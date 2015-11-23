@@ -26,22 +26,22 @@ class Chuck_System;
 // name: class ChucKtainer
 // desc: shared data/object store between OF and ChucK
 //------------------------------------------------------------------------------
-class ChucKtainer
-{
-public:
-    // constructor
-    ChucKtainer();
-    // destructor
-    ~ChucKtainer();
-
-public:
-    // add a node by name
-    void add( const std::string & key, ofNode * node );
-    // remove a node by name
-    bool remove( const std::string & key );
-    // add a node by name
-    ofNode * lookup( const std::string & key );
-};
+//class ChucKtainer
+//{
+//public:
+//    // constructor
+//    ChucKtainer();
+//    // destructor
+//    ~ChucKtainer();
+//
+//public:
+//    // add a node by name
+//    void add( const std::string & key, ofNode * node );
+//    // remove a node by name
+//    bool remove( const std::string & key );
+//    // add a node by name
+//    ofNode * lookup( const std::string & key );
+//};
 
 
 
