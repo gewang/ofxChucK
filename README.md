@@ -1,0 +1,2 @@
+# ofxChucK
+OpenFrameworks + ChucK
