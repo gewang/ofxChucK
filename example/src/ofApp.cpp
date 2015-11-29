@@ -9,13 +9,13 @@ void ofApp::setup()
     // get singleton
     chuck = TheChucK::instance();
     // arguments
-    const char * argv[] = { "the", "/Users/ge/b.ck" };
+    const char * argv[] = { "the", "/Users/ge/research/oF/of_v0.9.0_osx_release/addons/ofxChucK/example/ck/b.ck" };
 
     // initialize (SHOULD HAPPEN BEFORE AUDIO STREAM STARTS)
     chuck->initialize( MY_SRATE, MY_BUFFERSIZE, MY_CHANNELS, 2, argv );
     
     // compile and run another file
-    chuck->compileFile( "/Users/ge/c.ck", "" );
+    chuck->compileFile( "/Users/ge/research/oF/of_v0.9.0_osx_release/addons/ofxChucK/example/ck/c.ck", "" );
     
     // setup the sound stream...
     soundStream.setup( this,

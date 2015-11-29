@@ -1,0 +1,17 @@
+# homebrew submodule synch with main chuck repo
+
+# no arguments: assume run from repository root directory
+CHUCK_DIR="../../../../chuck"
+TO_DIR="lib/chuck"
+
+# check argument
+if [ "$1" != "" ]; then 
+    CHUCK_DIR=$1 
+fi
+
+if [ "$2" != "" ]; then 
+    TO_DIR=$2 
+fi
+
+# copy
+echo cp $CHUCK_DIR/src/*.h $TO_DIR/
