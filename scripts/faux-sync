@@ -14,4 +14,8 @@ if [ "$2" != "" ]; then
 fi
 
 # copy
-echo cp $CHUCK_DIR/src/*.h $TO_DIR/
+yes | cp $CHUCK_DIR/src/*.y $TO_DIR/
+yes | cp $CHUCK_DIR/src/*.lex $TO_DIR/
+yes | cp $CHUCK_DIR/src/*.h $TO_DIR/
+yes | cp $CHUCK_DIR/src/*.c $TO_DIR/
+yes | cp $CHUCK_DIR/src/*.cpp $TO_DIR/
