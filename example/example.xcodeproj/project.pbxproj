@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1888C6574EACFB4FE1D50B44 /* ofxChucK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F26BFC8326F2ECD83C5401B6 /* ofxChucK.cpp */; };
-		86A9577C1C02C55200D2F8E8 /* ofck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86A9577A1C02C55200D2F8E8 /* ofck.cpp */; };
+		86A09AAC1C0AB8C8008F2165 /* ofck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86A09AAA1C0AB8C8008F2165 /* ofck.cpp */; };
 		86E68E621BF7FFF5007564C5 /* chuck.y in Sources */ = {isa = PBXBuildFile; fileRef = 86E68DDA1BF7FFF5007564C5 /* chuck.y */; };
 		86E68E631BF7FFF5007564C5 /* chuck_absyn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E68DDB1BF7FFF5007564C5 /* chuck_absyn.cpp */; };
 		86E68E641BF7FFF5007564C5 /* chuck_bbq.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E68DDD1BF7FFF5007564C5 /* chuck_bbq.cpp */; };
@@ -137,8 +137,8 @@
 
 /* Begin PBXFileReference section */
 		206545651015A6DA306A9A3B /* ofxChucK.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxChucK.h; path = ../../../addons/ofxChucK/src/ofxChucK.h; sourceTree = SOURCE_ROOT; };
-		86A9577A1C02C55200D2F8E8 /* ofck.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofck.cpp; path = src/ofck.cpp; sourceTree = "<group>"; };
-		86A9577B1C02C55200D2F8E8 /* ofck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofck.h; path = src/ofck.h; sourceTree = "<group>"; };
+		86A09AAA1C0AB8C8008F2165 /* ofck.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofck.cpp; path = ../src/ofck.cpp; sourceTree = "<group>"; };
+		86A09AAB1C0AB8C8008F2165 /* ofck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofck.h; path = ../src/ofck.h; sourceTree = "<group>"; };
 		86E68DD91BF7FFF5007564C5 /* chuck.lex */ = {isa = PBXFileReference; explicitFileType = sourcecode.lex; fileEncoding = 4; path = chuck.lex; sourceTree = "<group>"; };
 		86E68DDA1BF7FFF5007564C5 /* chuck.y */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.yacc; path = chuck.y; sourceTree = "<group>"; };
 		86E68DDB1BF7FFF5007564C5 /* chuck_absyn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = chuck_absyn.cpp; sourceTree = "<group>"; };
@@ -502,8 +502,8 @@
 		F77AFC5DE20591990AE42D2E /* src */ = {
 			isa = PBXGroup;
 			children = (
-				86A9577A1C02C55200D2F8E8 /* ofck.cpp */,
-				86A9577B1C02C55200D2F8E8 /* ofck.h */,
+				86A09AAA1C0AB8C8008F2165 /* ofck.cpp */,
+				86A09AAB1C0AB8C8008F2165 /* ofck.h */,
 				F26BFC8326F2ECD83C5401B6 /* ofxChucK.cpp */,
 				206545651015A6DA306A9A3B /* ofxChucK.h */,
 			);
@@ -633,7 +633,7 @@
 				86E68E951BF7FFF5007564C5 /* ulib_opsc.cpp in Sources */,
 				86E68EE21BF80368007564C5 /* method.c in Sources */,
 				86E68E701BF7FFF5007564C5 /* chuck_oo.cpp in Sources */,
-				86A9577C1C02C55200D2F8E8 /* ofck.cpp in Sources */,
+				86A09AAC1C0AB8C8008F2165 /* ofck.cpp in Sources */,
 				86E68E8D1BF7FFF5007564C5 /* uana_extract.cpp in Sources */,
 				86E68EDE1BF80368007564C5 /* address.c in Sources */,
 				86E68EE11BF80368007564C5 /* message.c in Sources */,
