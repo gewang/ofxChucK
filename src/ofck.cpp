@@ -26,9 +26,6 @@ CK_DLL_DTOR(ofck_dtor);
 CK_DLL_MFUN(ofck_setParam);
 CK_DLL_MFUN(ofck_getParam);
 
-// for Chugins extending UGen, this is mono synthesis function for 1 sample
-CK_DLL_TICK(ofck_tick);
-
 // this is a special offset reserved for Chugin internal data
 t_CKINT ofck_data_offset = 0;
 
@@ -44,14 +41,7 @@ public:
     {
         m_param = 0;
     }
-    
-    // for Chugins extending UGen
-    SAMPLE tick( SAMPLE in )
-    {
-        // default: this passes whatever input is patched into Chugin
-        return in;
-    }
-    
+
     // set parameter example
     float setParam( t_CKFLOAT p )
     {
@@ -71,23 +61,20 @@ private:
 // query function: chuck calls this when loading the Chugin
 // NOTE: developer will need to modify this function to
 // add additional functions to this Chugin
-CK_DLL_QUERY( ofck )
+DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
 {
     // hmm, don't change this...
-    QUERY->setname(QUERY, "ofck");
+    QUERY->setname(QUERY, "OF");
     
     // begin the class definition
     // can change the second argument to extend a different ChucK class
-    QUERY->begin_class(QUERY, "ofck", "UGen");
+    QUERY->begin_class(QUERY, "OF", "Object");
     
     // register the constructor (probably no need to change)
     QUERY->add_ctor(QUERY, ofck_ctor);
     // register the destructor (probably no need to change)
     QUERY->add_dtor(QUERY, ofck_dtor);
-    
-    // for UGen's only: add tick function
-    QUERY->add_ugen_func(QUERY, ofck_tick, NULL, 1, 1);
-    
+
     // NOTE: if this is to be a UGen with more than 1 channel,
     // e.g., a multichannel UGen -- will need to use add_ugen_funcf()
     // and declare a tickf function using CK_DLL_TICKF
@@ -140,20 +127,6 @@ CK_DLL_DTOR(ofck_dtor)
         OBJ_MEMBER_INT(SELF, ofck_data_offset) = 0;
         o_obj = NULL;
     }
-}
-
-
-// implementation for tick function
-CK_DLL_TICK(ofck_tick)
-{
-    // get our c++ class pointer
-    ofck * o_obj = (ofck *) OBJ_MEMBER_INT(SELF, ofck_data_offset);
-    
-    // invoke our tick function; store in the magical out variable
-    if(o_obj) *out = o_obj->tick(in);
-    
-    // yes
-    return TRUE;
 }
 
 

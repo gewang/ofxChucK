@@ -29,3 +29,5 @@
 
 # Extra gunk
 .DS_Store
+project.xcworkspace
+xcuserdata

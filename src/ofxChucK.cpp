@@ -12,6 +12,7 @@
 //------------------------------------------------------------------------------
 #include "ofxChucK.h"
 #include "chuck_system.h"
+#include "ofck.h"
 
 
 // static instantiation
@@ -33,7 +34,14 @@ bool TheChucK::initialize( int srate, int bufferSize, int numChannels,
     m_numChannels = numChannels;
     
     // initialize!
-    return m_system->clientInitialize( srate, bufferSize, numChannels, argc, argv );
+    t_CKBOOL val = m_system->clientInitialize(
+        srate, bufferSize, numChannels, argc, argv );
+    
+    // binding
+    m_system->bind( ofck_query, "OF" );
+    
+    // done
+    return val;
 }
 
 

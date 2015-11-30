@@ -1,6 +1,6 @@
 //------------------------------------------------------------------------------
 // name: ofck.h
-// desc: openframeworks <=> ChucK bridge
+// desc: openframeworks <=> ChucK bridge; ChucK-side bindings
 //
 // @author  Ge Wang
 // @author  Tim O'Brien
@@ -11,6 +11,13 @@
 //------------------------------------------------------------------------------
 #ifndef __OF_CK_H__
 #define __OF_CK_H__
+
+
+#include "chuck_dl.h"
+
+
+// the query function for ofck
+DLL_QUERY ofck_query( Chuck_DL_Query * QUERY );
 
 
 
