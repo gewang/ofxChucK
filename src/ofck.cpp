@@ -23,11 +23,16 @@ CK_DLL_CTOR(ofck_ctor);
 CK_DLL_DTOR(ofck_dtor);
 
 // VREntity
-CK_DLL_SFUN(vrentity_location);
-CK_DLL_SFUN(vrentity_rotation);
-CK_DLL_SFUN(vrentity_scaling);
-CK_DLL_SFUN(vrentity_rgb);
-CK_DLL_SFUN(vrentity_rgba);
+CK_DLL_SFUN(vrentity_getLocation);
+CK_DLL_SFUN(vrentity_setLocation);
+CK_DLL_SFUN(vrentity_getRotation);
+CK_DLL_SFUN(vrentity_setRotation);
+CK_DLL_SFUN(vrentity_getScaling);
+CK_DLL_SFUN(vrentity_setScaling);
+CK_DLL_SFUN(vrentity_getRGB);
+CK_DLL_SFUN(vrentity_setRGB);
+CK_DLL_SFUN(vrentity_getRGBA);
+CK_DLL_SFUN(vrentity_setRGBA);
 CK_DLL_SFUN(vrentity_addEntity);
 CK_DLL_SFUN(vrentity_removeEntity);
 
@@ -88,19 +93,29 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
     QUERY->begin_class(QUERY, "VREntity", "Object");
     {
         // vec3 VREntity.location()
-        QUERY->add_sfun(QUERY, vrentity_location, "vec3", "location");
+        QUERY->add_sfun(QUERY, vrentity_getLocation, "vec3", "location");
+        QUERY->add_sfun(QUERY, vrentity_setLocation, "vec3", "location");
+        QUERY->add_arg(QUERY, "vec3", "loc");
 
         // vec3 VREntity.rotation()
-        QUERY->add_sfun(QUERY, vrentity_rotation, "vec3", "rotation");
+        QUERY->add_sfun(QUERY, vrentity_getRotation, "vec3", "rotation");
+        QUERY->add_sfun(QUERY, vrentity_setRotation, "vec3", "rotation");
+        QUERY->add_arg(QUERY, "vec3", "rot");
         
         // vec3 VREntity.scaling()
-        QUERY->add_sfun(QUERY, vrentity_scaling, "vec3", "scaling");
+        QUERY->add_sfun(QUERY, vrentity_getScaling, "vec3", "scaling");
+        QUERY->add_sfun(QUERY, vrentity_setScaling, "vec3", "scaling");
+        QUERY->add_arg(QUERY, "vec3", "sca");
         
         // vec3 VREntity.rgb()
-        QUERY->add_sfun(QUERY, vrentity_rgb, "vec3", "rgb");
+        QUERY->add_sfun(QUERY, vrentity_getRGB, "vec3", "rgb");
+        QUERY->add_sfun(QUERY, vrentity_setRGB, "vec3", "rgb");
+        QUERY->add_arg(QUERY, "vec3", "col");
         
         // vec4 VREntity.rgb()
-        QUERY->add_sfun(QUERY, vrentity_rgba, "vec4", "rgba");
+        QUERY->add_sfun(QUERY, vrentity_getRGBA, "vec4", "rgba");
+        QUERY->add_sfun(QUERY, vrentity_setRGBA, "vec4", "rgba");
+        QUERY->add_arg(QUERY, "vec4", "rgba");
     }
     // end the class definition
     QUERY->end_class(QUERY);
@@ -184,51 +199,19 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
 }
 
 
-// implementation for the constructor
-CK_DLL_CTOR(ofck_ctor)
+CK_DLL_SFUN(vrentity_getLocation)
 {
-    // get the offset where we'll store our internal c++ class pointer
-    OBJ_MEMBER_INT(SELF, ofck_data_offset) = 0;
-    
-    // instantiate our internal c++ class representation
-    ofck * o_obj = new ofck(API->vm->get_srate());
-    
-    // store the pointer in the ChucK object member
-    OBJ_MEMBER_INT(SELF, ofck_data_offset) = (t_CKINT) o_obj;
 }
 
+CK_DLL_SFUN(vrentity_setLocation);
+CK_DLL_SFUN(vrentity_getRotation);
+CK_DLL_SFUN(vrentity_setRotation);
+CK_DLL_SFUN(vrentity_getScaling);
+CK_DLL_SFUN(vrentity_setScaling);
+CK_DLL_SFUN(vrentity_getRGB);
+CK_DLL_SFUN(vrentity_setRGB);
+CK_DLL_SFUN(vrentity_getRGBA);
+CK_DLL_SFUN(vrentity_setRGBA);
+CK_DLL_SFUN(vrentity_addEntity);
+CK_DLL_SFUN(vrentity_removeEntity);
 
-// implementation for the destructor
-CK_DLL_DTOR(ofck_dtor)
-{
-    // get our c++ class pointer
-    ofck * o_obj = (ofck *) OBJ_MEMBER_INT(SELF, ofck_data_offset);
-    // check it
-    if( o_obj )
-    {
-        // clean up
-        delete o_obj;
-        OBJ_MEMBER_INT(SELF, ofck_data_offset) = 0;
-        o_obj = NULL;
-    }
-}
-
-
-// example implementation for setter
-CK_DLL_MFUN(ofck_setParam)
-{
-    // get our c++ class pointer
-    ofck * o_obj = (ofck *) OBJ_MEMBER_INT(SELF, ofck_data_offset);
-    // set the return value
-    RETURN->v_float = o_obj->setParam(GET_NEXT_FLOAT(ARGS));
-}
-
-
-// example implementation for getter
-CK_DLL_MFUN(ofck_getParam)
-{
-    // get our c++ class pointer
-    ofck * o_obj = (ofck *) OBJ_MEMBER_INT(SELF, ofck_data_offset);
-    // set the return value
-    RETURN->v_float = o_obj->getParam();
-}
