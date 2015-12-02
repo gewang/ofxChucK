@@ -22,22 +22,40 @@ CK_DLL_CTOR(ofck_ctor);
 // declaration of chugin desctructor
 CK_DLL_DTOR(ofck_dtor);
 
-// example of getter/setter
-CK_DLL_MFUN(ofck_setParam);
-CK_DLL_MFUN(ofck_getParam);
+// VREntity
+CK_DLL_SFUN(vrentity_location);
+CK_DLL_SFUN(vrentity_rotation);
+CK_DLL_SFUN(vrentity_scaling);
+CK_DLL_SFUN(vrentity_rgb);
+CK_DLL_SFUN(vrentity_rgba);
+CK_DLL_SFUN(vrentity_addEntity);
+CK_DLL_SFUN(vrentity_removeEntity);
+
+// VR
+CK_DLL_SFUN(vr_object);
+CK_DLL_SFUN(vr_setInt);
+CK_DLL_SFUN(vr_getInt);
+CK_DLL_SFUN(vr_setFloat);
+CK_DLL_SFUN(vr_getFloat);
+CK_DLL_SFUN(vr_setString);
+CK_DLL_SFUN(vr_getString);
+CK_DLL_SFUN(vr_setVec3);
+CK_DLL_SFUN(vr_getVec3);
+CK_DLL_SFUN(vr_setVec4);
+CK_DLL_SFUN(vr_getVec4);
+CK_DLL_SFUN(vr_displaySync);
+
 
 // this is a special offset reserved for Chugin internal data
 t_CKINT ofck_data_offset = 0;
 
 
-// class definition for internal Chugin data
-// (note: this isn't strictly necessary, but serves as example
-// of one recommended approach)
-class ofck
+// defintion
+class VREntity
 {
 public:
     // constructor
-    ofck( t_CKFLOAT fs)
+    VREntity( t_CKFLOAT fs)
     {
         m_param = 0;
     }
@@ -64,35 +82,101 @@ private:
 DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
 {
     // hmm, don't change this...
-    QUERY->setname(QUERY, "OF");
-    
-    // begin the class definition
-    // can change the second argument to extend a different ChucK class
-    QUERY->begin_class(QUERY, "OF", "Object");
-    
-    // register the constructor (probably no need to change)
-    QUERY->add_ctor(QUERY, ofck_ctor);
-    // register the destructor (probably no need to change)
-    QUERY->add_dtor(QUERY, ofck_dtor);
+    QUERY->setname(QUERY, "VR");
 
-    // NOTE: if this is to be a UGen with more than 1 channel,
-    // e.g., a multichannel UGen -- will need to use add_ugen_funcf()
-    // and declare a tickf function using CK_DLL_TICKF
-    
-    // example of adding setter method
-    QUERY->add_mfun(QUERY, ofck_setParam, "float", "param");
-    // example of adding argument to the above method
-    QUERY->add_arg(QUERY, "float", "arg");
-    
-    // example of adding getter method
-    QUERY->add_mfun(QUERY, ofck_getParam, "float", "param");
-    
-    // this reserves a variable in the ChucK internal class to store
-    // referene to the c++ class we defined above
-    ofck_data_offset = QUERY->add_mvar(QUERY, "int", "@o_data", false);
-    
+    // begin the class definition
+    QUERY->begin_class(QUERY, "VREntity", "Object");
+    {
+        // vec3 VREntity.location()
+        QUERY->add_sfun(QUERY, vrentity_location, "vec3", "location");
+
+        // vec3 VREntity.rotation()
+        QUERY->add_sfun(QUERY, vrentity_rotation, "vec3", "rotation");
+        
+        // vec3 VREntity.scaling()
+        QUERY->add_sfun(QUERY, vrentity_scaling, "vec3", "scaling");
+        
+        // vec3 VREntity.rgb()
+        QUERY->add_sfun(QUERY, vrentity_rgb, "vec3", "rgb");
+        
+        // vec4 VREntity.rgb()
+        QUERY->add_sfun(QUERY, vrentity_rgba, "vec4", "rgba");
+    }
     // end the class definition
-    // IMPORTANT: this MUST be called!
+    QUERY->end_class(QUERY);
+
+    // begin the class definition
+    QUERY->begin_class(QUERY, "VR", "Object");
+    {
+        // VRObject VR.object(name) // retrive objects
+        QUERY->add_sfun(QUERY, vr_object, "VRObject", "object");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "string", "name");
+
+        // int VR.setInt(key,value) // set
+        QUERY->add_sfun(QUERY, vr_setInt, "int", "setInt");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "string", "key");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "int", "value");
+
+        // float VR.setFloat(key,value) // set
+        QUERY->add_sfun(QUERY, vr_getInt, "int", "getInt");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "string", "key");
+
+        // float VR.setFloat(key,value) // set
+        QUERY->add_sfun(QUERY, vr_setFloat, "float", "setFloat");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "string", "key");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "int", "value");
+
+        // float VR.getFloat(key,value) // set
+        QUERY->add_sfun(QUERY, vr_getFloat, "float", "getFloat");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "string", "key");
+        
+        // float VR.setString(key,value) // set
+        QUERY->add_sfun(QUERY, vr_setFloat, "string", "setString");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "string", "key");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "string", "value");
+        
+        // string VR.getString(key,value) // set
+        QUERY->add_sfun(QUERY, vr_getString, "string", "getString");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "string", "key");
+
+        // vec3 VR.setVec3(key,value) // set
+        QUERY->add_sfun(QUERY, vr_setVec3, "vec3", "setVec3");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "string", "key");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "vec3", "value");
+        
+        // vec3 VR.getVec3(key,value) // set
+        QUERY->add_sfun(QUERY, vr_getString, "vec3", "getVec3");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "string", "key");
+
+        // vec4 VR.setVec4(key,value) // set
+        QUERY->add_sfun(QUERY, vr_setVec4, "vec4", "setVec4");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "string", "key");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "vec4", "value");
+        
+        // vec4 VR.getVec4(key,value) // set
+        QUERY->add_sfun(QUERY, vr_getString, "vec4", "getVec4");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "string", "key");
+        
+        // Event VR.displaySync // event for display
+        QUERY->add_sfun(QUERY, vr_object, "Event", "displaySync");
+    }
+    // end the class definition
     QUERY->end_class(QUERY);
     
     // wasn't that a breeze?
