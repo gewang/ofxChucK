@@ -38,4 +38,12 @@ public:
 
     // the ChucK
     TheChucK * chuck;
+    
+public:
+    // color buffer
+    ofPixels m_colorPixels;
+    // the texture color
+    ofTexture m_texColor;
+    // width and height
+    int w, h;
 };

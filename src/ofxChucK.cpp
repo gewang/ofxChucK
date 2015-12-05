@@ -61,6 +61,32 @@ bool TheChucK::compileFile( const std::string & path, const std::string & args )
 
 
 //------------------------------------------------------------------------------
+// name: compileCode()
+// desc: compile code
+//------------------------------------------------------------------------------
+bool TheChucK::compileCode( const std::string & path, const std::string & args )
+{
+    // compile
+    return FALSE;
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: vm()
+// desc: get VM
+//------------------------------------------------------------------------------
+Chuck_VM * TheChucK::vm()
+{
+    // compile
+    return m_system->vm();
+}
+
+
+
+
+//------------------------------------------------------------------------------
 // name: onInput()
 // desc: audio input
 //------------------------------------------------------------------------------
@@ -130,4 +156,36 @@ TheChucK::~TheChucK()
     delete m_system;
     // zero out
     m_system = NULL;
+}
+
+
+
+// set float
+float TheChucK::setFloat( const std::string & key, float value )
+{
+    // get the DB
+    OFCKDB * db = OFCKDB::instance();
+    // insert
+    db->string2float[key] = value;
+
+}
+
+// get float
+float TheChucK::getFloat( const std::string & key )
+{
+    // get the DB
+    OFCKDB * db = OFCKDB::instance();
+    // lookup
+    if( db->string2float.find( key ) == db->string2float.end() )
+        return 0;
+    else
+        return db->string2float[key];
+}
+
+void TheChucK::displaySync()
+{
+    // get the DB
+    OFCKDB * db = OFCKDB::instance();
+    // broadcast on the event
+    db->displaySync.queue_broadcast( db->m_eventBuffer );
 }

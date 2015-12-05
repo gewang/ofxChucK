@@ -12,11 +12,17 @@
 #include "ofck.h"
 #include "chuck_dl.h"
 #include "chuck_def.h"
+#include "chuck_type.h"
+#include "chuck_instr.h"
+#include "chuck_vm.h"
+#include "ofxChucK.h"
 
 // general includes
 #include <stdio.h>
 #include <limits.h>
 
+// static instantiation
+OFCKDB * OFCKDB::ourInstance = NULL;
 
 // VREntity
 CK_DLL_CTOR(vrentity_ctor);
@@ -61,25 +67,19 @@ class VREntity
 {
 public:
     // constructor
-    VREntity( t_CKFLOAT fs)
-    {
-        m_param = 0;
-    }
+    VREntity( t_CKFLOAT fs );
 
-    // set parameter example
-    float setParam( t_CKFLOAT p )
-    {
-        m_param = p;
-        return p;
-    }
-    
-    // get parameter example
-    float getParam() { return m_param; }
     
 private:
     // instance data
     float m_param;
 };
+
+OFCKDB::OFCKDB()
+{
+    initialize_object( &displaySync, &t_event );
+    m_eventBuffer = TheChucK::instance()->vm()->create_event_buffer();
+}
 
 
 // query function: chuck calls this when loading the Chugin
@@ -142,14 +142,14 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
     // end the class definition
     QUERY->end_class(QUERY);
 
-//    // begin the class definition
-//    QUERY->begin_class(QUERY, "VR", "Object");
-//    {
+    // begin the class definition
+    QUERY->begin_class(QUERY, "VR", "Object");
+    {
 //        // VRObject VR.object(name) // retrive objects
 //        QUERY->add_sfun(QUERY, vr_object, "VRObject", "object");
 //        // name of object to retrieve
 //        QUERY->add_arg(QUERY, "string", "name");
-//
+
 //        // int VR.setInt(key,value) // set
 //        QUERY->add_sfun(QUERY, vr_setInt, "int", "setInt");
 //        // name of object to retrieve
@@ -161,19 +161,19 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
 //        QUERY->add_sfun(QUERY, vr_getInt, "int", "getInt");
 //        // name of object to retrieve
 //        QUERY->add_arg(QUERY, "string", "key");
-//
-//        // float VR.setFloat(key,value) // set
-//        QUERY->add_sfun(QUERY, vr_setFloat, "float", "setFloat");
-//        // name of object to retrieve
-//        QUERY->add_arg(QUERY, "string", "key");
-//        // name of object to retrieve
-//        QUERY->add_arg(QUERY, "int", "value");
-//
-//        // float VR.getFloat(key,value) // set
-//        QUERY->add_sfun(QUERY, vr_getFloat, "float", "getFloat");
-//        // name of object to retrieve
-//        QUERY->add_arg(QUERY, "string", "key");
-//        
+
+        // float VR.setFloat(key,value) // set
+        QUERY->add_sfun(QUERY, vr_setFloat, "float", "setFloat");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "string", "key");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "float", "value");
+
+        // float VR.getFloat(key,value) // set
+        QUERY->add_sfun(QUERY, vr_getFloat, "float", "getFloat");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "string", "key");
+        
 //        // float VR.setString(key,value) // set
 //        QUERY->add_sfun(QUERY, vr_setFloat, "string", "setString");
 //        // name of object to retrieve
@@ -209,12 +209,12 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
 //        QUERY->add_sfun(QUERY, vr_getString, "vec4", "getVec4");
 //        // name of object to retrieve
 //        QUERY->add_arg(QUERY, "string", "key");
-//        
-//        // Event VR.displaySync // event for display
-//        QUERY->add_sfun(QUERY, vr_object, "Event", "displaySync");
-//    }
-//    // end the class definition
-//    QUERY->end_class(QUERY);
+        
+        // Event VR.displaySync // event for display
+        QUERY->add_sfun(QUERY, vr_displaySync, "Event", "displaySync");
+    }
+    // end the class definition
+    QUERY->end_class(QUERY);
     
     // wasn't that a breeze?
     return TRUE;
@@ -253,3 +253,43 @@ CK_DLL_DTOR(vrentity_dtor)
 //CK_DLL_SFUN(vrentity_addEntity);
 //CK_DLL_SFUN(vrentity_removeEntity);
 
+
+CK_DLL_SFUN( vr_setFloat)
+{
+    std::string key = GET_NEXT_STRING(ARGS)->str;
+    t_CKFLOAT value = GET_NEXT_FLOAT(ARGS);
+    
+    // get the DB
+    OFCKDB * db = OFCKDB::instance();
+    // insert the key value pair, possibly overwriting
+    db->string2float[key] = value;
+    // return the value
+    RETURN->v_float = value;
+}
+
+CK_DLL_SFUN( vr_getFloat)
+{
+    // get the argument
+    std::string key = GET_NEXT_STRING(ARGS)->str;
+    // get the DB
+    OFCKDB * db = OFCKDB::instance();
+    // look for the key in the DB
+    if( db->string2float.find(key) == db->string2float.end() )
+    {
+        // not found
+        RETURN->v_float = 0;
+    }
+    else
+    {
+        // return the value
+        RETURN->v_float = db->string2float[key];
+    }
+}
+
+CK_DLL_SFUN( vr_displaySync )
+{
+    // get the DB
+    OFCKDB * db = OFCKDB::instance();
+    // return the event
+    RETURN->v_object = &(db->displaySync);
+}

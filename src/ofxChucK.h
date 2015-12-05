@@ -18,6 +18,7 @@
 
 // forward reference
 class Chuck_System;
+class Chuck_VM;
 
 
 
@@ -60,12 +61,25 @@ public:
     bool compileFile( const std::string & path, const std::string & args );
     // compile code directly
     bool compileCode( const std::string & code, const std::string & args );
+    // get ChucK VM (dangerous)
+    Chuck_VM * vm();
     
 public:
     // audio input
     void onInput( float * input, int numFrames );
     // audio output
     void onOutput( float * output, int numFrames );
+    
+public:
+    // ofx <=> ChucK binding
+    
+    // set float
+    float setFloat( const std::string & key, float value );
+    // get float
+    float getFloat( const std::string & key );
+    
+    // trigger display sync
+    void displaySync();
 
 public:
     // this is a singleton class (second instance would break everything)
