@@ -8,6 +8,29 @@
 #define MY_BUFFERSIZE 1024
 #define MY_NUMBUFFERS 4
 
+
+
+
+//------------------------------------------------------------------------------
+// name: class VRDotEntity
+// desc: dot entity
+//------------------------------------------------------------------------------
+class VRDotEntity : public VREntity
+{
+public:
+    VRDotEntity();
+    virtual void render();
+    
+    ofSpherePrimitive sphere;
+};
+
+
+
+
+//------------------------------------------------------------------------------
+// name: class ofApp
+// desc: the app
+//------------------------------------------------------------------------------
 class ofApp : public ofBaseApp
 {
 public:
@@ -40,10 +63,17 @@ public:
     TheChucK * chuck;
     
 public:
+    // the camera
+    ofCamera m_camera;
     // color buffer
     ofPixels m_colorPixels;
     // the texture color
     ofTexture m_texColor;
     // width and height
     int w, h;
+
+    
+    // ofSpherePrimitive * m_sphere;
+    ofLight * m_light;
+    VRDotEntity * m_dot;
 };

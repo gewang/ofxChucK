@@ -137,6 +137,7 @@
 
 /* Begin PBXFileReference section */
 		206545651015A6DA306A9A3B /* ofxChucK.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxChucK.h; path = ../../../addons/ofxChucK/src/ofxChucK.h; sourceTree = SOURCE_ROOT; };
+		86314F741C13AA0600554BAD /* x-vector3d.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "x-vector3d.h"; path = "../src/x-vector3d.h"; sourceTree = "<group>"; };
 		86A09AAA1C0AB8C8008F2165 /* ofck.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofck.cpp; path = ../src/ofck.cpp; sourceTree = "<group>"; };
 		86A09AAB1C0AB8C8008F2165 /* ofck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofck.h; path = ../src/ofck.h; sourceTree = "<group>"; };
 		86E68DD91BF7FFF5007564C5 /* chuck.lex */ = {isa = PBXFileReference; explicitFileType = sourcecode.lex; fileEncoding = 4; path = chuck.lex; sourceTree = "<group>"; };
@@ -506,6 +507,7 @@
 				86A09AAB1C0AB8C8008F2165 /* ofck.h */,
 				F26BFC8326F2ECD83C5401B6 /* ofxChucK.cpp */,
 				206545651015A6DA306A9A3B /* ofxChucK.h */,
+				86314F741C13AA0600554BAD /* x-vector3d.h */,
 			);
 			name = src;
 			sourceTree = "<group>";

@@ -15,10 +15,12 @@
 
 
 #include <string>
+#include "ofck.h"
 
 // forward reference
 class Chuck_System;
 class Chuck_VM;
+class Chuck_Compiler;
 
 
 
@@ -63,6 +65,8 @@ public:
     bool compileCode( const std::string & code, const std::string & args );
     // get ChucK VM (dangerous)
     Chuck_VM * vm();
+    // get ChucK compiler (dangerous)
+    Chuck_Compiler * compiler();
     
 public:
     // audio input
@@ -77,7 +81,11 @@ public:
     float setFloat( const std::string & key, float value );
     // get float
     float getFloat( const std::string & key );
-    
+    // set entity
+    VREntity * setEntity( const std::string & key, VREntity * entity );
+    // get entity
+    VREntity * getEntity( const std::string & key );
+
     // trigger display sync
     void displaySync();
 

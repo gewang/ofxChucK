@@ -1,11 +1,48 @@
 #include "ofApp.h"
 
+
+
+
+//------------------------------------------------------------------------------
+// name: VRDotEntity()
+// desc: constructor
+//------------------------------------------------------------------------------
+VRDotEntity::VRDotEntity()
+: sphere( 100, 10 )
+{}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: render()
+// desc: draw the thing
+//------------------------------------------------------------------------------
+void VRDotEntity::render()
+{
+    // ofSetColor( 255 );
+    sphere.draw();
+}
+
+//VirChucK Reality
+//VCKR
+//
+//Chutual Reality
+//CKVR
+//
+//ChVRcK
+//VirChuR
+//VReCK
+
+
+
+
 //--------------------------------------------------------------
 void ofApp::setup()
 {
     ofSetVerticalSync( true );
     ofBackground(54, 54, 54);
-    
+ 
     // get singleton
     chuck = TheChucK::instance();
     // arguments
@@ -13,9 +50,14 @@ void ofApp::setup()
 
     // initialize (SHOULD HAPPEN BEFORE AUDIO STREAM STARTS)
     chuck->initialize( MY_SRATE, MY_BUFFERSIZE, MY_CHANNELS, 2, argv );
+
+    m_dot = new VRDotEntity();
+    chuck->setEntity( "dot", m_dot );
+    m_dot->col.setAll(255);
+    m_dot->alpha = 255;
     
     // compile and run another file
-    chuck->compileFile( "/Users/ge/research/oF/of_v0.9.0_osx_release/addons/ofxChucK/example/ck/the.ck", "" );
+    chuck->compileFile( "/Users/ge/research/oF/of_v0.9.0_osx_release/addons/ofxChucK/example/ck/thedot.ck", "" );
 
     // compile and run another file
     // chuck->compileFile( "/Users/ge/research/oF/of_v0.9.0_osx_release/addons/ofxChucK/example/ck/c.ck", "" );
@@ -44,6 +86,18 @@ void ofApp::setup()
             m_colorPixels.setColor(x,y,ofColor(x,y,0));
         }
     }
+    
+    // set up camera
+    m_camera.setupPerspective( false, 90, .1, 300 );
+    // set up sphere
+    // m_sphere = new ofSpherePrimitive( 100, 50 );
+    // m_sphere->setRadius( 100 );
+    
+    m_light = new ofLight();
+    m_light->setDiffuseColor( ofColor(100, 255, 100) );
+    m_light->enable();
+    m_light->setGlobalPosition( 100, 100, 100 );
+    
 }
 
 //--------------------------------------------------------------
@@ -86,6 +140,13 @@ void ofApp::update()
     // finally, load those pixels into the texture
     m_texColor.loadData(m_colorPixels);
     
+    // m_dot->loc.set( ofGetWindowWidth()/2, ofGetWindowHeight()/2, 0 );
+    m_dot->updateAll(1.0/60);
+    // cerr << ofGetWindowWidth()/2 << " " << ofGetWindowHeight()/2 << endl;
+    // cerr << m_dot->loc.x << " " << m_dot->loc.y << " " << m_dot->loc.z << endl;
+    // cerr << m_dot->col.x << " " << m_dot->col.y << " " << m_dot->col.z << endl;
+    // cerr << " " << m_dot->alpha << endl;
+    
     // trigger displaySync to chuck
     chuck->displaySync();
 }
@@ -93,8 +154,16 @@ void ofApp::update()
 //--------------------------------------------------------------
 void ofApp::draw()
 {
+    m_camera.begin();
+    m_light->enable();
     //texGray.draw(100,100,w,h);
-    m_texColor.draw(350,300,w,h);
+    // m_texColor.draw(350,300,w,h);
+    
+    // ofTranslate( ofGetWindowWidth()/2, ofGetWindowHeight()/2, 0 );
+    // m_sphere->draw();
+    m_dot->renderAll();
+    m_light->disable();
+    m_camera.end();
 }
 
 //--------------------------------------------------------------

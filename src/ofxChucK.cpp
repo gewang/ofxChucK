@@ -87,6 +87,19 @@ Chuck_VM * TheChucK::vm()
 
 
 //------------------------------------------------------------------------------
+// name: compiler()
+// desc: get compiler
+//------------------------------------------------------------------------------
+Chuck_Compiler * TheChucK::compiler()
+{
+    // compile
+    return m_system->compiler();
+}
+
+
+
+
+//------------------------------------------------------------------------------
 // name: onInput()
 // desc: audio input
 //------------------------------------------------------------------------------
@@ -160,17 +173,28 @@ TheChucK::~TheChucK()
 
 
 
-// set float
+
+//------------------------------------------------------------------------------
+// name: setFloat()
+// desc: set float
+//------------------------------------------------------------------------------
 float TheChucK::setFloat( const std::string & key, float value )
 {
     // get the DB
     OFCKDB * db = OFCKDB::instance();
     // insert
     db->string2float[key] = value;
-
+    // done
+    return value;
 }
 
-// get float
+
+
+
+//------------------------------------------------------------------------------
+// name: getFloat()
+// desc: get float
+//------------------------------------------------------------------------------
 float TheChucK::getFloat( const std::string & key )
 {
     // get the DB
@@ -182,6 +206,48 @@ float TheChucK::getFloat( const std::string & key )
         return db->string2float[key];
 }
 
+
+
+
+//------------------------------------------------------------------------------
+// name: setEntity()
+// desc: set entity
+//------------------------------------------------------------------------------
+VREntity * TheChucK::setEntity( const std::string & key, VREntity * e )
+{
+    // get the DB
+    OFCKDB * db = OFCKDB::instance();
+    // insert
+    db->string2entity[key] = e;
+    // done
+    return e;
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: getEntity()
+// desc: get float
+//------------------------------------------------------------------------------
+VREntity * TheChucK::getEntity( const std::string & key )
+{
+    // get the DB
+    OFCKDB * db = OFCKDB::instance();
+    // lookup
+    if( db->string2entity.find( key ) == db->string2entity.end() )
+        return 0;
+    else
+        return db->string2entity[key];
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: displaySync()
+// desc: trigger a display sync from oF; triggering ChucK event
+//------------------------------------------------------------------------------
 void TheChucK::displaySync()
 {
     // get the DB
