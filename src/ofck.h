@@ -98,11 +98,26 @@ public:
     OFCKDB();
 
 public:
+    // associate a int value with a key
+    t_CKINT setInt( const std::string & key, t_CKINT value );
+    // get a int value associated with a key
+    t_CKINT getInt( const std::string & key );
     // associate a float value with a key
     t_CKFLOAT setFloat( const std::string & key, t_CKFLOAT value );
     // get a float value associated with a key
     t_CKFLOAT getFloat( const std::string & key );
-    
+    // associate a vec3 value with a key
+    t_CKVEC3 setVec3( const std::string & key, t_CKVEC3 value );
+    // get a vec3 value associated with a key
+    t_CKVEC3 getVec3( const std::string & key );
+    // associate a vec4 value with a key
+    t_CKVEC4 setVec4( const std::string & key, t_CKVEC4 value );
+    // get a vec3 value associated with a key
+    t_CKVEC4 getVec4( const std::string & key );
+    // associate a string value with a key
+    std::string setString( const std::string & key, const std::string & value );
+    // get a vec3 value associated with a key
+    std::string getString( const std::string & key );
     // associate an VREntity with a key
     VREntity * setObject( const std::string & key, VREntity * e );
     // get an object associated with a key
@@ -121,8 +136,16 @@ public:
     static OFCKDB * ourInstance;
 
 public:
+    // string to int map
+    std::map<std::string, t_CKINT> string2int;
     // string to float map
-    std::map<std::string, float> string2float;
+    std::map<std::string, t_CKFLOAT> string2float;
+    // string to float map
+    std::map<std::string, t_CKVEC3> string2vec3;
+    // string to float map
+    std::map<std::string, t_CKVEC4> string2vec4;
+    // string to string map
+    std::map<std::string, std::string> string2string;
     // string to entity map
     std::map<std::string, VREntity *> string2entity;
 

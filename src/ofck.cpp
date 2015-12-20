@@ -114,17 +114,17 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
         // name of object to retrieve
         QUERY->add_arg(QUERY, "string", "name");
 
-//        // int VR.setInt(key,value) // set
-//        QUERY->add_sfun(QUERY, vr_setInt, "int", "setInt");
-//        // name of object to retrieve
-//        QUERY->add_arg(QUERY, "string", "key");
-//        // name of object to retrieve
-//        QUERY->add_arg(QUERY, "int", "value");
-//
-//        // float VR.setFloat(key,value) // set
-//        QUERY->add_sfun(QUERY, vr_getInt, "int", "getInt");
-//        // name of object to retrieve
-//        QUERY->add_arg(QUERY, "string", "key");
+        // int VR.setInt(key,value) // set
+        QUERY->add_sfun(QUERY, vr_setInt, "int", "setInt");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "string", "key");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "int", "value");
+
+        // float VR.setFloat(key,value) // set
+        QUERY->add_sfun(QUERY, vr_getInt, "int", "getInt");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "string", "key");
 
         // float VR.setFloat(key,value) // set
         QUERY->add_sfun(QUERY, vr_setFloat, "float", "setFloat");
@@ -138,41 +138,41 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
         // name of object to retrieve
         QUERY->add_arg(QUERY, "string", "key");
         
-//        // float VR.setString(key,value) // set
-//        QUERY->add_sfun(QUERY, vr_setFloat, "string", "setString");
-//        // name of object to retrieve
-//        QUERY->add_arg(QUERY, "string", "key");
-//        // name of object to retrieve
-//        QUERY->add_arg(QUERY, "string", "value");
-//        
-//        // string VR.getString(key,value) // set
-//        QUERY->add_sfun(QUERY, vr_getString, "string", "getString");
-//        // name of object to retrieve
-//        QUERY->add_arg(QUERY, "string", "key");
-//
-//        // vec3 VR.setVec3(key,value) // set
-//        QUERY->add_sfun(QUERY, vr_setVec3, "vec3", "setVec3");
-//        // name of object to retrieve
-//        QUERY->add_arg(QUERY, "string", "key");
-//        // name of object to retrieve
-//        QUERY->add_arg(QUERY, "vec3", "value");
-//        
-//        // vec3 VR.getVec3(key,value) // set
-//        QUERY->add_sfun(QUERY, vr_getString, "vec3", "getVec3");
-//        // name of object to retrieve
-//        QUERY->add_arg(QUERY, "string", "key");
-//
-//        // vec4 VR.setVec4(key,value) // set
-//        QUERY->add_sfun(QUERY, vr_setVec4, "vec4", "setVec4");
-//        // name of object to retrieve
-//        QUERY->add_arg(QUERY, "string", "key");
-//        // name of object to retrieve
-//        QUERY->add_arg(QUERY, "vec4", "value");
-//        
-//        // vec4 VR.getVec4(key,value) // set
-//        QUERY->add_sfun(QUERY, vr_getString, "vec4", "getVec4");
-//        // name of object to retrieve
-//        QUERY->add_arg(QUERY, "string", "key");
+        // float VR.setString(key,value) // set
+        QUERY->add_sfun(QUERY, vr_setFloat, "string", "setString");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "string", "key");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "string", "value");
+        
+        // string VR.getString(key,value) // set
+        QUERY->add_sfun(QUERY, vr_getString, "string", "getString");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "string", "key");
+
+        // vec3 VR.setVec3(key,value) // set
+        QUERY->add_sfun(QUERY, vr_setVec3, "vec3", "setVec3");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "string", "key");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "vec3", "value");
+        
+        // vec3 VR.getVec3(key,value) // set
+        QUERY->add_sfun(QUERY, vr_getString, "vec3", "getVec3");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "string", "key");
+
+        // vec4 VR.setVec4(key,value) // set
+        QUERY->add_sfun(QUERY, vr_setVec4, "vec4", "setVec4");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "string", "key");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "vec4", "value");
+        
+        // vec4 VR.getVec4(key,value) // set
+        QUERY->add_sfun(QUERY, vr_getString, "vec4", "getVec4");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "string", "key");
         
         // Event VR.displaySync // event for display
         QUERY->add_sfun(QUERY, vr_displaySync, "Event", "displaySync");
@@ -216,51 +216,125 @@ CK_DLL_SFUN( vr_getEntity)
     // get the DB
     OFCKDB * db = OFCKDB::instance();
     // look for the key in the DB
-    if( db->string2entity.find(key) == db->string2entity.end() )
+    VREntity * e = db->getObject(key);
+    // check it
+    if( !e ) { RETURN->v_object = 0; } else
     {
-        // not found
-        RETURN->v_object = 0;
-    }
-    else
-    {
-        if( db->string2entity[key]->chuckObject() == NULL )
-        {
-            db->string2entity[key]->initChucKSideObject();
-        }
+        // if necessary, instantiate chuck-side object
+        if( e->chuckObject() == NULL ) { e->initChucKSideObject(); }
         // return the value
-        RETURN->v_object = db->string2entity[key]->chuckObject();
+        RETURN->v_object = e->chuckObject();
     }
 }
 
-CK_DLL_SFUN( vr_setFloat)
+CK_DLL_SFUN( vr_setFloat )
 {
     std::string key = GET_NEXT_STRING(ARGS)->str;
     t_CKFLOAT value = GET_NEXT_FLOAT(ARGS);
-    
     // get the DB
     OFCKDB * db = OFCKDB::instance();
     // insert the key value pair, possibly overwriting
-    db->string2float[key] = value;
-    // return the value
-    RETURN->v_float = value;
+    RETURN->v_float = db->setFloat(key,value);
 }
 
-CK_DLL_SFUN( vr_getFloat)
+CK_DLL_SFUN( vr_getFloat )
 {
     // get the argument
     std::string key = GET_NEXT_STRING(ARGS)->str;
     // get the DB
     OFCKDB * db = OFCKDB::instance();
     // look for the key in the DB
-    if( db->string2float.find(key) == db->string2float.end() )
+    RETURN->v_float = db->getFloat(key);
+}
+
+CK_DLL_SFUN( vr_setInt )
+{
+    std::string key = GET_NEXT_STRING(ARGS)->str;
+    t_CKINT value = GET_NEXT_INT(ARGS);
+    // get the DB
+    OFCKDB * db = OFCKDB::instance();
+    // insert the key value pair, possibly overwriting
+    RETURN->v_int = db->setInt(key,value);
+}
+
+CK_DLL_SFUN( vr_getInt )
+{
+    // get the argument
+    std::string key = GET_NEXT_STRING(ARGS)->str;
+    // get the DB
+    OFCKDB * db = OFCKDB::instance();
+    // look for the key in the DB
+    RETURN->v_int = db->getInt(key);
+}
+
+CK_DLL_SFUN( vr_setVec3 )
+{
+    std::string key = GET_NEXT_STRING(ARGS)->str;
+    t_CKVEC3 value = GET_NEXT_VEC3(ARGS);
+    // get the DB
+    OFCKDB * db = OFCKDB::instance();
+    // insert the key value pair, possibly overwriting
+    RETURN->v_vec3 = db->setVec3(key,value);
+}
+
+CK_DLL_SFUN( vr_getVec3 )
+{
+    // get the argument
+    std::string key = GET_NEXT_STRING(ARGS)->str;
+    // get the DB
+    OFCKDB * db = OFCKDB::instance();
+    // look for the key in the DB
+    RETURN->v_vec3 = db->getVec3(key);
+}
+
+CK_DLL_SFUN( vr_setVec4 )
+{
+    std::string key = GET_NEXT_STRING(ARGS)->str;
+    t_CKVEC4 value = GET_NEXT_VEC4(ARGS);
+    // get the DB
+    OFCKDB * db = OFCKDB::instance();
+    // insert the key value pair, possibly overwriting
+    RETURN->v_vec4 = db->setVec4(key,value);
+}
+
+CK_DLL_SFUN( vr_getVec4 )
+{
+    // get the argument
+    std::string key = GET_NEXT_STRING(ARGS)->str;
+    // get the DB
+    OFCKDB * db = OFCKDB::instance();
+    // look for the key in the DB
+    RETURN->v_vec4 = db->getVec4(key);
+}
+
+CK_DLL_SFUN( vr_setString )
+{
+    std::string key = GET_NEXT_STRING(ARGS)->str;
+    Chuck_String * value = GET_NEXT_STRING(ARGS);
+    
+    // get the DB
+    OFCKDB * db = OFCKDB::instance();
+    // insert the key value pair, possibly overwriting
+    db->string2string[key] = value->str;
+    // return the value
+    RETURN->v_string = value;
+}
+
+CK_DLL_SFUN( vr_getString )
+{
+    // get the argument
+    std::string key = GET_NEXT_STRING(ARGS)->str;
+    // get the DB
+    OFCKDB * db = OFCKDB::instance();
+    // look for the key in the DB
+    if( db->string2string.find(key) != db->string2string.end() )
     {
-        // not found
-        RETURN->v_float = 0;
-    }
-    else
-    {
+        // chuck string TODO: verify memory
+        Chuck_String * str = (Chuck_String *)instantiate_and_initialize_object( &t_string, NULL );
+        // set the string value
+        str->str = db->getString(key);
         // return the value
-        RETURN->v_float = db->string2float[key];
+        RETURN->v_string = str;
     }
 }
 
@@ -289,12 +363,190 @@ OFCKDB::OFCKDB()
 
 
 //------------------------------------------------------------------------------
+// name: setInt()
+// desc: associate a int value with a key
+//------------------------------------------------------------------------------
+t_CKINT OFCKDB::setInt( const std::string & key, t_CKINT value )
+{
+    string2int[key] = value;
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: getInt()
+// desc: get a int value associated with a key
+//------------------------------------------------------------------------------
+t_CKINT OFCKDB::getInt( const std::string & key )
+{
+    // look for the key in the DB
+    if( string2int.find(key) == string2int.end() )
+    {
+        // not found
+        return 0;
+    }
+
+    // return the value
+    return string2int[key];
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: setFloat()
+// desc: associate a float value with a key
+//------------------------------------------------------------------------------
+t_CKFLOAT OFCKDB::setFloat( const std::string & key, t_CKFLOAT value )
+{
+    string2float[key] = value;
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: getFloat()
+// desc: get a float value associated with a key
+//------------------------------------------------------------------------------
+t_CKFLOAT OFCKDB::getFloat( const std::string & key )
+{
+    // look for the key in the DB
+    if( string2float.find(key) == string2float.end() )
+    {
+        // not found
+        return 0;
+    }
+    
+    // return the value
+    return string2float[key];
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: setVec3()
+// desc: associate a vec3 value with a key
+//------------------------------------------------------------------------------
+t_CKVEC3 OFCKDB::setVec3( const std::string & key, t_CKVEC3 value )
+{
+    string2vec3[key] = value;
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: getVec3()
+// desc: get a vec3 value associated with a key
+//------------------------------------------------------------------------------
+t_CKVEC3 OFCKDB::getVec3( const std::string & key )
+{
+    // look for the key in the DB
+    if( string2vec3.find(key) == string2vec3.end() )
+    {
+        // local instance
+        t_CKVEC3 r;
+        // zero out
+        r.x = r.y = r.z = 0;
+        // not found
+        return r;
+    }
+    
+    // return the value
+    return string2vec3[key];
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: setVec4()
+// desc: associate a vec4 value with a key
+//------------------------------------------------------------------------------
+t_CKVEC4 OFCKDB::setVec4( const std::string & key, t_CKVEC4 value )
+{
+    string2vec4[key] = value;
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: getVec4()
+// desc: get a vec3 value associated with a key
+//------------------------------------------------------------------------------
+t_CKVEC4 OFCKDB::getVec4( const std::string & key )
+{
+    // look for the key in the DB
+    if( string2vec4.find(key) == string2vec4.end() )
+    {
+        // local copy
+        t_CKVEC4 r;
+        // zero out
+        r.x = r.y = r.z = r.w = 0;
+        // not found
+        return r;
+    }
+    
+    // return the value
+    return string2vec4[key];
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: setString()
+// desc: associate a string value with a key
+//------------------------------------------------------------------------------
+std::string OFCKDB::setString( const std::string & key, const std::string & value )
+{
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: getString()
+// desc: get a vec3 value associated with a key
+//------------------------------------------------------------------------------
+std::string OFCKDB::getString( const std::string & key )
+{
+}
+
+
+
+
+//------------------------------------------------------------------------------
 // name: setObject()
 // desc: map object by name
 //------------------------------------------------------------------------------
 VREntity * OFCKDB::setObject( const string & key, VREntity * e )
 {
     string2entity[key] = e;
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: getObject()
+// desc: get an object associated with a key
+//------------------------------------------------------------------------------
+VREntity * OFCKDB::getObject( const std::string & key )
+{
+    // look for the key in the DB
+    if( string2entity.find(key) == string2entity.end() )
+    {
+        // not found
+        return NULL;
+    }
+    
+    // return the value
+    return string2entity[key];
 }
 
 

@@ -52,7 +52,7 @@ void ofApp::setup()
     chuck->initialize( MY_SRATE, MY_BUFFERSIZE, MY_CHANNELS, 2, argv );
 
     m_dot = new VRDotEntity();
-    chuck->setEntity( "dot", m_dot );
+    chuck->db()->setObject( "dot", m_dot );
     m_dot->col.setAll(255);
     m_dot->alpha = 255;
     
@@ -126,8 +126,8 @@ void ofApp::update()
     ofBackground( 0, 0, 0 );
 
     // get x and y from chuck
-    float x = chuck->getFloat("color-x");
-    float y = chuck->getFloat("color-y");
+    float x = chuck->db()->getFloat("color-x");
+    float y = chuck->db()->getFloat("color-y");
     
     // scerr << "x: " << x << " y: " << y << endl;
 
@@ -179,8 +179,8 @@ void ofApp::keyReleased(int key){
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y )
 {
-    chuck->setFloat( "mouse-x", x );
-    chuck->setFloat( "mouse-y", y );
+    chuck->db()->setFloat( "mouse-x", x );
+    chuck->db()->setFloat( "mouse-y", y );
 }
 
 //--------------------------------------------------------------

@@ -26,30 +26,6 @@ class Chuck_Compiler;
 
 
 //------------------------------------------------------------------------------
-// name: class ChucKtainer
-// desc: shared data/object store between OF and ChucK
-//------------------------------------------------------------------------------
-//class ChucKtainer
-//{
-//public:
-//    // constructor
-//    ChucKtainer();
-//    // destructor
-//    ~ChucKtainer();
-//
-//public:
-//    // add a node by name
-//    void add( const std::string & key, ofNode * node );
-//    // remove a node by name
-//    bool remove( const std::string & key );
-//    // add a node by name
-//    ofNode * lookup( const std::string & key );
-//};
-
-
-
-
-//------------------------------------------------------------------------------
 // name: class TheChucK
 // desc: openframeworks chuck object
 //------------------------------------------------------------------------------
@@ -67,6 +43,8 @@ public:
     Chuck_VM * vm();
     // get ChucK compiler (dangerous)
     Chuck_Compiler * compiler();
+    // get the oFCK database
+    OFCKDB * db();
     
 public:
     // audio input
@@ -75,17 +53,6 @@ public:
     void onOutput( float * output, int numFrames );
     
 public:
-    // ofx <=> ChucK binding
-    
-    // set float
-    float setFloat( const std::string & key, float value );
-    // get float
-    float getFloat( const std::string & key );
-    // set entity
-    VREntity * setEntity( const std::string & key, VREntity * entity );
-    // get entity
-    VREntity * getEntity( const std::string & key );
-
     // trigger display sync
     void displaySync();
 
