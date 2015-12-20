@@ -93,15 +93,15 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
 
         // add .ori
         vrentity_offset_rotation = QUERY->add_mvar( QUERY, "vec3", "ori", FALSE );
-        if( vrentity_offset_location == CK_INVALID_OFFSET ) goto error;
+        if( vrentity_offset_rotation == CK_INVALID_OFFSET ) goto error;
 
         // add .sca
         vrentity_offset_scaling = QUERY->add_mvar( QUERY, "vec3", "sca", FALSE );
-        if( vrentity_offset_location == CK_INVALID_OFFSET ) goto error;
+        if( vrentity_offset_scaling == CK_INVALID_OFFSET ) goto error;
 
         // add .rgba
         vrentity_offset_rgba = QUERY->add_mvar( QUERY, "vec4", "rgba", FALSE );
-        if( vrentity_offset_location == CK_INVALID_OFFSET ) goto error;
+        if( vrentity_offset_rgba == CK_INVALID_OFFSET ) goto error;
     }
     // end the class definition
     QUERY->end_class(QUERY);
@@ -364,6 +364,7 @@ bool VREntity::initChucKSideObject()
     
     // chuck-side object
     m_chuckObject = new Chuck_Object;
+    // HACK:
     the_vrentity_type = Chuck_Env::instance()->curr->lookup_type( "VREntity", TRUE );
     initialize_object( m_chuckObject, the_vrentity_type );
 
