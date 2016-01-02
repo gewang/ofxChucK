@@ -552,6 +552,46 @@ VREntity * OFCKDB::getObject( const std::string & key )
 
 
 
+// static instantiation
+float XForm::screenWidth = 1024;
+float XForm::screenHeight = 768;
+float XForm::aspectRatio = XForm::screenWidth / XForm::screenHeight;
+float XForm::normalizedWidth = 2;
+float XForm::scaling = XForm::screenWidth / XForm::normalizedWidth;
+
+
+
+
+//------------------------------------------------------------------------------
+// name: map()
+// desc: map from OF coordinate (0,0) top left to centered normalized
+// (normalized height is implied from aspect ratio and width)
+//------------------------------------------------------------------------------
+void XForm::mapPush( float screenWidth, float screenHeight, float normalizedWidth )
+{
+    // remember width
+    screenWidth = screenWidth;
+    // remember height
+    screenHeight = screenHeight;
+    // compute aspect ratio
+    aspectRatio = screenWidth / screenHeight;
+    // save normalized width
+    normalizedWidth = normalizedWidth;
+    // compute width ratio
+    scaling = normalizedWidth / screenWidth;
+    
+    // flip
+    ofSetOrientation(OF_ORIENTATION_DEFAULT, false);
+    
+    // re-center
+    ofTranslate( -screenWidth / 2, -screenHeight / 2, 0 );
+    // re-scale
+    ofScale( scaling, -scaling, scaling );
+}
+
+
+
+
 //------------------------------------------------------------------------------
 // name: VREntity()
 // desc: constructor
@@ -562,6 +602,18 @@ VREntity::VREntity()
     col.setAll(255);
     sca.setAll(1);
     m_chuckObject = NULL;
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: ~VREntity()
+// desc: destructor
+//------------------------------------------------------------------------------
+VREntity::~VREntity()
+{
+    // do nothing for now
 }
 
 

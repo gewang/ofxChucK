@@ -41,8 +41,11 @@ void VRDotEntity::render()
 void ofApp::setup()
 {
     ofSetVerticalSync( true );
-    ofBackground(54, 54, 54);
- 
+    ofBackground(0, 0, 0);
+    
+    // flip y axis globally
+    ofSetOrientation( OF_ORIENTATION_DEFAULT, false );
+
     // get singleton
     chuck = TheChucK::instance();
     // arguments
@@ -209,8 +212,10 @@ void ofApp::mouseExited(int x, int y){
 }
 
 //--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-
+void ofApp::windowResized(int w, int h)
+{
+    // log
+    cerr << "window resized w: " << w << " h: " << h << endl;
 }
 
 //--------------------------------------------------------------

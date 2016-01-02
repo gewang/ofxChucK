@@ -24,13 +24,43 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY );
 
 
 //------------------------------------------------------------------------------
-// class VREntity
+// nane: class XForm
+// desc: normalizing transform class
+//------------------------------------------------------------------------------
+class XForm
+{
+public:
+    // map from OF coordinate (0,0) top left to centered normalized
+    // (normalized height is implied from aspect ratio and width)
+    static void mapPush( float screenWidth, float screenHeight,
+                         float normalizedWidth = 2 );
+    // undo map push
+    static void mapPop( float screenWidth, float screenHeight,
+                        float normalizedWidth = 2 );
+
+private:
+    // mapping
+    static float screenWidth;
+    static float screenHeight;
+    static float aspectRatio;
+    static float normalizedWidth;
+    static float scaling;
+};
+
+
+
+
+//------------------------------------------------------------------------------
+// nane: class VREntity
+// desc: base entity class
 //------------------------------------------------------------------------------
 class VREntity
 {
 public:
     // constructor
     VREntity();
+    // destructor
+    ~VREntity();
 
 public:
     // add child

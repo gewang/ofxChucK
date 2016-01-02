@@ -1,14 +1,14 @@
 /*----------------------------------------------------------------------------
  MCD-X: General API for audio/graphics/interaction programming
  (sibling of MCD-Y API)
- http://www.gewang.com/software/mcd-api/
+   http://www.gewang.com/software/mcd-api/
  
  Copyright (c) 2007-present Ge Wang
  All rights reserved.
- http://www.gewang.com/
+   http://www.gewang.com/
  
  Music, Computing, Design Group @ CCRMA, Stanford University
- http://ccrma.stanford.edu/groups/mcd/
+   http://ccrma.stanford.edu/groups/mcd/
  
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by

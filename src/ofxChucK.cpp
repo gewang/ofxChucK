@@ -3,10 +3,10 @@
 // desc: header file for ofxChucK, an openframeworks addon to unleash the
 //       fury of the ChucK programming language onto OpenFrameworks...
 //
-// author: Tim O'Brien
-// author: Kitty Shi
-// author: Madeline Huberth
-// author: Ge Wang
+// @author: Tim O'Brien
+// @author: Kitty Shi
+// @author: Madeline Huberth
+// @author: Ge Wang
 //
 // @date    Fall 2015
 //------------------------------------------------------------------------------

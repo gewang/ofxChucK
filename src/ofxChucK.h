@@ -16,6 +16,8 @@
 
 #include <string>
 #include "ofck.h"
+#include "ofck-entities.h"
+
 
 // forward reference
 class Chuck_System;

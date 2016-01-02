@@ -33,7 +33,8 @@ while( true )
 {
     // control location of dot
     512 + x.last() * 200 => dot.loc.x;
-    384 + y.last() * 200 => dot.loc.y;
+    384 + y.last() * 200 => dot.loc.y; 
+    // 384 => dot.loc.y;
     
     // <<< dot.loc >>>;
     // when there is a new graphics draw

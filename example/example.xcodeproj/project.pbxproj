@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1888C6574EACFB4FE1D50B44 /* ofxChucK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F26BFC8326F2ECD83C5401B6 /* ofxChucK.cpp */; };
+		8692FDA91C2FC2BB00DFD708 /* ofck-entities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8692FDA71C2FC2BB00DFD708 /* ofck-entities.cpp */; };
 		86A09AAC1C0AB8C8008F2165 /* ofck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86A09AAA1C0AB8C8008F2165 /* ofck.cpp */; };
 		86E68E621BF7FFF5007564C5 /* chuck.y in Sources */ = {isa = PBXBuildFile; fileRef = 86E68DDA1BF7FFF5007564C5 /* chuck.y */; };
 		86E68E631BF7FFF5007564C5 /* chuck_absyn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E68DDB1BF7FFF5007564C5 /* chuck_absyn.cpp */; };
@@ -138,6 +139,8 @@
 /* Begin PBXFileReference section */
 		206545651015A6DA306A9A3B /* ofxChucK.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxChucK.h; path = ../../../addons/ofxChucK/src/ofxChucK.h; sourceTree = SOURCE_ROOT; };
 		86314F741C13AA0600554BAD /* x-vector3d.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "x-vector3d.h"; path = "../src/x-vector3d.h"; sourceTree = "<group>"; };
+		8692FDA71C2FC2BB00DFD708 /* ofck-entities.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "ofck-entities.cpp"; path = "../src/ofck-entities.cpp"; sourceTree = "<group>"; };
+		8692FDA81C2FC2BB00DFD708 /* ofck-entities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ofck-entities.h"; path = "../src/ofck-entities.h"; sourceTree = "<group>"; };
 		86A09AAA1C0AB8C8008F2165 /* ofck.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofck.cpp; path = ../src/ofck.cpp; sourceTree = "<group>"; };
 		86A09AAB1C0AB8C8008F2165 /* ofck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofck.h; path = ../src/ofck.h; sourceTree = "<group>"; };
 		86E68DD91BF7FFF5007564C5 /* chuck.lex */ = {isa = PBXFileReference; explicitFileType = sourcecode.lex; fileEncoding = 4; path = chuck.lex; sourceTree = "<group>"; };
@@ -503,10 +506,12 @@
 		F77AFC5DE20591990AE42D2E /* src */ = {
 			isa = PBXGroup;
 			children = (
-				86A09AAA1C0AB8C8008F2165 /* ofck.cpp */,
-				86A09AAB1C0AB8C8008F2165 /* ofck.h */,
-				F26BFC8326F2ECD83C5401B6 /* ofxChucK.cpp */,
 				206545651015A6DA306A9A3B /* ofxChucK.h */,
+				F26BFC8326F2ECD83C5401B6 /* ofxChucK.cpp */,
+				86A09AAB1C0AB8C8008F2165 /* ofck.h */,
+				86A09AAA1C0AB8C8008F2165 /* ofck.cpp */,
+				8692FDA81C2FC2BB00DFD708 /* ofck-entities.h */,
+				8692FDA71C2FC2BB00DFD708 /* ofck-entities.cpp */,
 				86314F741C13AA0600554BAD /* x-vector3d.h */,
 			);
 			name = src;
@@ -629,6 +634,7 @@
 				86E68E781BF7FFF5007564C5 /* chuck_table.cpp in Sources */,
 				86E68E711BF7FFF5007564C5 /* chuck_otf.cpp in Sources */,
 				86E68E681BF7FFF5007564C5 /* chuck_emit.cpp in Sources */,
+				8692FDA91C2FC2BB00DFD708 /* ofck-entities.cpp in Sources */,
 				86E68E991BF7FFF5007564C5 /* util_console.cpp in Sources */,
 				1888C6574EACFB4FE1D50B44 /* ofxChucK.cpp in Sources */,
 				86E68E7C1BF7FFF5007564C5 /* chuck_vm.cpp in Sources */,
