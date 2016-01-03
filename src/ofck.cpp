@@ -54,6 +54,8 @@ CK_DLL_SFUN(vr_setVec3);
 CK_DLL_SFUN(vr_getVec3);
 CK_DLL_SFUN(vr_setVec4);
 CK_DLL_SFUN(vr_getVec4);
+CK_DLL_SFUN(vr_setFOV);
+CK_DLL_SFUN(vr_getFOV);
 CK_DLL_SFUN(vr_displaySync);
 
 
@@ -108,7 +110,7 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
     // begin the class definition
     QUERY->begin_class(QUERY, "VR", "Object");
     {
-        // VRObject VR.object(name) // retrive objects
+        // VRObject VR.object(name) // retrieve objects
         QUERY->add_sfun(QUERY, vr_getEntity, "VREntity", "getEntity");
         // name of object to retrieve
         QUERY->add_arg(QUERY, "string", "name");
@@ -169,10 +171,18 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
         QUERY->add_arg(QUERY, "vec4", "value");
         
         // vec4 VR.getVec4(key,value) // set
-        QUERY->add_sfun(QUERY, vr_getString, "vec4", "getVec4");
+        QUERY->add_sfun(QUERY, vr_getVec4, "vec4", "getVec4");
         // name of object to retrieve
-        QUERY->add_arg(QUERY, "string", "key");
+        QUERY->add_arg(QUERY, "vec4", "key");
         
+        // float VR.fov()
+        QUERY->add_sfun(QUERY, vr_setFOV, "float", "fov");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "float", "value");
+        
+        // float VR.fov()
+        QUERY->add_sfun(QUERY, vr_getFOV, "float", "fov");
+
         // Event VR.displaySync // event for display
         QUERY->add_sfun(QUERY, vr_displaySync, "Event", "displaySync");
     }
@@ -195,12 +205,12 @@ error:
 //------------------------------------------------------------------------------
 // VREntity chuck bindings
 //------------------------------------------------------------------------------
-CK_DLL_CTOR(vrentity_ctor)
+CK_DLL_CTOR( vrentity_ctor )
 {
     // nothing for now
 }
 
-CK_DLL_DTOR(vrentity_dtor)
+CK_DLL_DTOR( vrentity_dtor )
 {
     // nothing for now
 }
@@ -208,7 +218,38 @@ CK_DLL_DTOR(vrentity_dtor)
 //CK_DLL_SFUN(vrentity_addEntity);
 //CK_DLL_SFUN(vrentity_removeEntity);
 
-CK_DLL_SFUN( vr_getEntity)
+
+
+
+//------------------------------------------------------------------------------
+// VRCamera chuck bindings
+//------------------------------------------------------------------------------
+CK_DLL_CTOR( vrcamera_ctor )
+{
+    // nothing for now
+}
+
+CK_DLL_DTOR( vrcamera_dtor )
+{
+    // nothing for now
+}
+
+CK_DLL_MFUN( vrcamera_fov )
+{
+    t_CKFLOAT value = GET_NEXT_FLOAT(ARGS);
+}
+
+CK_DLL_MFUN( vrcamera_lookAt )
+{
+    t_CKVEC3 value = GET_NEXT_VEC3(ARGS);
+}
+
+CK_DLL_MFUN( vrcamera_up )
+{
+    t_CKVEC3 value = GET_NEXT_VEC3(ARGS);
+}
+
+CK_DLL_SFUN( vr_getEntity )
 {
     // get the argument
     std::string key = GET_NEXT_STRING(ARGS)->str;
@@ -306,6 +347,16 @@ CK_DLL_SFUN( vr_getVec4 )
     RETURN->v_vec4 = db->getVec4(key);
 }
 
+// float VR.fov( float )
+CK_DLL_SFUN( vr_setFOV )
+{
+}
+
+// float VR.fov()
+CK_DLL_SFUN( vr_getFOV )
+{
+}
+
 CK_DLL_SFUN( vr_setString )
 {
     std::string key = GET_NEXT_STRING(ARGS)->str;
@@ -367,7 +418,10 @@ OFCKDB::OFCKDB()
 //------------------------------------------------------------------------------
 t_CKINT OFCKDB::setInt( const std::string & key, t_CKINT value )
 {
+    // associate
     string2int[key] = value;
+    // return
+    return value;
 }
 
 
@@ -399,7 +453,10 @@ t_CKINT OFCKDB::getInt( const std::string & key )
 //------------------------------------------------------------------------------
 t_CKFLOAT OFCKDB::setFloat( const std::string & key, t_CKFLOAT value )
 {
+    // associate
     string2float[key] = value;
+    // return
+    return value;
 }
 
 
@@ -431,7 +488,10 @@ t_CKFLOAT OFCKDB::getFloat( const std::string & key )
 //------------------------------------------------------------------------------
 t_CKVEC3 OFCKDB::setVec3( const std::string & key, t_CKVEC3 value )
 {
+    // associate
     string2vec3[key] = value;
+    // return
+    return value;
 }
 
 
@@ -467,7 +527,10 @@ t_CKVEC3 OFCKDB::getVec3( const std::string & key )
 //------------------------------------------------------------------------------
 t_CKVEC4 OFCKDB::setVec4( const std::string & key, t_CKVEC4 value )
 {
+    // associate
     string2vec4[key] = value;
+    // return
+    return value;
 }
 
 
@@ -525,7 +588,10 @@ std::string OFCKDB::getString( const std::string & key )
 //------------------------------------------------------------------------------
 VREntity * OFCKDB::setObject( const string & key, VREntity * e )
 {
+    // associate
     string2entity[key] = e;
+    // return
+    return e;
 }
 
 
@@ -557,7 +623,10 @@ VREntity * OFCKDB::getObject( const std::string & key )
 //------------------------------------------------------------------------------
 ofImage * OFCKDB::setImage( const string & key, ofImage * image )
 {
+    // associate it
     string2image[key] = image;
+    // return
+    return image;
 }
 
 
@@ -614,6 +683,42 @@ ofImage * OFCKDB::getImage( const std::string & key )
 
 
 //------------------------------------------------------------------------------
+// name: setCamera()
+// desc: set camera
+//------------------------------------------------------------------------------
+ofCamera * OFCKDB::setCamera( const string & key, ofCamera * cam )
+{
+    // map
+    string2camera[key] = cam;
+    
+    // return
+    return cam;
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: getCamera()
+// desc: get camera associated with a key
+//------------------------------------------------------------------------------
+ofCamera * OFCKDB::getCamera( const std::string & key )
+{
+    // look for the key in the DB
+    if( string2camera.find(key) == string2camera.end() )
+    {
+        // not found
+        return NULL;
+    }
+    
+    // return the value
+    return string2camera[key];
+}
+
+
+
+
+//------------------------------------------------------------------------------
 // name: VREntity()
 // desc: constructor
 //------------------------------------------------------------------------------
@@ -661,13 +766,13 @@ void VREntity::syncFromChucK()
     // check
     if( !m_chuckObject )
         return;
-    
+
     // get them from check
     t_CKVEC3 LOC = OBJ_MEMBER_VEC3(m_chuckObject, vrentity_offset_location);
     t_CKVEC3 ORI = OBJ_MEMBER_VEC3(m_chuckObject, vrentity_offset_rotation);
     t_CKVEC3 SCA = OBJ_MEMBER_VEC3(m_chuckObject, vrentity_offset_scaling);
     t_CKVEC4 RGBA = OBJ_MEMBER_VEC4(m_chuckObject, vrentity_offset_rgba);
-    
+
     // copy
     this->loc.set( LOC.x, LOC.y, LOC.z );
     this->ori.set( ORI.x, ORI.y, ORI.z );

@@ -132,6 +132,10 @@ public:
     ofImage * loadImage( const std::string & key, const std::string & name );
     // get an image associated with a key
     ofImage * getImage( const std::string & key );
+    // set camera associated with a key
+    ofCamera * setCamera( const std::string & key, ofCamera * cam );
+    // get a camera associated with a key
+    ofCamera * getCamera( const std::string & key );
     
 public:
     // instance
@@ -160,6 +164,8 @@ public:
     std::map<std::string, VREntity *> string2entity;
     // string to image map
     std::map<std::string, ofImage *> string2image;
+    // string to entity map
+    std::map<std::string, ofCamera *> string2camera;
 
     // display sync event is broadcast right before each new graphics frame
     Chuck_Event displaySync;
