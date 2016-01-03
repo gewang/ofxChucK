@@ -13,6 +13,7 @@
 #define __OF_CK_ENTITIES_H__
 
 #include "ofck.h"
+#include "ofMain.h"
 
 
 
@@ -28,12 +29,24 @@ public:
     VRFlare();
     // destructor
     ~VRFlare();
+    
+public:
+    // set image for drawing
+    void setImage( ofImage * imageRef );
+    // set image for drawing by name (via OFCKDB)
+    void setImage( const std::string & key );
 
 public:
     // update
     void update( double dt );
     // render
     void render();
+
+protected:
+    // reference to image
+    ofImage * m_imageRef;
+    // blend mode
+    ofBlendMode m_blendMode;
 };
 
 

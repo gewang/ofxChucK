@@ -17,7 +17,6 @@
 #include "chuck_vm.h"
 #include "chuck_compile.h"
 #include "ofxChucK.h"
-#include "ofMain.h"
 
 // general includes
 #include <stdio.h>
@@ -552,41 +551,63 @@ VREntity * OFCKDB::getObject( const std::string & key )
 
 
 
-// static instantiation
-float XForm::screenWidth = 1024;
-float XForm::screenHeight = 768;
-float XForm::aspectRatio = XForm::screenWidth / XForm::screenHeight;
-float XForm::normalizedWidth = 2;
-float XForm::scaling = XForm::screenWidth / XForm::normalizedWidth;
-
-
-
-
 //------------------------------------------------------------------------------
-// name: map()
-// desc: map from OF coordinate (0,0) top left to centered normalized
-// (normalized height is implied from aspect ratio and width)
+// name: setImage()
+// desc: map image by name
 //------------------------------------------------------------------------------
-void XForm::mapPush( float screenWidth, float screenHeight, float normalizedWidth )
+ofImage * OFCKDB::setImage( const string & key, ofImage * image )
 {
-    // remember width
-    screenWidth = screenWidth;
-    // remember height
-    screenHeight = screenHeight;
-    // compute aspect ratio
-    aspectRatio = screenWidth / screenHeight;
-    // save normalized width
-    normalizedWidth = normalizedWidth;
-    // compute width ratio
-    scaling = normalizedWidth / screenWidth;
+    string2image[key] = image;
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: loadImage()
+// desc: map image by name
+//------------------------------------------------------------------------------
+ofImage * OFCKDB::loadImage( const string & key, const string & name )
+{
+    // instantiate image
+    ofImage * image = new ofImage();
+    // load image
+    if( !image->load( name ) )
+    {
+        // log
+        cerr << "[ofck]: cannot load image: '" << name << "'" << endl;
+        // clean up
+        goto error;
+    }
+
+    // associate image
+    return setImage( key, image );
+
+error:
+    // delete
+    delete image;
+    // done
+    return NULL;
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: getImage()
+// desc: get an image associated with a key
+//------------------------------------------------------------------------------
+ofImage * OFCKDB::getImage( const std::string & key )
+{
+    // look for the key in the DB
+    if( string2image.find(key) == string2image.end() )
+    {
+        // not found
+        return NULL;
+    }
     
-    // flip
-    ofSetOrientation(OF_ORIENTATION_DEFAULT, false);
-    
-    // re-center
-    ofTranslate( -screenWidth / 2, -screenHeight / 2, 0 );
-    // re-scale
-    ofScale( scaling, -scaling, scaling );
+    // return the value
+    return string2image[key];
 }
 
 
@@ -651,8 +672,8 @@ void VREntity::syncFromChucK()
     this->loc.set( LOC.x, LOC.y, LOC.z );
     this->ori.set( ORI.x, ORI.y, ORI.z );
     this->sca.set( SCA.x, SCA.y, SCA.z );
-    this->col.set( RGBA.x, RGBA.y, RGBA.z );
-    this->alpha = RGBA.w;
+    this->col.set( RGBA.x*255, RGBA.y*255, RGBA.z*255 );
+    this->alpha = RGBA.w*255;
 }
 
 
@@ -688,10 +709,10 @@ bool VREntity::initChucKSideObject()
     OBJ_MEMBER_VEC3(m_chuckObject,vrentity_offset_scaling).z = this->sca.z;
 
     // initialize color
-    OBJ_MEMBER_VEC4(m_chuckObject,vrentity_offset_rgba).x = this->col.x;
-    OBJ_MEMBER_VEC4(m_chuckObject,vrentity_offset_rgba).y = this->col.y;
-    OBJ_MEMBER_VEC4(m_chuckObject,vrentity_offset_rgba).z = this->col.z;
-    OBJ_MEMBER_VEC4(m_chuckObject,vrentity_offset_rgba).w = this->alpha;
+    OBJ_MEMBER_VEC4(m_chuckObject,vrentity_offset_rgba).x = this->col.x / 255;
+    OBJ_MEMBER_VEC4(m_chuckObject,vrentity_offset_rgba).y = this->col.y / 255;
+    OBJ_MEMBER_VEC4(m_chuckObject,vrentity_offset_rgba).z = this->col.z / 255;
+    OBJ_MEMBER_VEC4(m_chuckObject,vrentity_offset_rgba).w = this->alpha / 255;
 
     // done
     return true;

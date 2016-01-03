@@ -8,7 +8,7 @@
 // desc: constructor
 //------------------------------------------------------------------------------
 VRDotEntity::VRDotEntity()
-: sphere( 100, 10 )
+: sphere( 1, 10 )
 {}
 
 
@@ -24,27 +24,17 @@ void VRDotEntity::render()
     sphere.draw();
 }
 
-//VirChucK Reality
-//VCKR
-//
-//Chutual Reality
-//CKVR
-//
-//ChVRcK
-//VirChuR
-//VReCK
 
 
 
-
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------
+// name: setup()
+// desc: set up the app
+//------------------------------------------------------------------------------
 void ofApp::setup()
 {
     ofSetVerticalSync( true );
     ofBackground(0, 0, 0);
-    
-    // flip y axis globally
-    ofSetOrientation( OF_ORIENTATION_DEFAULT, false );
 
     // get singleton
     chuck = TheChucK::instance();
@@ -61,10 +51,13 @@ void ofApp::setup()
     
     // compile and run another file
     chuck->compileFile( "/Users/ge/research/oF/of_v0.9.0_osx_release/addons/ofxChucK/example/ck/thedot.ck", "" );
-
-    // compile and run another file
-    // chuck->compileFile( "/Users/ge/research/oF/of_v0.9.0_osx_release/addons/ofxChucK/example/ck/c.ck", "" );
     
+    // set up light
+    m_light = new ofLight();
+    m_light->setDiffuseColor( ofColor(100, 255, 100) );
+    m_light->enable();
+    m_light->setGlobalPosition( 1000, 1000, 1000 );
+
     // setup the sound stream...
     soundStream.setup( this,
                        MY_CHANNELS,     // output
@@ -72,39 +65,16 @@ void ofApp::setup()
                        MY_SRATE,        // sample rate
                        MY_BUFFERSIZE,   // buffer size
                        MY_NUMBUFFERS ); // num buffer
-    
-    // set location
-    w = 250;
-    h = 200;
-
-    // set pixel format
-    m_colorPixels.allocate( w,h,OF_PIXELS_RGB );
-    // allocate texture
-    m_texColor.allocate( m_colorPixels );
-
-    
-    // color pixels, use x and y to control red and green
-    for (int y = 0; y < h; y++){
-        for (int x = 0; x < w; x++){
-            m_colorPixels.setColor(x,y,ofColor(x,y,0));
-        }
-    }
-    
-    // set up camera
-    m_camera.setupPerspective( false, 90, .1, 300 );
-    // set up sphere
-    // m_sphere = new ofSpherePrimitive( 100, 50 );
-    // m_sphere->setRadius( 100 );
-    
-    m_light = new ofLight();
-    m_light->setDiffuseColor( ofColor(100, 255, 100) );
-    m_light->enable();
-    m_light->setGlobalPosition( 100, 100, 100 );
-    
 }
 
-//--------------------------------------------------------------
-void ofApp::audioIn(float * input, int bufferSize, int nChannels)
+
+
+
+//------------------------------------------------------------------------------
+// name: audioIn()
+// desc: audio input callback
+//------------------------------------------------------------------------------
+void ofApp::audioIn( float * input, int bufferSize, int nChannels )
 {
     assert( bufferSize == MY_BUFFERSIZE );
     assert( nChannels == MY_CHANNELS );
@@ -112,8 +82,13 @@ void ofApp::audioIn(float * input, int bufferSize, int nChannels)
 }
 
 
-//--------------------------------------------------------------
-void ofApp::audioOut(float * output, int bufferSize, int nChannels)
+
+
+//------------------------------------------------------------------------------
+// name: audioOut()
+// desc: audio output callback
+//------------------------------------------------------------------------------
+void ofApp::audioOut( float * output, int bufferSize, int nChannels )
 {
     assert( bufferSize == MY_BUFFERSIZE );
     assert( nChannels == MY_CHANNELS );
@@ -122,108 +97,182 @@ void ofApp::audioOut(float * output, int bufferSize, int nChannels)
 }
 
 
-//--------------------------------------------------------------
+
+
+//------------------------------------------------------------------------------
+// name: update()
+// desc: update the system
+//------------------------------------------------------------------------------
 void ofApp::update()
 {
     // set background
-    ofBackground( 0, 0, 0 );
+    ofBackground( 1, 1, 1 );
 
-    // get x and y from chuck
-    float x = chuck->db()->getFloat("color-x");
-    float y = chuck->db()->getFloat("color-y");
-    
-    // scerr << "x: " << x << " y: " << y << endl;
-
-    float pct = (float)x / (float)ofGetWidth();
-    for (int y = 0; y < h; y++){
-        for (int x = 0; x < w; x++){
-            m_colorPixels.setColor(x,y,ofColor(x,y,pct*255));
-        }
-    }
-    // finally, load those pixels into the texture
-    m_texColor.loadData(m_colorPixels);
-    
-    // m_dot->loc.set( ofGetWindowWidth()/2, ofGetWindowHeight()/2, 0 );
-    m_dot->updateAll(1.0/60);
-    // cerr << ofGetWindowWidth()/2 << " " << ofGetWindowHeight()/2 << endl;
-    // cerr << m_dot->loc.x << " " << m_dot->loc.y << " " << m_dot->loc.z << endl;
-    // cerr << m_dot->col.x << " " << m_dot->col.y << " " << m_dot->col.z << endl;
-    // cerr << " " << m_dot->alpha << endl;
+    // update
+    m_dot->updateAll( 1.0/60 );
     
     // trigger displaySync to chuck
     chuck->displaySync();
 }
 
-//--------------------------------------------------------------
+
+
+
+//------------------------------------------------------------------------------
+// name: draw()
+// desc: draw the scene
+//------------------------------------------------------------------------------
 void ofApp::draw()
 {
+    // enable depth test
+    ofEnableDepthTest();
+    // set fov
+    m_camera.setFov( 80 );
+    // set position
+    m_camera.setPosition( ofVec3f(0,0,10) );
+    // look at
+    m_camera.lookAt( ofVec3f(0,0,0), ofVec3f(0,1,0) );
+
+    // start camera
     m_camera.begin();
+    // render light
     m_light->enable();
-    //texGray.draw(100,100,w,h);
-    // m_texColor.draw(350,300,w,h);
-    
-    // ofTranslate( ofGetWindowWidth()/2, ofGetWindowHeight()/2, 0 );
-    // m_sphere->draw();
+
+    // blend
+    ofEnableBlendMode( OF_BLENDMODE_ALPHA );
+    // render the dot entity
     m_dot->renderAll();
+    // disable
+    ofDisableBlendMode();
+    
+    // undo light
     m_light->disable();
+    
+    // done with camera
     m_camera.end();
 }
 
-//--------------------------------------------------------------
-void ofApp::keyPressed(int key){
 
+
+
+//------------------------------------------------------------------------------
+// name: keyPressed()
+// desc: on key pressed
+//------------------------------------------------------------------------------
+void ofApp::keyPressed( int key )
+{
 }
 
-//--------------------------------------------------------------
-void ofApp::keyReleased(int key){
 
+
+
+//------------------------------------------------------------------------------
+// name: keyRelease()
+// desc: on key released
+//------------------------------------------------------------------------------
+void ofApp::keyReleased( int key )
+{
 }
 
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y )
+
+
+
+//------------------------------------------------------------------------------
+// name: mouseMoved()
+// desc: on mouse moved
+//------------------------------------------------------------------------------
+void ofApp::mouseMoved( int x, int y )
 {
     chuck->db()->setFloat( "mouse-x", x );
     chuck->db()->setFloat( "mouse-y", y );
 }
 
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
 
+
+
+//------------------------------------------------------------------------------
+// name: mouseDragged()
+// desc: on mouse dragged
+//------------------------------------------------------------------------------
+void ofApp::mouseDragged( int x, int y, int button )
+{
 }
 
-//--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
 
+
+
+//------------------------------------------------------------------------------
+// name: mousePressed()
+// desc: on mouse pressed
+//------------------------------------------------------------------------------
+void ofApp::mousePressed( int x, int y, int button )
+{
 }
 
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
 
+
+
+//------------------------------------------------------------------------------
+// name: mouseReleased()
+// desc: on mouse released
+//------------------------------------------------------------------------------
+void ofApp::mouseReleased( int x, int y, int button )
+{
 }
 
-//--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y){
 
+
+
+//------------------------------------------------------------------------------
+// name: mouseEntered()
+// desc: on mouse entered
+//------------------------------------------------------------------------------
+void ofApp::mouseEntered( int x, int y )
+{
 }
 
-//--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y){
 
+
+
+//------------------------------------------------------------------------------
+// name: mouseExited()
+// desc: on mouse exited
+//------------------------------------------------------------------------------
+void ofApp::mouseExited( int x, int y )
+{
 }
 
-//--------------------------------------------------------------
-void ofApp::windowResized(int w, int h)
+
+
+
+//------------------------------------------------------------------------------
+// name: windowResized()
+// desc: on window resized
+//------------------------------------------------------------------------------
+void ofApp::windowResized( int w, int h )
 {
     // log
     cerr << "window resized w: " << w << " h: " << h << endl;
 }
 
-//--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
 
+
+
+//------------------------------------------------------------------------------
+// name: gotMessage()
+// desc: on receive of message
+//------------------------------------------------------------------------------
+void ofApp::gotMessage( ofMessage msg )
+{
 }
 
-//--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
 
+
+
+//------------------------------------------------------------------------------
+// name: dragEvent()
+// desc: on drag event
+//------------------------------------------------------------------------------
+void ofApp::dragEvent( ofDragInfo dragInfo )
+{
 }

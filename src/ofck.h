@@ -15,37 +15,11 @@
 
 #include "chuck_dl.h"
 #include "x-vector3d.h"
+#include "ofMain.h"
 
 
 // the query function for ofck
 DLL_QUERY ofck_query( Chuck_DL_Query * QUERY );
-
-
-
-
-//------------------------------------------------------------------------------
-// nane: class XForm
-// desc: normalizing transform class
-//------------------------------------------------------------------------------
-class XForm
-{
-public:
-    // map from OF coordinate (0,0) top left to centered normalized
-    // (normalized height is implied from aspect ratio and width)
-    static void mapPush( float screenWidth, float screenHeight,
-                         float normalizedWidth = 2 );
-    // undo map push
-    static void mapPop( float screenWidth, float screenHeight,
-                        float normalizedWidth = 2 );
-
-private:
-    // mapping
-    static float screenWidth;
-    static float screenHeight;
-    static float aspectRatio;
-    static float normalizedWidth;
-    static float scaling;
-};
 
 
 
@@ -152,6 +126,12 @@ public:
     VREntity * setObject( const std::string & key, VREntity * e );
     // get an object associated with a key
     VREntity * getObject( const std::string & key );
+    // associate an image with a key
+    ofImage * setImage( const std::string & key, ofImage * image );
+    // load image and associate it with a key
+    ofImage * loadImage( const std::string & key, const std::string & name );
+    // get an image associated with a key
+    ofImage * getImage( const std::string & key );
     
 public:
     // instance
@@ -178,6 +158,8 @@ public:
     std::map<std::string, std::string> string2string;
     // string to entity map
     std::map<std::string, VREntity *> string2entity;
+    // string to image map
+    std::map<std::string, ofImage *> string2image;
 
     // display sync event is broadcast right before each new graphics frame
     Chuck_Event displaySync;
