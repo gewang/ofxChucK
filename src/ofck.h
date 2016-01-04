@@ -81,12 +81,19 @@ protected:
 protected:
     // child nodes in the scene graph
     std::vector<VREntity *> children;
+    
+protected:
+    // key-value map
+    std::map<std::string, std::string> settings;
+    // associate a string value with a key
+    std::string setString( const std::string & key, const std::string & value );
+    // get a vec3 value associated with a key
+    std::string getString( const std::string & key );
 
 protected:
     // how chuck sees this entity (chuck type: VREntity)
     Chuck_Object * m_chuckObject;
 };
-
 
 
 
@@ -173,6 +180,18 @@ public:
     CBufferSimple * m_eventBuffer;
 };
 
+
+
+
+//------------------------------------------------------------------------------
+// name: class VR
+// desc: top-level VR routines
+//------------------------------------------------------------------------------
+class VR
+{
+public:
+    
+};
 
 
 

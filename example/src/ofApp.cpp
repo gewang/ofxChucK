@@ -50,7 +50,7 @@ void ofApp::setup()
     m_dot->alpha = 255;
     
     // compile and run another file
-    chuck->compileFile( "/Users/ge/research/oF/of_v0.9.0_osx_release/addons/ofxChucK/example/ck/thedot.ck", "" );
+    chuck->compileFile( "/Users/ge/research/oF/of_v0.9.0_osx_release/addons/ofxChucK/example/ck/dot-circle.ck", "" );
     
     // set up light
     m_light = new ofLight();

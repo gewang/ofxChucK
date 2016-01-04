@@ -41,6 +41,8 @@ CK_DLL_MFUN(vrentity_getRGBA);
 CK_DLL_MFUN(vrentity_setRGBA);
 CK_DLL_MFUN(vrentity_addEntity);
 CK_DLL_MFUN(vrentity_removeEntity);
+CK_DLL_MFUN(vrentity_setString);
+CK_DLL_MFUN(vrentity_getString);
 
 // VR
 CK_DLL_SFUN(vr_getEntity);
@@ -57,6 +59,7 @@ CK_DLL_SFUN(vr_getVec4);
 CK_DLL_SFUN(vr_setFOV);
 CK_DLL_SFUN(vr_getFOV);
 CK_DLL_SFUN(vr_displaySync);
+CK_DLL_SFUN(vr_makeEntity);
 
 
 // internal data
@@ -103,6 +106,18 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
         // add .rgba
         vrentity_offset_rgba = QUERY->add_mvar( QUERY, "vec4", "rgba", FALSE );
         if( vrentity_offset_rgba == CK_INVALID_OFFSET ) goto error;
+        
+        // string VREntity.setString(key,value) // set
+        QUERY->add_mfun(QUERY, vrentity_setString, "string", "setString");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "string", "key");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "string", "value");
+        
+        // string VR.getString(key,value) // set
+        QUERY->add_mfun(QUERY, vrentity_getString, "string", "getString");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "string", "key");
     }
     // end the class definition
     QUERY->end_class(QUERY);
@@ -139,8 +154,8 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
         // name of object to retrieve
         QUERY->add_arg(QUERY, "string", "key");
         
-        // float VR.setString(key,value) // set
-        QUERY->add_sfun(QUERY, vr_setFloat, "string", "setString");
+        // string VR.setString(key,value) // set
+        QUERY->add_sfun(QUERY, vr_setString, "string", "setString");
         // name of object to retrieve
         QUERY->add_arg(QUERY, "string", "key");
         // name of object to retrieve
@@ -185,6 +200,9 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
 
         // Event VR.displaySync // event for display
         QUERY->add_sfun(QUERY, vr_displaySync, "Event", "displaySync");
+
+        // VREntity VR.makeEntity( type, name ) // event for display
+        // QUERY->add_sfun(QUERY, vr_makeEntity, "VREntity", "makeEntity");
     }
     // end the class definition
     QUERY->end_class(QUERY);
@@ -218,7 +236,36 @@ CK_DLL_DTOR( vrentity_dtor )
 //CK_DLL_SFUN(vrentity_addEntity);
 //CK_DLL_SFUN(vrentity_removeEntity);
 
+CK_DLL_MFUN( vrentity_setString )
+{
+    std::string key = GET_NEXT_STRING(ARGS)->str;
+    Chuck_String * value = GET_NEXT_STRING(ARGS);
+    
+    // get the DB
+    OFCKDB * db = OFCKDB::instance();
+    // insert the key value pair, possibly overwriting
+    db->string2string[key] = value->str;
+    // return the value
+    RETURN->v_string = value;
+}
 
+CK_DLL_MFUN( vrentity_getString )
+{
+    // get the argument
+    std::string key = GET_NEXT_STRING(ARGS)->str;
+    // get the DB
+    OFCKDB * db = OFCKDB::instance();
+    // look for the key in the DB
+    if( db->string2string.find(key) != db->string2string.end() )
+    {
+        // chuck string TODO: verify memory
+        Chuck_String * str = (Chuck_String *)instantiate_and_initialize_object( &t_string, NULL );
+        // set the string value
+        str->str = db->getString(key);
+        // return the value
+        RETURN->v_string = str;
+    }
+}
 
 
 //------------------------------------------------------------------------------
@@ -566,6 +613,10 @@ t_CKVEC4 OFCKDB::getVec4( const std::string & key )
 //------------------------------------------------------------------------------
 std::string OFCKDB::setString( const std::string & key, const std::string & value )
 {
+    // associate
+    string2string[key] = value;
+    // return
+    return value;
 }
 
 
@@ -577,6 +628,15 @@ std::string OFCKDB::setString( const std::string & key, const std::string & valu
 //------------------------------------------------------------------------------
 std::string OFCKDB::getString( const std::string & key )
 {
+    // look for the key in the DB
+    if( string2string.find(key) == string2string.end() )
+    {
+        // not found
+        return "";
+    }
+    
+    // return the value
+    return string2string[key];
 }
 
 
@@ -925,4 +985,39 @@ void VREntity::applyTransforms()
 void VREntity::popTransforms()
 {
     ofPopMatrix();
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: setString()
+// desc: associate a string value with a key
+//------------------------------------------------------------------------------
+std::string VREntity::setString( const std::string & key, const std::string & value )
+{
+    // associate
+    settings[key] = value;
+    // return
+    return value;
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: getString()
+// desc: get a vec3 value associated with a key
+//------------------------------------------------------------------------------
+std::string VREntity::getString( const std::string & key )
+{
+    // look for the key in the DB
+    if( settings.find(key) == settings.end() )
+    {
+        // not found
+        return "";
+    }
+    
+    // return the value
+    return settings[key];
 }

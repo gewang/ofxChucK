@@ -76,7 +76,8 @@ void VRFlare::setImage( const string & key )
 //------------------------------------------------------------------------------
 void VRFlare::update( double dt )
 {
-    // nothing for now
+    // look up and set image ref
+    setImage( getString("VRFlare.imageName") );
 }
 
 
