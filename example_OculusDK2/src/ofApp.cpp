@@ -40,15 +40,6 @@ void ofApp::setup()
     oculusRift.setup();
     oculusRift.fullscreenOnRift();
     
-    // needed for programmable renderer -- 0.5.0.1 SDK no longer needed?
-    //ofViewport(ofGetNativeViewport());
-    
-    for(int i = 0; i < 80; i++){
-        DemoBox d;
-        demos.push_back(d);
-    }
-    setupBoxes();
-    
     if (ofIsGLProgrammableRenderer())
         bshader.load("Shaders_GL3/simple.vert", "Shaders_GL3/simple.frag");
     
@@ -56,9 +47,6 @@ void ofApp::setup()
     // sized images you want and still use them to texture your box
     // but we have to explicitly normalize our tex coords here
     ofEnableNormalizedTexCoords();
-    
-    // loads the OF logo from disk
-    ofLogo.loadImage("of.png");
     
     //enable mouse;
     cam.setAutoDistance(false);
@@ -115,57 +103,6 @@ void ofApp::update()
     // trigger displaySync to chuck
     chuck->displaySync();
     
-    
-    //--------------------------------------------------------------------------
-    // other demo boxes
-    //--------------------------------------------------------------------------
-    for(int i = 0; i < demos.size(); i++){
-        demos[i].floatPos.y = 4 * ofSignedNoise(ofGetElapsedTimef()/10.0,
-                                                demos[i].pos.x/1.0,
-                                                demos[i].pos.y/1.0,
-                                                demos[i].pos.z/1.0);
-        
-    }
-    
-    //--------------------------------------------------------------------------
-    // Overlay
-    //--------------------------------------------------------------------------
-    if(oculusRift.isSetup()){
-        ofRectangle viewport = oculusRift.getOculusViewport();
-        for(int i = 0; i < demos.size(); i++){
-            // mouse selection
-            float mouseDist = oculusRift.distanceFromMouse(demos[i].floatPos);
-            demos[i].bMouseOver = (mouseDist < 100);
-            
-            // gaze selection
-            ofVec3f screenPos = oculusRift.worldToScreen(demos[i].floatPos, true);
-            float gazeDist = ofDist(screenPos.x, screenPos.y,
-                                    viewport.getCenter().x, viewport.getCenter().y);
-            demos[i].bGazeOver = (gazeDist < 25);
-        }
-    }
-}
-
-//------------------------------------------------------------------------------
-void ofApp::setupBoxes() {
-    
-    for(int i = 0; i < demos.size(); i++) {
-        demos[i].color = ofFloatColor(ofRandom(1.0),
-                                      ofRandom(1.0),
-                                      ofRandom(1.0));
-        
-        demos[i].pos = ofVec3f(ofRandom(-8, 8),0,ofRandom(-8,8));
-        
-        demos[i].box = ofBoxPrimitive();
-        demos[i].box.set(ofRandom(0.2,0.8));
-        demos[i].box.enableTextures();
-        
-        demos[i].floatPos.x = demos[i].pos.x;
-        demos[i].floatPos.z = demos[i].pos.z;
-        
-        demos[i].bMouseOver = false;
-        demos[i].bGazeOver  = false;
-    }
 }
 
 //--------------------------------------------------------------
@@ -222,7 +159,7 @@ void ofApp::drawScene()
     ofSetColor(30);
     ofDrawGridPlane(12.0f, 8.0f, false );
     ofPopMatrix();
-
+    
     //--------------------------------------------------------------------------
     // Draw ChucK-controlled elements
     //--------------------------------------------------------------------------
@@ -242,37 +179,8 @@ void ofApp::drawScene()
     
     
     //--------------------------------------------------------------------------
-    // Draw demo boxes (not connected to chuck at this point)
-    //--------------------------------------------------------------------------
-    if(ofIsGLProgrammableRenderer()) bshader.begin();
-    ofLogo.getTextureReference().bind();
-    
-    for(int i = 0; i < demos.size(); i++){
-        ofPushMatrix();
-        ofTranslate(demos[i].floatPos);
-        
-        ofFloatColor col;
-        if (demos[i].bMouseOver)
-            col = ofColor::white;
-        else
-            col = demos[i].color;
-        
-        if(ofIsGLProgrammableRenderer()) {
-            bshader.setUniform3f("color", col.r, col.g, col.b);
-        } else {
-            ofSetColor(col);
-        }
-        
-        demos[i].box.draw();
-        
-        ofPopMatrix();
-    }
-    
-    ofLogo.getTextureReference().unbind();
-    if(ofIsGLProgrammableRenderer()) bshader.end();
-    
     //billboard and draw the mouse
-    
+    //--------------------------------------------------------------------------
     if(oculusRift.isSetup()){
         
         ofPushMatrix();
@@ -322,9 +230,6 @@ void ofApp::keyPressed(int key)
     }
     if(key == 'c'){
         oculusRift.recenterPose();
-    }
-    if(key == 'z'){
-        setupBoxes();
     }
     if(key == 'h'){
         ofHideCursor();

@@ -12,20 +12,6 @@
 
 
 //------------------------------------------------------------------------------
-// name: struct DemoBox
-// desc: a box for this demo
-//------------------------------------------------------------------------------
-typedef struct{
-    ofBoxPrimitive box;
-    ofFloatColor color;
-    ofVec3f pos;
-    ofVec3f floatPos;
-    bool bMouseOver;
-    bool bGazeOver;
-} DemoBox;
-
-
-//------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 class ofApp : public ofBaseApp
 {
@@ -38,8 +24,6 @@ public:
     void setup();
     void update();
     void draw();
-    
-    void setupBoxes();
     
     void drawScene();
     
@@ -58,12 +42,9 @@ public:
     
     ofxOculusDK2		oculusRift;
     
-    ofImage ofLogo; // the OF logo
-    ofLight light;
     ofEasyCam cam;
     bool showOverlay;
     
-    vector<DemoBox> demos;
     ofShader bshader;
     
     ofVec3f cursor2D;
@@ -90,8 +71,5 @@ public:
     // width and height
     int w, h;
     
-    // ofSpherePrimitive * m_sphere;
-    ofLight * m_light;
-//    VRDotEntity * m_dot;
     
 };
