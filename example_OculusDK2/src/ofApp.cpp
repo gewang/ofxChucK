@@ -1,40 +1,5 @@
 #include "ofApp.h"
 
-
-
-//------------------------------------------------------------------------------
-// name: VRDotEntity()
-// desc: constructor
-//------------------------------------------------------------------------------
-VRDotEntity::VRDotEntity()
-: sphere( 1, 5 )
-{}
-
-
-
-
-//------------------------------------------------------------------------------
-// name: render()
-// desc: draw the thing
-//------------------------------------------------------------------------------
-void VRDotEntity::render()
-{
-    // ofSetColor( 255 );
-    sphere.draw();
-}
-
-//VirChucK Reality
-//VCKR
-//
-//Chutual Reality
-//CKVR
-//
-//ChVRcK
-//VirChuR
-//VReCK
-
-
-
 //--------------------------------------------------------------
 void ofApp::setup()
 {
@@ -54,16 +19,8 @@ void ofApp::setup()
     // initialize (SHOULD HAPPEN BEFORE AUDIO STREAM STARTS)
     chuck->initialize( MY_SRATE, MY_BUFFERSIZE, MY_CHANNELS, 2, argv );
     
-    m_dot = new VRDotEntity();
-    chuck->db()->setObject( "dot", m_dot );
-    m_dot->col.setAll(255);
-    m_dot->alpha = 255;
-    
-    // compile and run another file
-    chuck->compileFile( ofToDataPath("../../ck/thedot.ck"), "" );
-    
-    // compile and run another file
-    chuck->compileFile( ofToDataPath("../../ck/c.ck"), "" );
+    // compile and run a file
+    chuck->compileFile( "ck/dot-circle.ck" );
     
     // setup the sound stream...
     soundStream.setup( this,
@@ -111,13 +68,6 @@ void ofApp::setup()
     // set camera y to user eye height
     cam.setGlobalPosition(0, oculusRift.getUserEyeHeight(), 3);
     
-    
-    m_light = new ofLight();
-    m_light->setDiffuseColor( ofColor(100, 255, 100) );
-    m_light->enable();
-    m_light->setGlobalPosition( 100, 100, 100 );
-    
-
 }
 
 //--------------------------------------------------------------
@@ -144,35 +94,31 @@ void ofApp::audioOut(float * output, int bufferSize, int nChannels)
 void ofApp::update()
 {
     // set background
-    ofBackground( 0 );
+    ofBackground( 1, 1, 1 );
     
-    // get x and y from chuck
-    float x = chuck->db()->getFloat("color-x");
-    float y = chuck->db()->getFloat("color-y");
+    // entity pointer
+    VREntity * e = NULL;
+
+    // db
+    OFCKDB * db = OFCKDB::instance();
     
-    // scerr << "x: " << x << " y: " << y << endl;
-    
-    // float pct = (float)x / (float)ofGetWidth();
-    // for (int y = 0; y < h; y++){
-    //     for (int x = 0; x < w; x++){
-    //         m_colorPixels.setColor(x,y,ofColor(x,y,pct*255));
-    //     }
-    // }
-    // finally, load those pixels into the texture
-    // m_texColor.loadData(m_colorPixels);
-    
-    // m_dot->loc.set( ofGetWindowWidth()/2, ofGetWindowHeight()/2, 0 );
-    m_dot->updateAll(1.0/60);
-    // cerr << ofGetWindowWidth()/2 << " " << ofGetWindowHeight()/2 << endl;
-    // cerr << m_dot->loc.x << " " << m_dot->loc.y << " " << m_dot->loc.z << endl;
-    // cerr << m_dot->col.x << " " << m_dot->col.y << " " << m_dot->col.z << endl;
-    // cerr << " " << m_dot->alpha << endl;
+    // draw list
+    map<string,VREntity *>::iterator i;
+    for( i = db->string2entity.begin(); i != db->string2entity.end(); i++ )
+    {
+        // get entity
+        e = i->second;
+        // draw it
+        e->updateAll(1/60.0f);
+    }
     
     // trigger displaySync to chuck
     chuck->displaySync();
     
-    //--------------------------------------------------------------------------
     
+    //--------------------------------------------------------------------------
+    // other demo boxes
+    //--------------------------------------------------------------------------
     for(int i = 0; i < demos.size(); i++){
         demos[i].floatPos.y = 4 * ofSignedNoise(ofGetElapsedTimef()/10.0,
                                                 demos[i].pos.x/1.0,
@@ -181,6 +127,9 @@ void ofApp::update()
         
     }
     
+    //--------------------------------------------------------------------------
+    // Overlay
+    //--------------------------------------------------------------------------
     if(oculusRift.isSetup()){
         ofRectangle viewport = oculusRift.getOculusViewport();
         for(int i = 0; i < demos.size(); i++){
@@ -197,6 +146,7 @@ void ofApp::update()
     }
 }
 
+//------------------------------------------------------------------------------
 void ofApp::setupBoxes() {
     
     for(int i = 0; i < demos.size(); i++) {
@@ -272,11 +222,30 @@ void ofApp::drawScene()
     ofSetColor(30);
     ofDrawGridPlane(12.0f, 8.0f, false );
     ofPopMatrix();
+
+    //--------------------------------------------------------------------------
+    // Draw ChucK-controlled elements
+    //--------------------------------------------------------------------------
+    // entity pointer
+    VREntity * e = NULL;
+    // db
+    OFCKDB * db = OFCKDB::instance();
+    // draw list
+    map<string,VREntity *>::iterator i;
+    for( i = db->string2entity.begin(); i != db->string2entity.end(); i++ )
+    {
+        // get entity
+        e = i->second;
+        // draw it
+        e->renderAll();
+    }
     
+    
+    //--------------------------------------------------------------------------
+    // Draw demo boxes (not connected to chuck at this point)
+    //--------------------------------------------------------------------------
     if(ofIsGLProgrammableRenderer()) bshader.begin();
     ofLogo.getTextureReference().bind();
-
-    m_dot->renderAll();
     
     for(int i = 0; i < demos.size(); i++){
         ofPushMatrix();
@@ -416,7 +385,8 @@ void ofApp::mouseExited(int x, int y){
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-
+    // log
+    cerr << "window resized w: " << w << " h: " << h << endl;
 }
 
 //--------------------------------------------------------------

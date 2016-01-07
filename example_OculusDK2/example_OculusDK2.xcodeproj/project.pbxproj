@@ -34,6 +34,7 @@
 		5767AB54CAF353ECCCC2F42F /* send.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B1CE2FCB9615EC86323BC3A /* send.c */; settings = {COMPILER_FLAGS = "-DHAVE_CONFIG_H"; }; };
 		5BDA79BCABE2EB9119AE83C2 /* ofck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D56ADA820B1EB0EF648B9C6 /* ofck.cpp */; };
 		5DA755D5180C396D3990EDFB /* chuck_oo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 82055F42CDB6AE64A113EB2E /* chuck_oo.cpp */; };
+		63A0B0721C3F052400C86099 /* ofck-entities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63A0B06F1C3F052400C86099 /* ofck-entities.cpp */; };
 		63B489C81C13BF5D002061D6 /* chuck.y in Sources */ = {isa = PBXBuildFile; fileRef = 63B489C71C13BF5D002061D6 /* chuck.y */; };
 		63B489C91C13BF84002061D6 /* chuck.lex in Sources */ = {isa = PBXBuildFile; fileRef = 63B489C61C13BF5D002061D6 /* chuck.lex */; };
 		63B489CC1C13C0B9002061D6 /* MultitouchSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B489CB1C13C0B9002061D6 /* MultitouchSupport.framework */; };
@@ -216,6 +217,9 @@
 		60D874BBFE0993711ECE3A31 /* chuck_type.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = chuck_type.cpp; path = ../../../addons/ofxChucK/libs/chuck/chuck_type.cpp; sourceTree = SOURCE_ROOT; };
 		62D5C385358B54D95076439B /* chuck_win32.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = chuck_win32.h; path = ../../../addons/ofxChucK/libs/chuck/chuck_win32.h; sourceTree = SOURCE_ROOT; };
 		62DE214B9515E8DAF304AE89 /* util_thread.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = util_thread.h; path = ../../../addons/ofxChucK/libs/chuck/util_thread.h; sourceTree = SOURCE_ROOT; };
+		63A0B06F1C3F052400C86099 /* ofck-entities.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "ofck-entities.cpp"; path = "../src/ofck-entities.cpp"; sourceTree = "<group>"; };
+		63A0B0701C3F052400C86099 /* ofck-entities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ofck-entities.h"; path = "../src/ofck-entities.h"; sourceTree = "<group>"; };
+		63A0B0711C3F052400C86099 /* x-vector3d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "x-vector3d.h"; path = "../src/x-vector3d.h"; sourceTree = "<group>"; };
 		63B489C61C13BF5D002061D6 /* chuck.lex */ = {isa = PBXFileReference; explicitFileType = sourcecode.lex; fileEncoding = 4; name = chuck.lex; path = ../libs/chuck/chuck.lex; sourceTree = "<group>"; };
 		63B489C71C13BF5D002061D6 /* chuck.y */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.yacc; name = chuck.y; path = ../libs/chuck/chuck.y; sourceTree = "<group>"; };
 		63B489CB1C13C0B9002061D6 /* MultitouchSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultitouchSupport.framework; path = System/Library/PrivateFrameworks/MultitouchSupport.framework; sourceTree = SDKROOT; };
@@ -716,6 +720,9 @@
 		F77AFC5DE20591990AE42D2E /* src */ = {
 			isa = PBXGroup;
 			children = (
+				63A0B06F1C3F052400C86099 /* ofck-entities.cpp */,
+				63A0B0701C3F052400C86099 /* ofck-entities.h */,
+				63A0B0711C3F052400C86099 /* x-vector3d.h */,
 				9D56ADA820B1EB0EF648B9C6 /* ofck.cpp */,
 				1298AB84CC064F33141C5A90 /* ofck.h */,
 				F26BFC8326F2ECD83C5401B6 /* ofxChucK.cpp */,
@@ -829,6 +836,7 @@
 				1888C6574EACFB4FE1D50B44 /* ofxChucK.cpp in Sources */,
 				EAD108C50990870D368340F4 /* chuck_absyn.cpp in Sources */,
 				CE67D10742EA3C3024094AD0 /* chuck_bbq.cpp in Sources */,
+				63A0B0721C3F052400C86099 /* ofck-entities.cpp in Sources */,
 				1440C8A067BAFEC39EAF0A2D /* chuck_compile.cpp in Sources */,
 				3EDD404081511D03CB6F6047 /* chuck_console.cpp in Sources */,
 				6C1C673AE28731969BC3EF95 /* chuck_dl.cpp in Sources */,
@@ -1268,6 +1276,7 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_51)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_52)",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_CFLAGS = "-D__MACOSX_CORE__";
 				PRODUCT_NAME = "$(TARGET_NAME)Debug";
 				USER_HEADER_SEARCH_PATHS = "\"$(OF_PATH)/libs/openssl/include\" $(OF_PATH)/addons/ofxChucK/libs";
@@ -1357,6 +1366,7 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_50)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_51)",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_CFLAGS = "-D__MACOSX_CORE__";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "\"$(OF_PATH)/libs/openssl/include\" $(OF_PATH)/addons/ofxChucK/libs";

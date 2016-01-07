@@ -24,23 +24,8 @@ typedef struct{
     bool bGazeOver;
 } DemoBox;
 
-//------------------------------------------------------------------------------
-// name: class VRDotEntity
-// desc: dot entity
-//------------------------------------------------------------------------------
-class VRDotEntity : public VREntity
-{
-public:
-    VRDotEntity();
-    virtual void render();
-    
-    ofSpherePrimitive sphere;
-};
-
 
 //------------------------------------------------------------------------------
-// name: class VRDotEntity
-// desc: dot entity
 //------------------------------------------------------------------------------
 class ofApp : public ofBaseApp
 {
@@ -107,6 +92,6 @@ public:
     
     // ofSpherePrimitive * m_sphere;
     ofLight * m_light;
-    VRDotEntity * m_dot;
+//    VRDotEntity * m_dot;
     
 };
