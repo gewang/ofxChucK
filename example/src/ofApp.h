@@ -12,22 +12,6 @@
 
 
 //------------------------------------------------------------------------------
-// name: class VRDotEntity
-// desc: dot entity
-//------------------------------------------------------------------------------
-class VRDotEntity : public VREntity
-{
-public:
-    VRDotEntity();
-    virtual void render();
-    
-    ofSpherePrimitive sphere;
-};
-
-
-
-
-//------------------------------------------------------------------------------
 // name: class ofApp
 // desc: the app
 //------------------------------------------------------------------------------
@@ -67,6 +51,4 @@ public:
     ofCamera m_camera;
     // a light
     ofLight * m_light;
-    // our VR dot entity test
-    VRDotEntity * m_dot;
 };

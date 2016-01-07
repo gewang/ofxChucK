@@ -66,4 +66,20 @@ protected:
 
 
 
+//------------------------------------------------------------------------------
+// name: class VRDotEntity
+// desc: dot entity
+//------------------------------------------------------------------------------
+class VRDotEntity : public VREntity
+{
+public:
+    VRDotEntity();
+    virtual void render();
+    
+    ofSpherePrimitive sphere;
+};
+
+
+
+
 #endif

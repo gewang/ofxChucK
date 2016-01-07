@@ -10,6 +10,8 @@ SinOsc y => blackhole;
 // set phase
 pi/4 => x.phase;
 
+// make a dot
+VR.makeEntity("dot","dot");
 // get a name 
 VR.getEntity("dot") @=> VREntity dot;
 // print pointer

@@ -18,10 +18,10 @@ using namespace std;
 
 
 //------------------------------------------------------------------------------
-// name: toLower()
+// name: lowerCase()
 // desc: lower case a string
 //------------------------------------------------------------------------------
-string toLower( const string & s )
+string lowerCase( const string & s )
 {
     // copy
     string str = s;
@@ -39,10 +39,38 @@ string toLower( const string & s )
 VREntity * VREntityFactory::makeEntity( const std::string & type )
 {
     // lower case it
-    // check type
-    if( type == "")
+    string s = lowerCase( type );
+    // check/remove prefix
+    if( s.length() > 2 && s[0] == 'v' and s[1] == 'r' )
     {
+        // remove prefix
+        s = s.substr(2);
     }
+
+    // the pointer to return
+    VREntity * e = NULL;
+
+    // check type
+    if( type == "flare" ) { e = new VRFlare(); }
+    else if( type == "points" ) { }
+    else if( type == "lines" ) { }
+    else if( type == "linestrip" ) { }
+    else if( type == "triangles" ) { }
+    else if( type == "trianglestrip" ) { }
+    else if( type == "circle" ) { }
+    else if( type == "text" ) { }
+    else if( type == "ugen" ) { }
+    else if( type == "dot" ) { e = new VRDotEntity(); }
+    
+    // log
+    if( !e )
+    {
+        // warning
+        cerr << "[VREntityFactory]: unknown type: '" << type << "'..." << endl;
+    }
+    
+    // done
+    return e;
 }
 
 
@@ -110,7 +138,7 @@ void VRFlare::setImage( const string & key )
 void VRFlare::update( double dt )
 {
     // look up and set image ref
-    setImage( getString("VRFlare.imageName") );
+    setImage( getString("texture") );
 }
 
 
@@ -131,11 +159,34 @@ void VRFlare::render()
     ofEnableBlendMode( m_blendMode );
     // center
     ofSetRectMode( OF_RECTMODE_CENTER );
-    
     // normalize
     ofScale( 1.0f/width, 1.0/width );
     // draw the image
     m_imageRef->draw( 0, 0 );
     // disable
     ofDisableBlendMode();
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: VRDotEntity()
+// desc: constructor
+//------------------------------------------------------------------------------
+VRDotEntity::VRDotEntity()
+: sphere( 1, 10 )
+{}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: render()
+// desc: draw the thing
+//------------------------------------------------------------------------------
+void VRDotEntity::render()
+{
+    // ofSetColor( 255 );
+    sphere.draw();
 }

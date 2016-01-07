@@ -4,30 +4,6 @@
 
 
 //------------------------------------------------------------------------------
-// name: VRDotEntity()
-// desc: constructor
-//------------------------------------------------------------------------------
-VRDotEntity::VRDotEntity()
-: sphere( 1, 10 )
-{}
-
-
-
-
-//------------------------------------------------------------------------------
-// name: render()
-// desc: draw the thing
-//------------------------------------------------------------------------------
-void VRDotEntity::render()
-{
-    // ofSetColor( 255 );
-    sphere.draw();
-}
-
-
-
-
-//------------------------------------------------------------------------------
 // name: setup()
 // desc: set up the app
 //------------------------------------------------------------------------------
@@ -40,23 +16,21 @@ void ofApp::setup()
     chuck = TheChucK::instance();
     // arguments
     const char * argv[] = { "the", "-v0" };
-
+    
     // initialize (SHOULD HAPPEN BEFORE AUDIO STREAM STARTS)
     chuck->initialize( MY_SRATE, MY_BUFFERSIZE, MY_CHANNELS, 2, argv );
 
-    m_dot = new VRDotEntity();
-    chuck->db()->setObject( "dot", m_dot );
-    m_dot->col.setAll(255);
-    m_dot->alpha = 255;
-    
-    // compile and run another file
-    chuck->compileFile( "/Users/ge/research/oF/of_v0.9.0_osx_release/addons/ofxChucK/example/ck/dot-circle.ck", "" );
+    // load image
+    OFCKDB::instance()->loadImage("texture:flare-1", "flare-tng-1.png");
     
     // set up light
     m_light = new ofLight();
     m_light->setDiffuseColor( ofColor(100, 255, 100) );
     m_light->enable();
     m_light->setGlobalPosition( 1000, 1000, 1000 );
+
+    // compile and run another file
+    chuck->compileFile( "/Users/ge/research/oF/of_v0.9.0_osx_release/addons/ofxChucK/example/ck/dot-circle", "" );
 
     // setup the sound stream...
     soundStream.setup( this,
@@ -108,9 +82,20 @@ void ofApp::update()
     // set background
     ofBackground( 1, 1, 1 );
 
-    // update
-    m_dot->updateAll( 1.0/60 );
-    
+    // entity pointer
+    VREntity * e = NULL;
+    // db
+    OFCKDB * db = OFCKDB::instance();
+    // draw list
+    map<string,VREntity *>::iterator i;
+    for( i = db->string2entity.begin(); i != db->string2entity.end(); i++ )
+    {
+        // get entity
+        e = i->second;
+        // draw it
+        e->updateAll(1/60.0f);
+    }
+
     // trigger displaySync to chuck
     chuck->displaySync();
 }
@@ -138,12 +123,19 @@ void ofApp::draw()
     // render light
     m_light->enable();
 
-    // blend
-    ofEnableBlendMode( OF_BLENDMODE_ALPHA );
-    // render the dot entity
-    m_dot->renderAll();
-    // disable
-    ofDisableBlendMode();
+    // entity pointer
+    VREntity * e = NULL;
+    // db
+    OFCKDB * db = OFCKDB::instance();
+    // draw list
+    map<string,VREntity *>::iterator i;
+    for( i = db->string2entity.begin(); i != db->string2entity.end(); i++ )
+    {
+        // get entity
+        e = i->second;
+        // draw it
+        e->renderAll();
+    }
     
     // undo light
     m_light->disable();

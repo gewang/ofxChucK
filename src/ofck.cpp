@@ -17,6 +17,7 @@
 #include "chuck_vm.h"
 #include "chuck_compile.h"
 #include "ofxChucK.h"
+#include "ofck-entities.h"
 
 // general includes
 #include <stdio.h>
@@ -56,10 +57,10 @@ CK_DLL_SFUN(vr_setVec3);
 CK_DLL_SFUN(vr_getVec3);
 CK_DLL_SFUN(vr_setVec4);
 CK_DLL_SFUN(vr_getVec4);
-CK_DLL_SFUN(vr_loadImage);
 CK_DLL_SFUN(vr_setFOV);
 CK_DLL_SFUN(vr_getFOV);
 CK_DLL_SFUN(vr_displaySync);
+CK_DLL_SFUN(vr_loadImage);
 CK_DLL_SFUN(vr_makeEntity);
 
 
@@ -198,6 +199,13 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
         // filename of image to load
         QUERY->add_arg(QUERY, "string", "filename");
 
+        // VREntity VR.makeEntity( type, name ) // event for display
+        QUERY->add_sfun(QUERY, vr_makeEntity, "VREntity", "makeEntity");
+        // key of image to map
+        QUERY->add_arg(QUERY, "string", "key");
+        // filename of image to load
+        QUERY->add_arg(QUERY, "string", "type");
+
         // float VR.fov()
         QUERY->add_sfun(QUERY, vr_setFOV, "float", "fov");
         // name of object to retrieve
@@ -209,8 +217,6 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
         // Event VR.displaySync // event for display
         QUERY->add_sfun(QUERY, vr_displaySync, "Event", "displaySync");
 
-        // VREntity VR.makeEntity( type, name ) // event for display
-        // QUERY->add_sfun(QUERY, vr_makeEntity, "VREntity", "makeEntity");
     }
     // end the class definition
     QUERY->end_class(QUERY);
@@ -410,6 +416,24 @@ CK_DLL_SFUN( vr_loadImage )
     OFCKDB * db = OFCKDB::instance();
     // insert the key value pair, possibly overwriting
     RETURN->v_int = (db->loadImage(key, filename, false) != NULL);
+}
+
+CK_DLL_SFUN( vr_makeEntity )
+{
+    std::string key = GET_NEXT_STRING(ARGS)->str;
+    std::string type = GET_NEXT_STRING(ARGS)->str;
+    // make the entity
+    VREntity * e = VREntityFactory::makeEntity(type);
+    // check it
+    if( !e ) { RETURN->v_object = 0; } else
+    {
+        // if necessary, instantiate chuck-side object
+        if( e->chuckObject() == NULL ) { e->initChucKSideObject(); }
+        // add to DB
+        OFCKDB::instance()->setObject( key, e );
+        // return the value
+        RETURN->v_object = e->chuckObject();
+    }
 }
 
 // float VR.fov( float )
