@@ -27,6 +27,8 @@ string lowerCase( const string & s )
     string str = s;
     // to lower each letter via iteration
     std::transform(str.begin(), str.end(), str.begin(), ::tolower);
+    // return
+    return str;
 }
 
 
@@ -41,7 +43,7 @@ VREntity * VREntityFactory::makeEntity( const std::string & type )
     // lower case it
     string s = lowerCase( type );
     // check/remove prefix
-    if( s.length() > 2 && s[0] == 'v' and s[1] == 'r' )
+    if( s.length() > 2 && s[0] == 'v' && s[1] == 'r' )
     {
         // remove prefix
         s = s.substr(2);
