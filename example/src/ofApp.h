@@ -5,24 +5,8 @@
 
 #define MY_SRATE      44100
 #define MY_CHANNELS   2
-#define MY_BUFFERSIZE 1024
+#define MY_BUFFERSIZE 128
 #define MY_NUMBUFFERS 4
-
-
-
-
-//------------------------------------------------------------------------------
-// name: class VRDotEntity
-// desc: dot entity
-//------------------------------------------------------------------------------
-class VRDotEntity : public VREntity
-{
-public:
-    VRDotEntity();
-    virtual void render();
-    
-    ofSpherePrimitive sphere;
-};
 
 
 
@@ -65,15 +49,6 @@ public:
 public:
     // the camera
     ofCamera m_camera;
-    // color buffer
-    ofPixels m_colorPixels;
-    // the texture color
-    ofTexture m_texColor;
-    // width and height
-    int w, h;
-
-    
-    // ofSpherePrimitive * m_sphere;
+    // a light
     ofLight * m_light;
-    VRDotEntity * m_dot;
 };

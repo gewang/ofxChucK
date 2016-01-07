@@ -15,6 +15,7 @@
 
 #include "chuck_dl.h"
 #include "x-vector3d.h"
+#include "ofMain.h"
 
 
 // the query function for ofck
@@ -24,13 +25,16 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY );
 
 
 //------------------------------------------------------------------------------
-// class VREntity
+// nane: class VREntity
+// desc: base entity class
 //------------------------------------------------------------------------------
 class VREntity
 {
 public:
     // constructor
     VREntity();
+    // destructor
+    ~VREntity();
 
 public:
     // add child
@@ -77,12 +81,19 @@ protected:
 protected:
     // child nodes in the scene graph
     std::vector<VREntity *> children;
+    
+public:
+    // key-value map
+    std::map<std::string, std::string> settings;
+    // associate a string value with a key
+    std::string setString( const std::string & key, const std::string & value );
+    // get a vec3 value associated with a key
+    std::string getString( const std::string & key );
 
 protected:
     // how chuck sees this entity (chuck type: VREntity)
     Chuck_Object * m_chuckObject;
 };
-
 
 
 
@@ -122,6 +133,16 @@ public:
     VREntity * setObject( const std::string & key, VREntity * e );
     // get an object associated with a key
     VREntity * getObject( const std::string & key );
+    // associate an image with a key
+    ofImage * setImage( const std::string & key, ofImage * image );
+    // load image and associate it with a key
+    ofImage * loadImage( const std::string & key, const std::string & name, bool replace = true );
+    // get an image associated with a key
+    ofImage * getImage( const std::string & key );
+    // set camera associated with a key
+    ofCamera * setCamera( const std::string & key, ofCamera * cam );
+    // get a camera associated with a key
+    ofCamera * getCamera( const std::string & key );
     
 public:
     // instance
@@ -148,6 +169,10 @@ public:
     std::map<std::string, std::string> string2string;
     // string to entity map
     std::map<std::string, VREntity *> string2entity;
+    // string to image map
+    std::map<std::string, ofImage *> string2image;
+    // string to entity map
+    std::map<std::string, ofCamera *> string2camera;
 
     // display sync event is broadcast right before each new graphics frame
     Chuck_Event displaySync;
@@ -155,6 +180,21 @@ public:
     CBufferSimple * m_eventBuffer;
 };
 
+
+
+
+//------------------------------------------------------------------------------
+// name: class VR
+// desc: top-level VR routines
+//------------------------------------------------------------------------------
+class VR
+{
+public:
+    // set field of view
+    float setFOV( float value );
+    // get field of view
+    float getFOV();
+};
 
 
 

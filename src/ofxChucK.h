@@ -16,6 +16,8 @@
 
 #include <string>
 #include "ofck.h"
+#include "ofck-entities.h"
+
 
 // forward reference
 class Chuck_System;
@@ -36,9 +38,9 @@ public:
     bool initialize( int srate, int bufferSize, int numChannels,
                      int argc, const char ** argv );
     // compile a file
-    bool compileFile( const std::string & path, const std::string & args );
+    bool compileFile( const std::string & path, const std::string & args = "" );
     // compile code directly
-    bool compileCode( const std::string & code, const std::string & args );
+    bool compileCode( const std::string & code, const std::string & args = "" );
     // get ChucK VM (dangerous)
     Chuck_VM * vm();
     // get ChucK compiler (dangerous)
@@ -81,3 +83,16 @@ protected:
 
 
 #endif
+
+
+
+
+//VirChucK Reality
+//VCKR
+//
+//Chutual Reality
+//CKVR
+//
+//ChVRcK
+//VirChuR
+//VReCK

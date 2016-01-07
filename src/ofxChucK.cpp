@@ -3,10 +3,10 @@
 // desc: header file for ofxChucK, an openframeworks addon to unleash the
 //       fury of the ChucK programming language onto OpenFrameworks...
 //
-// author: Tim O'Brien
-// author: Kitty Shi
-// author: Madeline Huberth
-// author: Ge Wang
+// @author: Tim O'Brien
+// @author: Kitty Shi
+// @author: Madeline Huberth
+// @author: Ge Wang
 //
 // @date    Fall 2015
 //------------------------------------------------------------------------------
@@ -54,7 +54,7 @@ bool TheChucK::initialize( int srate, int bufferSize, int numChannels,
 bool TheChucK::compileFile( const std::string & path, const std::string & args )
 {
     // compile
-    return m_system->compileFile( path, args );
+    return m_system->compileFile( ofToDataPath(path), args );
 }
 
 
