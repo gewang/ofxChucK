@@ -30,7 +30,7 @@ void ofApp::setup()
     m_light->setGlobalPosition( 1000, 1000, 1000 );
 
     // compile and run another file
-    chuck->compileFile( "dot-circle.ck" );
+    chuck->compileFile( "ck/dot-circle.ck" );
 
     // setup the sound stream...
     soundStream.setup( this,
