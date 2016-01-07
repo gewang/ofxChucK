@@ -54,7 +54,7 @@ bool TheChucK::initialize( int srate, int bufferSize, int numChannels,
 bool TheChucK::compileFile( const std::string & path, const std::string & args )
 {
     // compile
-    return m_system->compileFile( path, args );
+    return m_system->compileFile( ofToDataPath(path), args );
 }
 
 

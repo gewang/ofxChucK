@@ -30,7 +30,7 @@ void ofApp::setup()
     m_light->setGlobalPosition( 1000, 1000, 1000 );
 
     // compile and run another file
-    chuck->compileFile( "/Users/ge/research/oF/of_v0.9.0_osx_release/addons/ofxChucK/example/ck/dot-circle", "" );
+    chuck->compileFile( "dot-circle.ck" );
 
     // setup the sound stream...
     soundStream.setup( this,
