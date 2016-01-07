@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1888C6574EACFB4FE1D50B44 /* ofxChucK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F26BFC8326F2ECD83C5401B6 /* ofxChucK.cpp */; };
+		63A0B07D1C3F0FBA00C86099 /* RtAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63A0B07A1C3F0FBA00C86099 /* RtAudio.cpp */; };
 		8692FDA91C2FC2BB00DFD708 /* ofck-entities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8692FDA71C2FC2BB00DFD708 /* ofck-entities.cpp */; };
 		86A09AAC1C0AB8C8008F2165 /* ofck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86A09AAA1C0AB8C8008F2165 /* ofck.cpp */; };
 		86E68E621BF7FFF5007564C5 /* chuck.y in Sources */ = {isa = PBXBuildFile; fileRef = 86E68DDA1BF7FFF5007564C5 /* chuck.y */; };
@@ -73,7 +74,6 @@
 		86E68EE51BF80368007564C5 /* server.c in Sources */ = {isa = PBXBuildFile; fileRef = 86E68ED71BF80368007564C5 /* server.c */; settings = {COMPILER_FLAGS = "-DHAVE_CONFIG_H"; }; };
 		86E68EE61BF80368007564C5 /* server_thread.c in Sources */ = {isa = PBXBuildFile; fileRef = 86E68ED81BF80368007564C5 /* server_thread.c */; settings = {COMPILER_FLAGS = "-DHAVE_CONFIG_H"; }; };
 		86E68EE71BF80368007564C5 /* timetag.c in Sources */ = {isa = PBXBuildFile; fileRef = 86E68ED91BF80368007564C5 /* timetag.c */; settings = {COMPILER_FLAGS = "-DHAVE_CONFIG_H"; }; };
-		86E68EE81BF80368007564C5 /* RtAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E68EDB1BF80368007564C5 /* RtAudio.cpp */; };
 		86E68EEA1BF80C49007564C5 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86E68EE91BF80C49007564C5 /* Carbon.framework */; };
 		86E68EEC1BF80C50007564C5 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86E68EEB1BF80C50007564C5 /* CoreMIDI.framework */; };
 		86E68EEE1BF80C55007564C5 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86E68EED1BF80C55007564C5 /* CoreAudio.framework */; };
@@ -138,6 +138,9 @@
 
 /* Begin PBXFileReference section */
 		206545651015A6DA306A9A3B /* ofxChucK.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxChucK.h; path = ../../../addons/ofxChucK/src/ofxChucK.h; sourceTree = SOURCE_ROOT; };
+		63A0B07A1C3F0FBA00C86099 /* RtAudio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RtAudio.cpp; path = ../../libs/RtAudio/RtAudio.cpp; sourceTree = "<group>"; };
+		63A0B07B1C3F0FBA00C86099 /* RtAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RtAudio.h; path = ../../libs/RtAudio/RtAudio.h; sourceTree = "<group>"; };
+		63A0B07C1C3F0FBA00C86099 /* RtError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RtError.h; path = ../../libs/RtAudio/RtError.h; sourceTree = "<group>"; };
 		86314F741C13AA0600554BAD /* x-vector3d.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "x-vector3d.h"; path = "../src/x-vector3d.h"; sourceTree = "<group>"; };
 		8692FDA71C2FC2BB00DFD708 /* ofck-entities.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "ofck-entities.cpp"; path = "../src/ofck-entities.cpp"; sourceTree = "<group>"; };
 		8692FDA81C2FC2BB00DFD708 /* ofck-entities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ofck-entities.h"; path = "../src/ofck-entities.h"; sourceTree = "<group>"; };
@@ -260,9 +263,6 @@
 		86E68ED71BF80368007564C5 /* server.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = server.c; sourceTree = "<group>"; };
 		86E68ED81BF80368007564C5 /* server_thread.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = server_thread.c; sourceTree = "<group>"; };
 		86E68ED91BF80368007564C5 /* timetag.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = timetag.c; sourceTree = "<group>"; };
-		86E68EDB1BF80368007564C5 /* RtAudio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RtAudio.cpp; sourceTree = "<group>"; };
-		86E68EDC1BF80368007564C5 /* RtAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RtAudio.h; sourceTree = "<group>"; };
-		86E68EDD1BF80368007564C5 /* RtError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RtError.h; sourceTree = "<group>"; };
 		86E68EE91BF80C49007564C5 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		86E68EEB1BF80C50007564C5 /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
 		86E68EED1BF80C55007564C5 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
@@ -417,7 +417,7 @@
 				86E68E611BF7FFF5007564C5 /* util_xforms.h */,
 			);
 			name = chuck;
-			path = ../lib/chuck;
+			path = ../libs/chuck;
 			sourceTree = "<group>";
 		};
 		86E68EC41BF80368007564C5 /* lo */ = {
@@ -435,18 +435,18 @@
 				86E68ED91BF80368007564C5 /* timetag.c */,
 			);
 			name = lo;
-			path = ../lib/lo;
+			path = ../libs/lo;
 			sourceTree = "<group>";
 		};
 		86E68EDA1BF80368007564C5 /* RtAudio */ = {
 			isa = PBXGroup;
 			children = (
-				86E68EDB1BF80368007564C5 /* RtAudio.cpp */,
-				86E68EDC1BF80368007564C5 /* RtAudio.h */,
-				86E68EDD1BF80368007564C5 /* RtError.h */,
+				63A0B07A1C3F0FBA00C86099 /* RtAudio.cpp */,
+				63A0B07B1C3F0FBA00C86099 /* RtAudio.h */,
+				63A0B07C1C3F0FBA00C86099 /* RtError.h */,
 			);
 			name = RtAudio;
-			path = ../lib/RtAudio;
+			path = ../libs/RtAudio;
 			sourceTree = "<group>";
 		};
 		BB4B014C10F69532006C3DED /* addons */ = {
@@ -631,6 +631,7 @@
 				86E68E6A1BF7FFF5007564C5 /* chuck_frame.cpp in Sources */,
 				86E68EA31BF7FFF5007564C5 /* util_xforms.c in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
+				63A0B07D1C3F0FBA00C86099 /* RtAudio.cpp in Sources */,
 				86E68E781BF7FFF5007564C5 /* chuck_table.cpp in Sources */,
 				86E68E711BF7FFF5007564C5 /* chuck_otf.cpp in Sources */,
 				86E68E681BF7FFF5007564C5 /* chuck_emit.cpp in Sources */,
@@ -679,7 +680,6 @@
 				86E68EE01BF80368007564C5 /* bundle.c in Sources */,
 				86E68E7B1BF7FFF5007564C5 /* chuck_utils.cpp in Sources */,
 				86E68E981BF7FFF5007564C5 /* util_buffers.cpp in Sources */,
-				86E68EE81BF80368007564C5 /* RtAudio.cpp in Sources */,
 				86E68E8A1BF7FFF5007564C5 /* midiio_rtmidi.cpp in Sources */,
 				86E68E6C1BF7FFF5007564C5 /* chuck_instr.cpp in Sources */,
 				86E68E8F1BF7FFF5007564C5 /* ugen_filter.cpp in Sources */,
@@ -801,7 +801,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_CFLAGS = "-D__MACOSX_CORE__";
 				PRODUCT_NAME = "$(TARGET_NAME)Debug";
-				USER_HEADER_SEARCH_PATHS = ../lib;
+				USER_HEADER_SEARCH_PATHS = ../libs;
 				WRAPPER_EXTENSION = app;
 				YACC_GENERATED_FILE_STEM = InputFileStem;
 			};
@@ -834,7 +834,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_CFLAGS = "-D__MACOSX_CORE__";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = ../lib;
+				USER_HEADER_SEARCH_PATHS = ../libs;
 				WRAPPER_EXTENSION = app;
 				YACC_GENERATED_FILE_STEM = InputFileStem;
 				baseConfigurationReference = E4EB6923138AFD0F00A09F29;

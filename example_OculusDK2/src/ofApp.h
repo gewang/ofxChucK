@@ -7,7 +7,7 @@
 
 #define MY_SRATE      44100
 #define MY_CHANNELS   2
-#define MY_BUFFERSIZE 1024
+#define MY_BUFFERSIZE 256
 #define MY_NUMBUFFERS 4
 
 
