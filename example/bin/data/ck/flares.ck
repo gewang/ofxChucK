@@ -8,7 +8,7 @@ f.setString("texture", "texture:flare-1");
 // set color
 f.rgba.set(1,1,0,1);
 // set scale
-f.sca.setAll(1);
+f.sca.setAll(10);
 
 // infinite time loop
 while( true )

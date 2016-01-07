@@ -65,6 +65,7 @@ CK_DLL_SFUN(vr_makeEntity);
 
 
 // internal data
+t_CKINT vrentity_offset_cpointer = 0;
 t_CKINT vrentity_offset_location = 0;
 t_CKINT vrentity_offset_rotation = 0;
 t_CKINT vrentity_offset_scaling = 0;
@@ -255,10 +256,10 @@ CK_DLL_MFUN( vrentity_setString )
     std::string key = GET_NEXT_STRING(ARGS)->str;
     Chuck_String * value = GET_NEXT_STRING(ARGS);
     
-    // get the DB
-    OFCKDB * db = OFCKDB::instance();
-    // insert the key value pair, possibly overwriting
-    db->string2string[key] = value->str;
+    // get the c VREntity pointer
+    VREntity * e = (VREntity *)OBJ_MEMBER_INT(SELF,vrentity_offset_cpointer);
+    // set the string
+    e->setString( key, value->str );
     // return the value
     RETURN->v_string = value;
 }
@@ -267,18 +268,14 @@ CK_DLL_MFUN( vrentity_getString )
 {
     // get the argument
     std::string key = GET_NEXT_STRING(ARGS)->str;
-    // get the DB
-    OFCKDB * db = OFCKDB::instance();
-    // look for the key in the DB
-    if( db->string2string.find(key) != db->string2string.end() )
-    {
-        // chuck string TODO: verify memory
-        Chuck_String * str = (Chuck_String *)instantiate_and_initialize_object( &t_string, NULL );
-        // set the string value
-        str->str = db->getString(key);
-        // return the value
-        RETURN->v_string = str;
-    }
+    // get the c VREntity pointer
+    VREntity * e = (VREntity *)OBJ_MEMBER_INT(SELF,vrentity_offset_cpointer);
+    // chuck string TODO: verify memory
+    Chuck_String * str = (Chuck_String *)instantiate_and_initialize_object( &t_string, NULL );
+    // set the string value
+    str->str = e->getString(key);
+    // return the value
+    RETURN->v_string = str;
 }
 
 
@@ -465,16 +462,12 @@ CK_DLL_SFUN( vr_getString )
     std::string key = GET_NEXT_STRING(ARGS)->str;
     // get the DB
     OFCKDB * db = OFCKDB::instance();
-    // look for the key in the DB
-    if( db->string2string.find(key) != db->string2string.end() )
-    {
-        // chuck string TODO: verify memory
-        Chuck_String * str = (Chuck_String *)instantiate_and_initialize_object( &t_string, NULL );
-        // set the string value
-        str->str = db->getString(key);
-        // return the value
-        RETURN->v_string = str;
-    }
+    // chuck string TODO: verify memory
+    Chuck_String * str = (Chuck_String *)instantiate_and_initialize_object( &t_string, NULL );
+    // set the string value
+    str->str = db->getString(key);
+    // return the value
+    RETURN->v_string = str;
 }
 
 CK_DLL_SFUN( vr_displaySync )
@@ -909,6 +902,8 @@ bool VREntity::initChucKSideObject()
     the_vrentity_type = Chuck_Env::instance()->curr->lookup_type( "VREntity", TRUE );
     initialize_object( m_chuckObject, the_vrentity_type );
 
+    // initialize c-side pointer: TODO: possible 64-bit issue depend on int
+    OBJ_MEMBER_INT(m_chuckObject,vrentity_offset_cpointer) = (t_CKINT)this;
     // initialize location
     OBJ_MEMBER_VEC3(m_chuckObject,vrentity_offset_location).x = this->loc.x;
     OBJ_MEMBER_VEC3(m_chuckObject,vrentity_offset_location).y = this->loc.y;

@@ -82,7 +82,7 @@ protected:
     // child nodes in the scene graph
     std::vector<VREntity *> children;
     
-protected:
+public:
     // key-value map
     std::map<std::string, std::string> settings;
     // associate a string value with a key
