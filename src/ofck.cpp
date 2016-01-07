@@ -745,7 +745,7 @@ ofImage * OFCKDB::loadImage( const string & key, const string & name, bool repla
     // instantiate image
     ofImage * image = new ofImage();
     // load image
-    if( !image->load( name ) )
+    if( !image->loadImage( name ) )
     {
         // log
         cerr << "[ofck]: cannot load image: '" << name << "'" << endl;
