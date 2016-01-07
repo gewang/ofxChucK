@@ -10,7 +10,40 @@
 // @date    Winter 2015
 //------------------------------------------------------------------------------
 #include "ofck-entities.h"
+#include <algorithm>
+#include <string>
 using namespace std;
+
+
+
+
+//------------------------------------------------------------------------------
+// name: toLower()
+// desc: lower case a string
+//------------------------------------------------------------------------------
+string toLower( const string & s )
+{
+    // copy
+    string str = s;
+    // to lower each letter via iteration
+    std::transform(str.begin(), str.end(), str.begin(), ::tolower);
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: makeEntity()
+// desc: instantiate entity of certain type
+//------------------------------------------------------------------------------
+VREntity * VREntityFactory::makeEntity( const std::string & type )
+{
+    // lower case it
+    // check type
+    if( type == "")
+    {
+    }
+}
 
 
 

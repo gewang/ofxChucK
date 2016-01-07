@@ -19,6 +19,20 @@
 
 
 //------------------------------------------------------------------------------
+// name: class VREntityFactory
+// desc: entity instantiator
+//------------------------------------------------------------------------------
+class VREntityFactory
+{
+public:
+    // make entity
+    static VREntity * makeEntity( const std::string & type );
+};
+
+
+
+
+//------------------------------------------------------------------------------
 // name: class VRFlare
 // desc: a single additive blended thing
 //------------------------------------------------------------------------------

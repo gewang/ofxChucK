@@ -56,6 +56,7 @@ CK_DLL_SFUN(vr_setVec3);
 CK_DLL_SFUN(vr_getVec3);
 CK_DLL_SFUN(vr_setVec4);
 CK_DLL_SFUN(vr_getVec4);
+CK_DLL_SFUN(vr_loadImage);
 CK_DLL_SFUN(vr_setFOV);
 CK_DLL_SFUN(vr_getFOV);
 CK_DLL_SFUN(vr_displaySync);
@@ -188,8 +189,15 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
         // vec4 VR.getVec4(key,value) // set
         QUERY->add_sfun(QUERY, vr_getVec4, "vec4", "getVec4");
         // name of object to retrieve
-        QUERY->add_arg(QUERY, "vec4", "key");
+        QUERY->add_arg(QUERY, "string", "key");
         
+        // int VR.loadImage(key,filename) // load
+        QUERY->add_sfun(QUERY, vr_loadImage, "int", "loadImage");
+        // key of image to map
+        QUERY->add_arg(QUERY, "string", "key");
+        // filename of image to load
+        QUERY->add_arg(QUERY, "string", "filename");
+
         // float VR.fov()
         QUERY->add_sfun(QUERY, vr_setFOV, "float", "fov");
         // name of object to retrieve
@@ -392,6 +400,16 @@ CK_DLL_SFUN( vr_getVec4 )
     OFCKDB * db = OFCKDB::instance();
     // look for the key in the DB
     RETURN->v_vec4 = db->getVec4(key);
+}
+
+CK_DLL_SFUN( vr_loadImage )
+{
+    std::string key = GET_NEXT_STRING(ARGS)->str;
+    std::string filename = GET_NEXT_STRING(ARGS)->str;
+    // get the DB
+    OFCKDB * db = OFCKDB::instance();
+    // insert the key value pair, possibly overwriting
+    RETURN->v_int = (db->loadImage(key, filename, false) != NULL);
 }
 
 // float VR.fov( float )
@@ -683,6 +701,8 @@ VREntity * OFCKDB::getObject( const std::string & key )
 //------------------------------------------------------------------------------
 ofImage * OFCKDB::setImage( const string & key, ofImage * image )
 {
+    // TODO: clean up existing image, if there is one
+
     // associate it
     string2image[key] = image;
     // return
@@ -696,8 +716,15 @@ ofImage * OFCKDB::setImage( const string & key, ofImage * image )
 // name: loadImage()
 // desc: map image by name
 //------------------------------------------------------------------------------
-ofImage * OFCKDB::loadImage( const string & key, const string & name )
+ofImage * OFCKDB::loadImage( const string & key, const string & name, bool replace )
 {
+    // look for the key in the DB
+    if( !replace && string2image.find(key) != string2image.end() )
+    {
+        // not found
+        return string2image[key];
+    }
+    
     // instantiate image
     ofImage * image = new ofImage();
     // load image

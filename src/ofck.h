@@ -136,7 +136,7 @@ public:
     // associate an image with a key
     ofImage * setImage( const std::string & key, ofImage * image );
     // load image and associate it with a key
-    ofImage * loadImage( const std::string & key, const std::string & name );
+    ofImage * loadImage( const std::string & key, const std::string & name, bool replace = true );
     // get an image associated with a key
     ofImage * getImage( const std::string & key );
     // set camera associated with a key
@@ -190,7 +190,10 @@ public:
 class VR
 {
 public:
-    
+    // set field of view
+    float setFOV( float value );
+    // get field of view
+    float getFOV();
 };
 
 
