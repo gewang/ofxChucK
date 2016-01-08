@@ -1,0 +1,25 @@
+dependencies: \
+  /Users/slork/Desktop/of_v0.8.4_osx_release/addons/ofxChucK/libs/chuck/ulib_opsc.cpp \
+  ../../../addons/ofxChucK/libs/lo/lo.h \
+  ../../../addons/ofxChucK/libs/lo/lo_endian.h \
+  ../../../addons/ofxChucK/libs/lo/lo_types.h \
+  ../../../addons/ofxChucK/libs/lo/lo_osc_types.h \
+  ../../../addons/ofxChucK/libs/lo/lo_errors.h \
+  ../../../addons/ofxChucK/libs/lo/lo_lowlevel.h \
+  ../../../addons/ofxChucK/libs/lo/lo_macros.h \
+  ../../../addons/ofxChucK/libs/chuck/ulib_opsc.h \
+  ../../../addons/ofxChucK/libs/chuck/chuck_def.h \
+  ../../../addons/ofxChucK/libs/chuck/chuck_dl.h \
+  ../../../addons/ofxChucK/libs/chuck/chuck_oo.h \
+  ../../../addons/ofxChucK/libs/chuck/util_thread.h \
+  ../../../addons/ofxChucK/libs/chuck/chuck_type.h \
+  ../../../addons/ofxChucK/libs/chuck/chuck_absyn.h \
+  ../../../addons/ofxChucK/libs/chuck/chuck_symbol.h \
+  ../../../addons/ofxChucK/libs/chuck/chuck_utils.h \
+  ../../../addons/ofxChucK/libs/chuck/chuck_errmsg.h \
+  ../../../addons/ofxChucK/libs/chuck/chuck_vm.h \
+  ../../../addons/ofxChucK/libs/chuck/chuck_ugen.h \
+  ../../../addons/ofxChucK/libs/chuck/util_opsc.h \
+  ../../../addons/ofxChucK/libs/chuck/chuck_instr.h \
+  ../../../addons/ofxChucK/libs/chuck/util_buffers.h \
+  ../../../addons/ofxChucK/libs/chuck/util_string.h
