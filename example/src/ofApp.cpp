@@ -35,15 +35,14 @@ void ofApp::setup()
     m_light->setGlobalPosition( 1000, 1000, 1000 );
 
     // compile and run another file
+    chuck->compileFile( "ck/solar.ck" );
+    // chuck->compileFile( "ck/flares.ck" ); // need audio input
     // chuck->compileFile( "ck/dot-circle.ck" );
-    chuck->compileFile( "ck/flares.ck" );
-    // chuck->compileFile( "ck/xform.ck" );
-    // chuck->compileFile( "ck/solar.ck" );
 
     // setup the sound stream...
     soundStream.setup( this,
                        MY_CHANNELS,     // output
-                       MY_CHANNELS,               // input
+                       0,     // input
                        MY_SRATE,        // sample rate
                        MY_BUFFERSIZE,   // buffer size
                        MY_NUMBUFFERS ); // num buffer
