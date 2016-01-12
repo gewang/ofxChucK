@@ -1,6 +1,9 @@
 // ensure load of texture
 // VR.loadImage("texture:flare-1", "flare-tng-1.png");
 
+// get root
+VR.getEntity("root") @=> VREntity root;
+
 // make entity
 VR.makeEntity("f1", "flare" ) @=> VREntity f;
 // set the texture
@@ -9,6 +12,9 @@ f.setString("texture", "texture:flare-1");
 f.rgba.set(1,1,0,1);
 // set scale
 f.sca.setAll(10);
+
+// add to draw it
+root.addChild(f);
 
 // infinite time loop
 while( true )

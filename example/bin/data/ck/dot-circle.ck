@@ -10,6 +10,8 @@ SinOsc y => blackhole;
 // set phase
 pi/4 => x.phase;
 
+// get root
+VR.getEntity("root") @=> VREntity root;
 // make a dot
 VR.makeEntity("dot","dot");
 // get a name 
@@ -20,6 +22,9 @@ VR.getEntity("dot") @=> VREntity dot;
  dot.rgba.setAll(1);
 // set scale
  dot.sca.setAll(1);
+ 
+// add to root
+root.addChild( dot );
 
 // infinite time loop
 while( true )

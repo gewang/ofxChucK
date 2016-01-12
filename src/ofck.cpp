@@ -40,7 +40,7 @@ CK_DLL_MFUN(vrentity_getRGB);
 CK_DLL_MFUN(vrentity_setRGB);
 CK_DLL_MFUN(vrentity_getRGBA);
 CK_DLL_MFUN(vrentity_setRGBA);
-CK_DLL_MFUN(vrentity_addEntity);
+CK_DLL_MFUN(vrentity_addChild);
 CK_DLL_MFUN(vrentity_removeEntity);
 CK_DLL_MFUN(vrentity_setString);
 CK_DLL_MFUN(vrentity_getString);
@@ -109,7 +109,12 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
         // add .rgba
         vrentity_offset_rgba = QUERY->add_mvar( QUERY, "vec4", "rgba", FALSE );
         if( vrentity_offset_rgba == CK_INVALID_OFFSET ) goto error;
-        
+
+        // add .addChild
+        QUERY->add_mfun(QUERY, vrentity_addChild, "void", "addChild" );
+        // VREntity
+        QUERY->add_arg(QUERY, "VREntity", "e" );
+
         // string VREntity.setString(key,value) // set
         QUERY->add_mfun(QUERY, vrentity_setString, "string", "setString");
         // name of object to retrieve
@@ -248,8 +253,19 @@ CK_DLL_DTOR( vrentity_dtor )
     // nothing for now
 }
 
-//CK_DLL_SFUN(vrentity_addEntity);
-//CK_DLL_SFUN(vrentity_removeEntity);
+CK_DLL_MFUN(vrentity_addChild)
+{
+    // get entity
+    Chuck_Object * object = GET_NEXT_OBJECT(ARGS);
+    // get the c VREntity pointer
+    VREntity * me = (VREntity *)OBJ_MEMBER_INT(SELF,vrentity_offset_cpointer);
+    // get the entity to add
+    VREntity * rhs = (VREntity *)OBJ_MEMBER_INT(object,vrentity_offset_cpointer);
+    // add it
+    me->addChild( rhs );
+}
+
+//CK_DLL_MFUN(vrentity_removeChild);
 
 CK_DLL_MFUN( vrentity_setString )
 {

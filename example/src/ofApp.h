@@ -45,8 +45,10 @@ public:
 
     // the ChucK
     TheChucK * chuck;
-    
+
 public:
+    // root of scene graph
+    VREntity * m_root;
     // the camera
     ofCamera m_camera;
     // a light

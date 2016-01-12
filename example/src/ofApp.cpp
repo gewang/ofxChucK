@@ -23,6 +23,11 @@ void ofApp::setup()
     // load image
     OFCKDB::instance()->loadImage("texture:flare-1", "flare-tng-1.png");
     
+    // default
+    m_root = new VREntity();
+    // add it
+    OFCKDB::instance()->setObject("root", m_root);
+    
     // set up light
     m_light = new ofLight();
     m_light->setDiffuseColor( ofColor(100, 255, 100) );
@@ -30,7 +35,9 @@ void ofApp::setup()
     m_light->setGlobalPosition( 1000, 1000, 1000 );
 
     // compile and run another file
-    chuck->compileFile( "ck/flares.ck" );
+    // chuck->compileFile( "ck/dot-circle.ck" );
+    // chuck->compileFile( "ck/flares.ck" );
+    chuck->compileFile( "ck/xform.ck" );
 
     // setup the sound stream...
     soundStream.setup( this,
@@ -82,19 +89,26 @@ void ofApp::update()
     // set background
     ofBackground( 1, 1, 1 );
 
-    // entity pointer
-    VREntity * e = NULL;
+//    // entity pointer
+//    VREntity * e = NULL;
+//    // db
+//    OFCKDB * db = OFCKDB::instance();
+//    // draw list
+//    map<string,VREntity *>::iterator i;
+//    for( i = db->string2entity.begin(); i != db->string2entity.end(); i++ )
+//    {
+//        // get entity
+//        e = i->second;
+//        // draw it
+//        e->updateAll(1/60.0f);
+//    }
+    
     // db
     OFCKDB * db = OFCKDB::instance();
-    // draw list
-    map<string,VREntity *>::iterator i;
-    for( i = db->string2entity.begin(); i != db->string2entity.end(); i++ )
-    {
-        // get entity
-        e = i->second;
-        // draw it
-        e->updateAll(1/60.0f);
-    }
+    // get root
+    VREntity * root = db->getObject("root");
+    // update it
+    root->updateAll(1/60.0f);
 
     // trigger displaySync to chuck
     chuck->displaySync();
@@ -123,20 +137,27 @@ void ofApp::draw()
     // render light
     m_light->enable();
 
-    // entity pointer
-    VREntity * e = NULL;
+//    // entity pointer
+//    VREntity * e = NULL;
+//    // db
+//    OFCKDB * db = OFCKDB::instance();
+//    // draw list
+//    map<string,VREntity *>::iterator i;
+//    for( i = db->string2entity.begin(); i != db->string2entity.end(); i++ )
+//    {
+//        // get entity
+//        e = i->second;
+//        // draw it
+//        e->renderAll();
+//    }
+    
     // db
     OFCKDB * db = OFCKDB::instance();
-    // draw list
-    map<string,VREntity *>::iterator i;
-    for( i = db->string2entity.begin(); i != db->string2entity.end(); i++ )
-    {
-        // get entity
-        e = i->second;
-        // draw it
-        e->renderAll();
-    }
-    
+    // get root
+    VREntity * root = db->getObject("root");
+    // update it
+    root->renderAll();
+
     // undo light
     m_light->disable();
     
