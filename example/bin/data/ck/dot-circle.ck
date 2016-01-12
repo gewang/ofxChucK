@@ -16,8 +16,6 @@ VR.getEntity("root") @=> VREntity root;
 VR.makeEntity("dot","dot");
 // get a name 
 VR.getEntity("dot") @=> VREntity dot;
-// print pointer
-<<< "dot:", dot >>>;
 // set color
  dot.rgba.setAll(1);
 // set scale

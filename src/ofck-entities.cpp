@@ -157,6 +157,8 @@ void VRFlare::render()
     // width of image
     float width = m_imageRef->getWidth();
 
+    // disable depth
+    ofDisableDepthTest();
     // blending
     ofEnableBlendMode( m_blendMode );
     // center

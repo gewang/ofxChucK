@@ -36,13 +36,14 @@ void ofApp::setup()
 
     // compile and run another file
     // chuck->compileFile( "ck/dot-circle.ck" );
-    // chuck->compileFile( "ck/flares.ck" );
-    chuck->compileFile( "ck/xform.ck" );
+    chuck->compileFile( "ck/flares.ck" );
+    // chuck->compileFile( "ck/xform.ck" );
+    // chuck->compileFile( "ck/solar.ck" );
 
     // setup the sound stream...
     soundStream.setup( this,
                        MY_CHANNELS,     // output
-                       0,               // input
+                       MY_CHANNELS,               // input
                        MY_SRATE,        // sample rate
                        MY_BUFFERSIZE,   // buffer size
                        MY_NUMBUFFERS ); // num buffer
