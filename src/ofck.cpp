@@ -26,6 +26,7 @@ using namespace std;
 
 // static instantiation
 OFCKDB * OFCKDB::ourInstance = NULL;
+VR * VR::ourInstance = NULL;
 
 // VREntity
 CK_DLL_CTOR(vrentity_ctor);
@@ -62,6 +63,7 @@ CK_DLL_SFUN(vr_getFOV);
 CK_DLL_SFUN(vr_displaySync);
 CK_DLL_SFUN(vr_loadImage);
 CK_DLL_SFUN(vr_makeEntity);
+CK_DLL_SFUN(vr_root);
 
 
 // internal data
@@ -222,7 +224,9 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
 
         // Event VR.displaySync // event for display
         QUERY->add_sfun(QUERY, vr_displaySync, "Event", "displaySync");
-
+        
+        // VREntity VR.root() // get scene graph root
+        QUERY->add_sfun(QUERY, vr_root, "VREntity", "root");
     }
     // end the class definition
     QUERY->end_class(QUERY);
@@ -444,6 +448,20 @@ CK_DLL_SFUN( vr_makeEntity )
         if( e->chuckObject() == NULL ) { e->initChucKSideObject(); }
         // add to DB
         OFCKDB::instance()->setObject( key, e );
+        // return the value
+        RETURN->v_object = e->chuckObject();
+    }
+}
+
+CK_DLL_SFUN( vr_root )
+{
+    // make the entity
+    VREntity * e = VR::instance()->root();
+    // check it
+    if( !e ) { RETURN->v_object = 0; } else
+    {
+        // if necessary, instantiate chuck-side object
+        if( e->chuckObject() == NULL ) { e->initChucKSideObject(); }
         // return the value
         RETURN->v_object = e->chuckObject();
     }
@@ -1082,4 +1100,43 @@ std::string VREntity::getString( const std::string & key )
     
     // return the value
     return settings[key];
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: VR()
+// desc: constructor
+//------------------------------------------------------------------------------
+VR::VR()
+{
+    // allocate
+    m_root = new VREntity();
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: ~VR()
+// desc: destructor
+//------------------------------------------------------------------------------
+VR::~VR()
+{
+    // deallocate
+    delete m_root;
+    m_root = NULL;
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: root()
+// desc: get the scene root
+//------------------------------------------------------------------------------
+VREntity * VR::root()
+{
+    return m_root;
 }

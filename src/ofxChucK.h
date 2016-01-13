@@ -35,7 +35,7 @@ class TheChucK
 {
 public:
     // initialize chuck system
-    bool initialize( int srate, int bufferSize, int numChannels,
+    bool initialize( int srate, int bufferSize, int channelsIn, int channelsOut,
                      int argc, const char ** argv );
     // compile a file
     bool compileFile( const std::string & path, const std::string & args = "" );
@@ -76,7 +76,8 @@ protected:
     // input buffer
     float * inputBuffer;
     // channel
-    int m_numChannels;
+    int m_channelsIn;
+    int m_channelsOut;
 };
 
 

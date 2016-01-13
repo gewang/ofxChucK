@@ -950,7 +950,7 @@ bool RtApiCore :: probeDeviceOpen( unsigned int device, StreamMode mode, unsigne
   if ( deviceChannels < ( channels + firstChannel ) ) {
     free( bufferList );
     // changed chuck 1.3.1.2 (ge): reformatted output
-    errorStream_ << "(CoreAudio) device (" << device << ") does not support requested channel count...";
+    errorStream_ << "(CoreAudio) device (" << device << ") does not support requested channel count: " << channels + firstChannel;
     errorText_ = errorStream_.str();
     return FAILURE;
   }

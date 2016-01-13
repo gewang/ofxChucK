@@ -25,17 +25,20 @@ TheChucK * TheChucK::ourInstance = NULL;
 // name: initialize()
 // desc: initialize chuck system
 //------------------------------------------------------------------------------
-bool TheChucK::initialize( int srate, int bufferSize, int numChannels,
-                           int argc, const char ** argv )
+bool TheChucK::initialize( int srate, int bufferSize, int channelsIn,
+                           int channelsOut, int argc, const char ** argv )
 {
+    // bigger of two
+    int biggerChannel = ::max( channelsIn, channelsOut );
     // allocate
-    inputBuffer = new float[bufferSize*numChannels];
+    inputBuffer = new float[bufferSize*biggerChannel];
     // remember
-    m_numChannels = numChannels;
+    m_channelsIn = channelsIn;
+    m_channelsOut = channelsOut;
     
     // initialize!
     t_CKBOOL val = m_system->clientInitialize(
-        srate, bufferSize, numChannels, argc, argv );
+        srate, bufferSize, channelsIn, channelsOut, argc, argv );
     
     // binding
     m_system->bind( ofck_query, "OF" );
@@ -119,7 +122,7 @@ OFCKDB * TheChucK::db()
 void TheChucK::onInput( float * input, int numFrames )
 {
     // copy
-    memcpy( inputBuffer, input, numFrames*m_numChannels*sizeof(float) );
+    memcpy( inputBuffer, input, numFrames*m_channelsIn*sizeof(float) );
 }
 
 
@@ -166,7 +169,8 @@ TheChucK::TheChucK()
     // instantiate
     m_system = new Chuck_System;
     inputBuffer = NULL;
-    m_numChannels = 0;
+    m_channelsIn = 0;
+    m_channelsOut = 0;
 }
 
 

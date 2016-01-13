@@ -18,15 +18,13 @@ void ofApp::setup()
     const char * argv[] = { "the", "-v0" };
     
     // initialize (SHOULD HAPPEN BEFORE AUDIO STREAM STARTS)
-    chuck->initialize( MY_SRATE, MY_BUFFERSIZE, MY_CHANNELS, 2, argv );
+    chuck->initialize( MY_SRATE, MY_BUFFERSIZE, MY_CHANNELS_IN, MY_CHANNELS_OUT, 2, argv );
 
     // load image
     OFCKDB::instance()->loadImage("texture:flare-1", "flare-tng-1.png");
-    
-    // default
-    m_root = new VREntity();
-    // add it
-    OFCKDB::instance()->setObject("root", m_root);
+
+    // set pointer
+    vr = VR::instance();
     
     // set up light
     m_light = new ofLight();
@@ -35,14 +33,14 @@ void ofApp::setup()
     m_light->setGlobalPosition( 1000, 1000, 1000 );
 
     // compile and run another file
-    chuck->compileFile( "ck/solar.ck" );
-    // chuck->compileFile( "ck/flares.ck" ); // need audio input
+    // chuck->compileFile( "ck/solar.ck" );
+    chuck->compileFile( "ck/flares.ck" ); // need audio input
     // chuck->compileFile( "ck/dot-circle.ck" );
 
     // setup the sound stream...
     soundStream.setup( this,
-                       MY_CHANNELS,     // output
-                       0,     // input
+                       MY_CHANNELS_OUT, // output
+                       MY_CHANNELS_IN,  // input
                        MY_SRATE,        // sample rate
                        MY_BUFFERSIZE,   // buffer size
                        MY_NUMBUFFERS ); // num buffer
@@ -58,7 +56,7 @@ void ofApp::setup()
 void ofApp::audioIn( float * input, int bufferSize, int nChannels )
 {
     assert( bufferSize == MY_BUFFERSIZE );
-    assert( nChannels == MY_CHANNELS );
+    assert( nChannels == MY_CHANNELS_IN );
     chuck->onInput( input, bufferSize );
 }
 
@@ -72,7 +70,7 @@ void ofApp::audioIn( float * input, int bufferSize, int nChannels )
 void ofApp::audioOut( float * output, int bufferSize, int nChannels )
 {
     assert( bufferSize == MY_BUFFERSIZE );
-    assert( nChannels == MY_CHANNELS );
+    assert( nChannels == MY_CHANNELS_OUT );
     // chuck
     chuck->onOutput( output, bufferSize );
 }
@@ -88,27 +86,9 @@ void ofApp::update()
 {
     // set background
     ofBackground( 1, 1, 1 );
-
-//    // entity pointer
-//    VREntity * e = NULL;
-//    // db
-//    OFCKDB * db = OFCKDB::instance();
-//    // draw list
-//    map<string,VREntity *>::iterator i;
-//    for( i = db->string2entity.begin(); i != db->string2entity.end(); i++ )
-//    {
-//        // get entity
-//        e = i->second;
-//        // draw it
-//        e->updateAll(1/60.0f);
-//    }
     
-    // db
-    OFCKDB * db = OFCKDB::instance();
-    // get root
-    VREntity * root = db->getObject("root");
     // update it
-    root->updateAll(1/60.0f);
+    vr->root()->updateAll(1/60.0f);
 
     // trigger displaySync to chuck
     chuck->displaySync();
@@ -136,27 +116,9 @@ void ofApp::draw()
     m_camera.begin();
     // render light
     m_light->enable();
-
-//    // entity pointer
-//    VREntity * e = NULL;
-//    // db
-//    OFCKDB * db = OFCKDB::instance();
-//    // draw list
-//    map<string,VREntity *>::iterator i;
-//    for( i = db->string2entity.begin(); i != db->string2entity.end(); i++ )
-//    {
-//        // get entity
-//        e = i->second;
-//        // draw it
-//        e->renderAll();
-//    }
     
-    // db
-    OFCKDB * db = OFCKDB::instance();
-    // get root
-    VREntity * root = db->getObject("root");
     // update it
-    root->renderAll();
+    vr->root()->renderAll();
 
     // undo light
     m_light->disable();

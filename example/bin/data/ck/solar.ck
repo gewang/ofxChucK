@@ -1,6 +1,3 @@
-// get root node of the entire scene
-VR.getEntity("root") @=> VREntity root;
-
 // make sun
 VR.makeEntity("sun","dot") @=> VREntity sun;
 // color
@@ -27,7 +24,7 @@ moon.sca.setAll(.5);
 3 => moon.loc.x;
 
 // add sun to root, so it can be drawn
-root.addChild( sun );
+VR.root().addChild( sun );
 // add earth as child of sun
 sun.addChild( earth );
 // add earth as child of sun

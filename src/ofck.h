@@ -190,11 +190,42 @@ public:
 class VR
 {
 public:
+    // constructor
+    VR();
+    // destructor
+    virtual ~VR();
+
+public:
+    // get the scene root
+    VREntity * root();
+
+public:
     // set field of view
     float setFOV( float value );
     // get field of view
     float getFOV();
+
+public:
+    // singleton
+    static VR * instance() {
+        // allocate if needed
+        if( ourInstance == NULL ) {
+            ourInstance = new VR();
+            OFCKDB::instance()->setObject( "root", ourInstance->m_root );
+        }
+        
+        return ourInstance;
+    }
+    
+public:
+    // static instance
+    static VR * ourInstance;
+
+public:
+    // scene graph root
+    VREntity * m_root;
 };
+
 
 
 

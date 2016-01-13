@@ -599,12 +599,12 @@
 		F77AFC5DE20591990AE42D2E /* src */ = {
 			isa = PBXGroup;
 			children = (
-				F656DDAC3CA16B998B19BBB0 /* ofck-entities.cpp */,
-				654ADC82668593EC5D6E329A /* ofck-entities.h */,
-				9D56ADA820B1EB0EF648B9C6 /* ofck.cpp */,
 				1298AB84CC064F33141C5A90 /* ofck.h */,
-				F26BFC8326F2ECD83C5401B6 /* ofxChucK.cpp */,
+				9D56ADA820B1EB0EF648B9C6 /* ofck.cpp */,
+				654ADC82668593EC5D6E329A /* ofck-entities.h */,
+				F656DDAC3CA16B998B19BBB0 /* ofck-entities.cpp */,
 				206545651015A6DA306A9A3B /* ofxChucK.h */,
+				F26BFC8326F2ECD83C5401B6 /* ofxChucK.cpp */,
 				C85970C1C3D7DA3192F70B59 /* x-vector3d.h */,
 			);
 			name = src;

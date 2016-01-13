@@ -2,7 +2,7 @@
 // VR.loadImage("texture:flare-1", "flare-tng-1.png");
 
 // get root
-VR.getEntity("root") @=> VREntity root;
+VR.root() @=> VREntity root;
 
 for( int i; i < 100; i ++ )
 {
