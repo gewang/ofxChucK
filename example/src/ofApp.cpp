@@ -33,8 +33,8 @@ void ofApp::setup()
     m_light->setGlobalPosition( 1000, 1000, 1000 );
 
     // compile and run another file
-    // chuck->compileFile( "ck/solar.ck" );
-    chuck->compileFile( "ck/flares.ck" ); // need audio input
+    chuck->compileFile( "ck/solar.ck" );
+    // chuck->compileFile( "ck/flares.ck" ); // need audio input
     // chuck->compileFile( "ck/dot-circle.ck" );
 
     // setup the sound stream...
@@ -106,7 +106,7 @@ void ofApp::draw()
     // enable depth test
     ofEnableDepthTest();
     // set fov
-    m_camera.setFov( 180 );
+    m_camera.setFov( 90 );
     // set position
     m_camera.setPosition( ofVec3f(0,0,10) );
     // look at
