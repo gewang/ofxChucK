@@ -42,7 +42,7 @@ CK_DLL_MFUN(vrentity_setRGB);
 CK_DLL_MFUN(vrentity_getRGBA);
 CK_DLL_MFUN(vrentity_setRGBA);
 CK_DLL_MFUN(vrentity_addChild);
-CK_DLL_MFUN(vrentity_removeEntity);
+CK_DLL_MFUN(vrentity_removeChild);
 CK_DLL_MFUN(vrentity_setString);
 CK_DLL_MFUN(vrentity_getString);
 
@@ -114,6 +114,11 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
 
         // add .addChild
         QUERY->add_mfun(QUERY, vrentity_addChild, "void", "addChild" );
+        // VREntity
+        QUERY->add_arg(QUERY, "VREntity", "e" );
+        
+        // add .removeChild
+        QUERY->add_mfun(QUERY, vrentity_removeChild, "void", "removeChild" );
         // VREntity
         QUERY->add_arg(QUERY, "VREntity", "e" );
 
@@ -269,7 +274,17 @@ CK_DLL_MFUN(vrentity_addChild)
     me->addChild( rhs );
 }
 
-//CK_DLL_MFUN(vrentity_removeChild);
+CK_DLL_MFUN(vrentity_removeChild)
+{
+    // get entity
+    Chuck_Object * object = GET_NEXT_OBJECT(ARGS);
+    // get the c VREntity pointer
+    VREntity * me = (VREntity *)OBJ_MEMBER_INT(SELF,vrentity_offset_cpointer);
+    // get the entity to add
+    VREntity * rhs = (VREntity *)OBJ_MEMBER_INT(object,vrentity_offset_cpointer);
+    // add it
+    me->removeChild( rhs );
+}
 
 CK_DLL_MFUN( vrentity_setString )
 {
@@ -890,6 +905,35 @@ VREntity::~VREntity()
 void VREntity::addChild( VREntity * entity )
 {
     children.push_back( entity );
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: removeChild()
+// desc: remove child
+//------------------------------------------------------------------------------
+void VREntity::removeChild( VREntity * entity )
+{
+    // index
+    int index = -1;
+    // find it
+    for( int i = 0; i < children.size(); i++ )
+    {
+        if( children[i] == entity )
+        {
+            index = i;
+            break;
+        }
+    }
+    
+    // check
+    if( index >= 0 )
+    {
+        // erase
+        children.erase( children.begin()+index );
+    }
 }
 
 

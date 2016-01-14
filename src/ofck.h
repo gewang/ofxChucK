@@ -39,6 +39,8 @@ public:
 public:
     // add child
     void addChild( VREntity * child );
+    // remove child
+    void removeChild( VREntity * child );
 
 public:
     // sync data with chuck

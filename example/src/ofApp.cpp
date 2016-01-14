@@ -106,7 +106,7 @@ void ofApp::draw()
     // enable depth test
     ofEnableDepthTest();
     // set fov
-    m_camera.setFov( 80 );
+    m_camera.setFov( 180 );
     // set position
     m_camera.setPosition( ofVec3f(0,0,10) );
     // look at
