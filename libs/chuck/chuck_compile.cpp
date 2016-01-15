@@ -61,8 +61,8 @@ using namespace std;
 
 // function prototypes
 t_CKBOOL load_internal_modules( Chuck_Compiler * compiler );
-t_CKBOOL load_external_modules( Chuck_Compiler * compiler, 
-                                const char * extension, 
+t_CKBOOL load_external_modules( Chuck_Compiler * compiler,
+                                const char * extension,
                                 std::list<std::string> & chugin_search_paths,
                                 std::list<std::string> & named_dls);
 t_CKBOOL load_module( Chuck_Env * env, f_ck_query query, const char * name, const char * nspc );
@@ -101,7 +101,7 @@ Chuck_Compiler::~Chuck_Compiler()
 // name: initialize()
 // desc: initialize the compiler
 //-----------------------------------------------------------------------------
-t_CKBOOL Chuck_Compiler::initialize( Chuck_VM * vm, 
+t_CKBOOL Chuck_Compiler::initialize( Chuck_VM * vm,
                                      std::list<std::string> & chugin_search_paths,
                                      std::list<std::string> & named_dls )
 {
@@ -114,7 +114,7 @@ t_CKBOOL Chuck_Compiler::initialize( Chuck_VM * vm,
     env = type_engine_init( vm );
     // add reference
     env->add_ref();
-    
+
     // allocate the emitter
     emitter = emit_engine_init( env );
     // add reference
@@ -125,11 +125,11 @@ t_CKBOOL Chuck_Compiler::initialize( Chuck_VM * vm,
     // load internal libs
     if( !load_internal_modules( this ) )
         goto error;
-    
+
     // load external libs
     if( !load_external_modules( this, ".chug", chugin_search_paths, named_dls ) )
         goto error;
-    
+
     // pop indent
     EM_poplog();
 
@@ -167,13 +167,13 @@ void Chuck_Compiler::shutdown()
     code = NULL;
     m_auto_depend = FALSE;
     m_recent.clear();
-    
+
     for(std::list<Chuck_DLL *>::iterator i = m_dlls.begin();
         i != m_dlls.end(); i++)
     {
         delete (*i);
     }
-    
+
     m_dlls.clear();
 
     // pop indent
@@ -196,7 +196,7 @@ t_CKBOOL Chuck_Compiler::bind( f_ck_query query_func, const std::string & name,
             name.c_str() );
     // push indent level
     EM_pushlog();
-    
+
     // get env
     Chuck_Env * env = this->env;
     // make context
@@ -206,32 +206,32 @@ t_CKBOOL Chuck_Compiler::bind( f_ck_query query_func, const std::string & name,
     env->reset();
     // load it
     type_engine_load_context( env, context );
-    
+
     // do it
     if( !load_module( env, query_func, name.c_str(), nspc.c_str() ) ) goto error;
 
     // clear context
     type_engine_unload_context( env );
-    
+
     // commit what is in the type checker at this point
     env->global()->commit();
-    
+
     // pop indent level
     EM_poplog();
-    
+
     return TRUE;
-    
+
 error:
-    
+
     // probably dangerous: rollback
     env->global()->rollback();
-    
+
     // clear context
     type_engine_unload_context( env );
-    
+
     // pop indent level
     EM_poplog();
-    
+
     return FALSE;
 }
 
@@ -263,7 +263,7 @@ t_CKBOOL Chuck_Compiler::go( const string & filename, FILE * fd, const char * st
     Chuck_Context * context = NULL;
 
     EM_reset_msg();
-    
+
     // check to see if resolve dependencies automatically
     if( !m_auto_depend )
     {
@@ -335,7 +335,7 @@ t_CKBOOL Chuck_Compiler::resolve( const string & type )
 
     // look up if name is already parsed
 
-    
+
 
     return ret;
 }
@@ -462,7 +462,7 @@ t_CKBOOL Chuck_Compiler::do_normal( const string & filename, FILE * fd, const ch
     // make the context
     context = type_engine_make_context( g_program, filename );
     if( !context ) return FALSE;
-    
+
     // remember full path (added 1.3.0.0)
     context->full_path = full_path;
 
@@ -566,20 +566,20 @@ Chuck_VM_Code * Chuck_Compiler::output()
 // name: load_module()
 // desc: load a dll and add it
 //-----------------------------------------------------------------------------
-t_CKBOOL load_module( Chuck_Env * env, f_ck_query query, 
+t_CKBOOL load_module( Chuck_Env * env, f_ck_query query,
                       const char * name, const char * nspc )
 {
     Chuck_DLL * dll = NULL;
     t_CKBOOL query_failed = FALSE;
-    
+
     // load osc
     dll = new Chuck_DLL( name );
     // (fixed: 1.3.0.0) query_failed now catches either failure of load or query
     if( (query_failed = !(dll->load( query ) && dll->query())) ||
         !type_engine_add_dll( env, dll, nspc ) )
     {
-        fprintf( stderr, 
-                 "[chuck]: internal error loading module '%s.%s'...\n", 
+        fprintf( stderr,
+                 "[chuck]: internal error loading module '%s.%s'...\n",
                  nspc, name );
         if( query_failed )
             fprintf( stderr, "       %s", dll->last_error() );
@@ -603,7 +603,7 @@ t_CKBOOL load_internal_modules( Chuck_Compiler * compiler )
     EM_log( CK_LOG_SEVERE, "loading built-in modules..." );
     // push indent level
     EM_pushlog();
-    
+
     // get env
     Chuck_Env * env = compiler->env;
     // make context
@@ -612,7 +612,7 @@ t_CKBOOL load_internal_modules( Chuck_Compiler * compiler )
     env->reset();
     // load it
     type_engine_load_context( env, context );
-    
+
 //#ifndef __DISABLE_MIDI__
     if( !init_class_Midi( env ) ) goto error;
     if( !init_class_MidiRW( env ) ) goto error;
@@ -631,7 +631,7 @@ t_CKBOOL load_internal_modules( Chuck_Compiler * compiler )
     load_module( env, xform_query, "xform", "global" );
     EM_log( CK_LOG_SEVERE, "module extract..." );
     load_module( env, extract_query, "extract", "global" );
-    
+
     // load
     EM_log( CK_LOG_SEVERE, "class 'machine'..." );
     if( !load_module( env, machine_query, "Machine", "global" ) ) goto error;
@@ -649,32 +649,32 @@ t_CKBOOL load_internal_modules( Chuck_Compiler * compiler )
     EM_log( CK_LOG_SEVERE, "class 'RegEx'..." );
     if( !load_module( env, regex_query, "RegEx", "global" ) ) goto error;
     // if( !load_module( env, net_query, "net", "global" ) ) goto error;
-    
+
     if( !init_class_HID( env ) ) goto error;
     if( !init_class_serialio( env ) ) goto error;
-        
+
     // clear context
     type_engine_unload_context( env );
-    
+
     // commit what is in the type checker at this point
     env->global()->commit();
-    
+
     // pop indent level
     EM_poplog();
-    
+
     return TRUE;
-    
+
 error:
-    
+
     // probably dangerous: rollback
     env->global()->rollback();
-    
+
     // clear context
     type_engine_unload_context( env );
-    
+
     // pop indent level
     EM_poplog();
-    
+
     return FALSE;
 }
 
@@ -684,17 +684,17 @@ error:
 // name: load_external_module_at_path()
 // desc: ...
 //-----------------------------------------------------------------------------
-t_CKBOOL load_external_module_at_path( Chuck_Compiler * compiler, 
+t_CKBOOL load_external_module_at_path( Chuck_Compiler * compiler,
                                        const char * name,
                                        const char * dl_path )
 {
     Chuck_Env * env = compiler->env;
-    
+
     EM_log(CK_LOG_SEVERE, "loading chugin '%s'", name);
-    
+
     Chuck_DLL * dll = new Chuck_DLL(name);
     t_CKBOOL query_failed = FALSE;
-    
+
     if((query_failed = !(dll->load(dl_path) && dll->query())) ||
        !type_engine_add_dll2(env, dll, "global"))
     {
@@ -702,14 +702,14 @@ t_CKBOOL load_external_module_at_path( Chuck_Compiler * compiler,
         if(query_failed)
             EM_log(CK_LOG_SEVERE, "error from chuck_dl: '%s'", dll->last_error());
         delete dll;
-        
+
         return FALSE;
     }
     else
     {
         compiler->m_dlls.push_back(dll);
         return TRUE;
-    }        
+    }
 }
 
 
@@ -723,8 +723,8 @@ static t_CKBOOL extension_matches( const char * filename, const char * extension
 {
     t_CKUINT extension_length = strlen(extension);
     t_CKUINT filename_length = strlen(filename);
-    
-    return strncmp( extension, filename+(filename_length-extension_length), 
+
+    return strncmp( extension, filename+(filename_length-extension_length),
                     extension_length) == 0;
 }
 
@@ -740,24 +740,24 @@ t_CKBOOL load_external_modules_in_directory( Chuck_Compiler * compiler,
                                              const char * extension )
 {
     static const t_CKBOOL RECURSIVE_SEARCH = false;
-    
+
     DIR * dir = opendir(directory);
-    
+
     if( dir )
     {
         // log
         EM_log( CK_LOG_INFO, "examining directory '%s' for chugins", directory );
-        
+
         struct dirent *de = NULL;
-        
+
         while( (de = readdir(dir)) )
         {
             t_CKBOOL is_regular = false;
             t_CKBOOL is_directory = false;
-            
+
 #if defined(__PLATFORM_WIN32__)
             is_directory = de->data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY;
-            is_regular = ((de->data.dwFileAttributes & FILE_ATTRIBUTE_NORMAL) || 
+            is_regular = ((de->data.dwFileAttributes & FILE_ATTRIBUTE_NORMAL) ||
                           (de->data.dwFileAttributes & FILE_ATTRIBUTE_READONLY) ||
                           (de->data.dwFileAttributes & FILE_ATTRIBUTE_ARCHIVE));
 #elif defined(__WINDOWS_PTHREAD__) // Cygwin -- doesn't have dirent d_type
@@ -770,9 +770,9 @@ t_CKBOOL load_external_modules_in_directory( Chuck_Compiler * compiler,
             }
             else
             {
-                // uhh ... 
-                EM_log( CK_LOG_INFO, 
-                        "unable to stat file '%s', ignoring for chugins", 
+                // uhh ...
+                EM_log( CK_LOG_INFO,
+                        "unable to stat file '%s', ignoring for chugins",
                         absolute_path.c_str() );
                 continue;
             }
@@ -780,14 +780,14 @@ t_CKBOOL load_external_modules_in_directory( Chuck_Compiler * compiler,
             is_directory = de->d_type == DT_DIR;
             is_regular = de->d_type == DT_REG;
 #endif
-            
+
             if( is_regular ) // TODO: follow links?
             {
                 if( extension_matches(de->d_name, extension) )
                 {
                     std::string absolute_path = std::string(directory) + "/" + de->d_name;
-                    
-                    load_external_module_at_path(compiler, de->d_name, 
+
+                    load_external_module_at_path(compiler, de->d_name,
                                                  absolute_path.c_str());
                 }
                 else if( extension_matches(de->d_name, ".ck") )
@@ -804,13 +804,13 @@ t_CKBOOL load_external_modules_in_directory( Chuck_Compiler * compiler,
                     strncmp(de->d_name, "..", sizeof("..")) != 0 )
                 {
                     std::string absolute_path = std::string(directory) + "/" + de->d_name;
-                    load_external_modules_in_directory(compiler, 
+                    load_external_modules_in_directory(compiler,
                                                        absolute_path.c_str(),
                                                        extension);
                 }
             }
         }
-        
+
         // close
         closedir( dir );
     }
@@ -820,7 +820,7 @@ t_CKBOOL load_external_modules_in_directory( Chuck_Compiler * compiler,
         EM_log( CK_LOG_INFO, "unable to open directory '%s'...", directory );
         EM_log( CK_LOG_INFO, "(ignoring for chugins...)" );
     }
-    
+
     return TRUE;
 }
 
@@ -831,8 +831,8 @@ t_CKBOOL load_external_modules_in_directory( Chuck_Compiler * compiler,
 // name: load_external_modules()
 // desc: ...
 //-----------------------------------------------------------------------------
-t_CKBOOL load_external_modules( Chuck_Compiler * compiler, 
-                                const char * extension, 
+t_CKBOOL load_external_modules( Chuck_Compiler * compiler,
+                                const char * extension,
                                 std::list<std::string> & chugin_search_paths,
                                 std::list<std::string> & named_dls )
 {
@@ -840,7 +840,7 @@ t_CKBOOL load_external_modules( Chuck_Compiler * compiler,
     EM_log( CK_LOG_SEVERE, "loading chugins" );
     // push indent level
     EM_pushlog();
-    
+
     // get env
     Chuck_Env * env = compiler->env;
     // make context
@@ -849,50 +849,50 @@ t_CKBOOL load_external_modules( Chuck_Compiler * compiler,
     env->reset();
     // load it
     type_engine_load_context( env, context );
-    
+
     /* first load dynamic libraries explicitly named on the command line */
-    
+
     for(std::list<std::string>::iterator i_dl = named_dls.begin();
         i_dl != named_dls.end(); i_dl++)
     {
         std::string & dl_path = *i_dl;
         if(!extension_matches(dl_path.c_str(), extension))
             dl_path += extension;
-        
+
         load_external_module_at_path(compiler, dl_path.c_str(),
                                      dl_path.c_str());
     }
-    
+
     /* now recurse through search paths and load any DLs or .ck files found */
-    
+
     for(std::list<std::string>::iterator i_sp = chugin_search_paths.begin();
         i_sp != chugin_search_paths.end(); i_sp++)
     {
         load_external_modules_in_directory(compiler, (*i_sp).c_str(), extension);
-    }    
-        
+    }
+
     // clear context
     type_engine_unload_context( env );
-    
+
     // commit what is in the type checker at this point
     env->global()->commit();
-    
+
     // pop indent level
     EM_poplog();
-    
+
     return TRUE;
-   /* 
+   /*
 error:
-    
+
     // probably dangerous: rollback
     env->global()->rollback();
-    
+
     // clear context
     type_engine_unload_context( env );
-    
+
     // pop indent level
     EM_poplog();
-    
+
     return FALSE;
 	*/
 }

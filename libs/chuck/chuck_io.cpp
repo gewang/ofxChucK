@@ -60,7 +60,7 @@ typedef WORD uint16_t;
 #ifndef __WINDOWS_MODERN__
 typedef DWORD uint32_t;
 #endif
-#endif 
+#endif
 
 
 // available baud rates
@@ -105,18 +105,18 @@ CK_DLL_MFUN(serialio_canWait);
 void * Chuck_IO_Serial::shell_read_cb( void *_this )
 {
     Chuck_IO_Serial *cereal = (Chuck_IO_Serial *) _this;
-    
+
     cereal->read_cb();
-    
+
     return NULL;
 }
 
 void * Chuck_IO_Serial::shell_write_cb( void *_this )
 {
     Chuck_IO_Serial *cereal = (Chuck_IO_Serial *) _this;
-    
+
     cereal->write_cb();
-    
+
     return NULL;
 }
 
@@ -139,22 +139,22 @@ m_writeBuffer(1024)
 {
     m_fd = -1;
     m_cfd = NULL;
-    
+
     m_io_buf_max = CHUCK_IO_DEFAULT_BUFSIZE;
     m_io_buf = new unsigned char[m_io_buf_max];
     m_io_buf_pos = m_io_buf_available = 0;
-    
+
     m_tmp_buf_max = CHUCK_IO_DEFAULT_BUFSIZE;
     m_tmp_buf = new unsigned char[m_tmp_buf_max];
-    
+
     m_read_thread = NULL;
     m_event_buffer = NULL;
-    
+
     m_write_thread = NULL;
     m_do_write_thread = TRUE;
 
     m_do_exit = FALSE;
-    
+
     s_serials.push_back(this);
 }
 
@@ -165,16 +165,16 @@ Chuck_IO_Serial::~Chuck_IO_Serial()
     SAFE_DELETE(m_read_thread);
     if( m_event_buffer )
         g_vm->destroy_event_buffer( m_event_buffer );
-    
+
     close();
-    
+
     SAFE_DELETE(m_io_buf);
     m_io_buf_max = 0;
     m_io_buf_pos = m_io_buf_available = 0;
-    
+
     SAFE_DELETE(m_tmp_buf);
     m_tmp_buf_max = 0;
-    
+
     s_serials.remove(this);
 }
 
@@ -185,9 +185,9 @@ t_CKBOOL Chuck_IO_Serial::ready()
     pollfds.fd = m_fd;
     pollfds.events = POLLIN;
     pollfds.revents = 0;
-    
+
     int result = poll(&pollfds, 1, 0);
-    
+
     if( result > 0 && (pollfds.revents & POLLIN) ) return TRUE;
     else return FALSE; // TODO: error handling
 #else
@@ -198,11 +198,11 @@ t_CKBOOL Chuck_IO_Serial::ready()
 t_CKBOOL Chuck_IO_Serial::open( const t_CKUINT i, t_CKINT flags, t_CKUINT baud )
 {
     vector<string> ports = SerialIOManager::availableSerialDevices();
-    
+
     if( i < ports.size() )
     {
         const string &path = ports[i];
-        
+
         open(path, flags, baud);
     }
     else
@@ -210,7 +210,7 @@ t_CKBOOL Chuck_IO_Serial::open( const t_CKUINT i, t_CKINT flags, t_CKUINT baud )
         EM_log(CK_LOG_WARNING, "(Serial.open): error: invalid port number");
         return FALSE;
     }
-    
+
     return TRUE;
 }
 
@@ -230,27 +230,27 @@ t_CKBOOL Chuck_IO_Serial::open( const std::string & path, t_CKINT flags, t_CKUIN
         EM_log(CK_LOG_WARNING, "(Serial.open): warning: invalid binary/ASCII flag requested, defaulting to ASCII");
         m_flags = Chuck_IO_File::TYPE_ASCII;
     }
-    
+
     int fd = ::open( path.c_str(), O_RDWR );
     if( fd < 0 )
     {
         EM_log(CK_LOG_WARNING, "(Serial.open): error: unable to open file at '%s'", path.c_str());
         return FALSE;
     }
-    
+
     m_fd = fd;
     m_path = path;
-    
+
     // set default baud rate
     setBaudRate(baud);
-    
+
     m_cfd = fdopen(fd, "a+");
     m_iomode = MODE_ASYNC;
 #ifndef WIN32
     fcntl(m_fd, F_SETFL, O_NONBLOCK);
 #endif
     m_eof = FALSE;
-    
+
     return TRUE;
 }
 
@@ -281,7 +281,7 @@ void Chuck_IO_Serial::close()
 void Chuck_IO_Serial::close_int()
 {
     EM_log(CK_LOG_INFO, "(Serial.close): closing serial device '%s'", m_path.c_str());
-    
+
     if(good())
     {
         if(m_cfd)
@@ -330,15 +330,15 @@ t_CKINT Chuck_IO_Serial::readInt( t_CKINT flags )
         EM_log(CK_LOG_WARNING, "(Serial.readInt): warning: file not open");
         return 0;
     }
-    
+
     if( m_iomode == MODE_ASYNC )
     {
         EM_log(CK_LOG_WARNING, "(Serial.readInt): warning: calling synchronous read function on asynchronous file");
         return 0;
     }
-    
+
     t_CKINT i = 0;
-    
+
     if( m_flags & Chuck_IO_File::TYPE_BINARY )
     {
         if( flags & INT8 )
@@ -346,7 +346,7 @@ t_CKINT Chuck_IO_Serial::readInt( t_CKINT flags )
             uint8_t byte = 0;
             if(!fread(&byte, 1, 1, m_cfd))
                 EM_log(CK_LOG_WARNING, "(Serial.readInt): error: read failed");
-            
+
             i = byte;
         }
         else if( flags & INT16 )
@@ -354,7 +354,7 @@ t_CKINT Chuck_IO_Serial::readInt( t_CKINT flags )
             uint16_t word = 0;
             if(!fread(&word, 2, 1, m_cfd))
                 EM_log(CK_LOG_WARNING, "(Serial.readInt): error: read failed");
-            
+
             i = word;
         }
         else if( flags & INT32 )
@@ -362,7 +362,7 @@ t_CKINT Chuck_IO_Serial::readInt( t_CKINT flags )
             uint32_t dword = 0;
             if(!fread(&dword, 4, 1, m_cfd))
                 EM_log(CK_LOG_WARNING, "(Serial.readInt): error: read failed");
-            
+
             i = dword;
         }
     }
@@ -371,7 +371,7 @@ t_CKINT Chuck_IO_Serial::readInt( t_CKINT flags )
         if(!fscanf(m_cfd, "%li", &i))
             EM_log(CK_LOG_WARNING, "(Serial.readInt): error: read failed");
     }
-    
+
     return i;
 }
 
@@ -382,15 +382,15 @@ t_CKFLOAT Chuck_IO_Serial::readFloat()
         EM_log(CK_LOG_WARNING, "(Serial.readFloat): warning: file not open");
         return 0;
     }
-    
+
     if( m_iomode == MODE_ASYNC )
     {
         EM_log(CK_LOG_WARNING, "(Serial.readFloat): warning: calling synchronous read function on asynchronous file");
         return 0;
     }
-    
+
     t_CKFLOAT f = 0;
-    
+
     if( m_flags & Chuck_IO_File::TYPE_BINARY )
     {
         if(!fread(&f, 4, 1, m_cfd))
@@ -401,7 +401,7 @@ t_CKFLOAT Chuck_IO_Serial::readFloat()
         if(!fscanf(m_cfd, "%lf", &f))
             EM_log(CK_LOG_WARNING, "(Serial.readFloat): error: read failed");
     }
-    
+
     return f;
 }
 
@@ -412,27 +412,27 @@ t_CKBOOL Chuck_IO_Serial::readString( std::string & str )
         EM_log(CK_LOG_WARNING, "(Serial.readString): warning: file not open");
         return FALSE;
     }
-    
+
     if( m_iomode == MODE_ASYNC )
     {
         EM_log(CK_LOG_WARNING, "(Serial.readString): warning: calling synchronous read function on asynchronous file");
         return FALSE;
     }
-    
+
     if( m_flags & Chuck_IO_File::TYPE_BINARY )
     {
         EM_log(CK_LOG_WARNING, "(Serial.readString): warning: cannot read string from binary file");
         return FALSE;
     }
-    
+
     if(!fscanf(m_cfd, CHUCK_IO_SCANF_STRING, &m_tmp_buf))
     {
         EM_log(CK_LOG_WARNING, "(Serial.readFloat): error: read failed");
         return FALSE;
     }
-    
+
     str = (char *) m_tmp_buf;
-    
+
     return TRUE;
 }
 
@@ -444,31 +444,31 @@ Chuck_String * Chuck_IO_Serial::readLine()
         EM_log(CK_LOG_WARNING, "(Serial.readLine): warning: file not open");
         return NULL;
     }
-    
+
     if( m_iomode == MODE_ASYNC )
     {
         EM_log(CK_LOG_WARNING, "(Serial.readLine): warning: calling synchronous read function on asynchronous file");
         return NULL;
     }
-    
+
     if( m_flags & Chuck_IO_File::TYPE_BINARY )
     {
         EM_log(CK_LOG_WARNING, "(Serial.readLine): warning: cannot read line from binary file");
         return NULL;
     }
-    
-    
+
+
     if(!fgets((char *)m_tmp_buf, m_tmp_buf_max, m_cfd))
     {
         EM_log(CK_LOG_WARNING, "(Serial.readLine): error: from fgets");
         return NULL;
     }
-    
+
     Chuck_String * str = new Chuck_String;
     initialize_object(str, &t_string);
-    
+
     str->str = string((char *)m_tmp_buf);
-    
+
     return str;
 }
 
@@ -480,7 +480,7 @@ t_CKBOOL Chuck_IO_Serial::eof()
         EM_log(CK_LOG_WARNING, "(Serial.eof): warning: file not open");
         return FALSE;
     }
-    
+
     if( MODE_SYNC )
         return (m_eof = feof( m_cfd ));
     else
@@ -496,22 +496,22 @@ void Chuck_IO_Serial::write( const std::string & val )
         EM_log(CK_LOG_WARNING, "(Serial.write): warning: file not open");
         return;
     }
-    
+
     if( m_iomode == MODE_ASYNC )
     {
         start_read_thread();
-        
+
         int len = val.length();
         for(int i = 0; i < len; i++)
             // TODO: efficiency
             m_writeBuffer.put(val[i]);
-        
+
         Request r;
         r.m_type = TYPE_WRITE;
         r.m_val = 0;
         r.m_num = 0;
         r.m_status = Request::RQ_STATUS_PENDING;
-        
+
         m_asyncWriteRequests.put(r);
     }
     else if( m_iomode == MODE_SYNC )
@@ -534,17 +534,17 @@ void Chuck_IO_Serial::write( t_CKINT val, t_CKINT size )
         EM_log(CK_LOG_WARNING, "(Serial.write): warning: file not open");
         return;
     }
-    
+
     if(!(size == 1 || size == 2 || size == 4 || size == 8))
     {
         EM_log(CK_LOG_WARNING, "(Serial.write): warning: invalid int size %li, ignoring write request", size);
         return;
     }
-    
+
     if( m_iomode == MODE_ASYNC )
     {
         start_read_thread();
-        
+
         if( m_flags & Chuck_IO_File::TYPE_ASCII )
         {
             // TODO: don't use m_tmp_buf (thread safety?)
@@ -553,34 +553,34 @@ void Chuck_IO_Serial::write( t_CKINT val, t_CKINT size )
             m_tmp_buf[m_tmp_buf_max - 1] = '\0'; // force NULL terminator -- see http://www.di-mgt.com.au/cprog.html#snprintf
 #else
             snprintf((char *)m_tmp_buf, m_tmp_buf_max, "%li", val);
-#endif       
+#endif
             int len = strlen((char *)m_tmp_buf);
             for(int i = 0; i < len; i++)
                 // TODO: efficiency
                 m_writeBuffer.put(m_tmp_buf[i]);
-            
+
             Request r;
             r.m_type = TYPE_WRITE;
             r.m_val = 0;
             r.m_num = 0;
             r.m_status = Request::RQ_STATUS_PENDING;
-            
+
             m_asyncWriteRequests.put(r);
         }
         else
         {
             char * buf = (char *) &val;
-            
+
             // assume 4-byte int
             for(int i = 0; i < size; i++)
                 m_writeBuffer.put(buf[i]);
-            
+
             Request r;
             r.m_type = TYPE_WRITE;
             r.m_val = 0;
             r.m_num = 0;
             r.m_status = Request::RQ_STATUS_PENDING;
-            
+
             m_asyncWriteRequests.put(r);
         }
     }
@@ -606,11 +606,11 @@ void Chuck_IO_Serial::write( t_CKFLOAT val )
         EM_log(CK_LOG_WARNING, "(Serial.write): warning: file not open");
         return;
     }
-    
+
     if( m_iomode == MODE_ASYNC )
     {
         start_read_thread();
-        
+
         if( m_flags & Chuck_IO_File::TYPE_ASCII )
         {
 #ifdef WIN32
@@ -618,35 +618,35 @@ void Chuck_IO_Serial::write( t_CKFLOAT val )
             m_tmp_buf[m_tmp_buf_max - 1] = '\0'; // force NULL terminator -- see http://www.di-mgt.com.au/cprog.html#snprintf
 #else
             snprintf((char *)m_tmp_buf, m_tmp_buf_max, "%f", val);
-#endif       
-            
+#endif
+
             int len = strlen((char *)m_tmp_buf);
             for(int i = 0; i < len; i++)
                 // TODO: efficiency
                 m_writeBuffer.put(m_tmp_buf[i]);
-            
+
             Request r;
             r.m_type = TYPE_WRITE;
             r.m_val = 0;
             r.m_num = 0;
             r.m_status = Request::RQ_STATUS_PENDING;
-            
+
             m_asyncWriteRequests.put(r);
         }
         else
         {
             char * buf = (char *) &val;
-            
+
             // assume 4-byte float
             for(int i = 0; i < 4; i++)
                 m_writeBuffer.put(buf[i]);
-            
+
             Request r;
             r.m_type = TYPE_WRITE;
             r.m_val = 0;
             r.m_num = 0;
             r.m_status = Request::RQ_STATUS_PENDING;
-            
+
             m_asyncWriteRequests.put(r);
         }
     }
@@ -673,11 +673,11 @@ void Chuck_IO_Serial::writeBytes( Chuck_Array4 * arr )
         EM_log(CK_LOG_WARNING, "(Serial.writeBytes): warning: file not open");
         return;
     }
-    
+
     if( m_iomode == MODE_ASYNC )
     {
         start_read_thread();
-        
+
         int len = arr->size();
         for(int i = 0; i < len; i++)
         {
@@ -686,13 +686,13 @@ void Chuck_IO_Serial::writeBytes( Chuck_Array4 * arr )
             arr->get(i, &byte);
             m_writeBuffer.put((char) byte);
         }
-        
+
         Request r;
         r.m_type = TYPE_WRITE;
         r.m_val = 0;
         r.m_num = 0;
         r.m_status = Request::RQ_STATUS_PENDING;
-        
+
         m_asyncWriteRequests.put(r);
     }
     else if( m_iomode == MODE_SYNC )
@@ -717,7 +717,7 @@ void Chuck_IO_Serial::start_read_thread()
         m_read_thread->start((unsigned int (__stdcall *)(void*))shell_read_cb, this);
 #else
         m_read_thread->start(shell_read_cb, this);
-#endif         
+#endif
         assert(m_event_buffer == NULL);
         m_event_buffer = g_vm->create_event_buffer();
     }
@@ -731,15 +731,15 @@ t_CKBOOL Chuck_IO_Serial::readAsync( t_CKUINT type, t_CKUINT num )
         EM_log(CK_LOG_WARNING, "(Serial.readAsync): warning: file not open");
         return FALSE;
     }
-    
+
     start_read_thread();
-    
+
     Request read;
     read.m_type = type;
     read.m_num = num;
     read.m_val = 0;
     read.m_status = Request::RQ_STATUS_PENDING;
-    
+
     if(!m_asyncRequests.atMaximum() )
     {
         m_asyncRequests.put(read);
@@ -749,7 +749,7 @@ t_CKBOOL Chuck_IO_Serial::readAsync( t_CKUINT type, t_CKUINT num )
         EM_log(CK_LOG_SEVERE, "(SerialIO.readAsync): warning: request buffer overflow, dropping read");
         return FALSE;
     }
-    
+
     return TRUE;
 }
 
@@ -760,18 +760,18 @@ Chuck_String * Chuck_IO_Serial::getLine()
         EM_log(CK_LOG_WARNING, "(Serial.getLine): warning: file not open");
         return NULL;
     }
-    
+
     Request r;
-    
+
     Chuck_String * str = NULL;
-    
+
     if(m_asyncResponses.peek(r, 1) &&
        r.m_type == TYPE_LINE && r.m_status == Request::RQ_STATUS_SUCCESS)
     {
         str = (Chuck_String *) r.m_val;
         m_asyncResponses.get(r);
     }
-    
+
     return str;
 }
 
@@ -783,11 +783,11 @@ t_CKINT Chuck_IO_Serial::getByte()
         EM_log(CK_LOG_WARNING, "(Serial.getByte): warning: file not open");
         return 0;
     }
-    
+
     Request r;
-    
+
     t_CKINT i = 0;
-    
+
     if(m_asyncResponses.peek(r, 1) &&
        r.m_type == TYPE_BYTE && r.m_num == 1 &&
        r.m_status == Request::RQ_STATUS_SUCCESS)
@@ -795,7 +795,7 @@ t_CKINT Chuck_IO_Serial::getByte()
         i = (t_CKINT) r.m_val;
         m_asyncResponses.get(r);
     }
-    
+
     return i;
 }
 
@@ -806,11 +806,11 @@ Chuck_Array * Chuck_IO_Serial::getBytes()
         EM_log(CK_LOG_WARNING, "(Serial.getBytes): warning: file not open");
         return NULL;
     }
-    
+
     Request r;
-    
+
     Chuck_Array * arr = NULL;
-    
+
     if(m_asyncResponses.peek(r, 1) &&
        r.m_type == TYPE_BYTE && r.m_num > 1 &&
        r.m_status == Request::RQ_STATUS_SUCCESS)
@@ -819,7 +819,7 @@ Chuck_Array * Chuck_IO_Serial::getBytes()
         initialize_object(arr, &t_array);
         m_asyncResponses.get(r);
     }
-    
+
     return arr;
 }
 
@@ -832,9 +832,9 @@ Chuck_Array * Chuck_IO_Serial::getInts()
     }
 
     Request r;
-    
+
     Chuck_Array * arr = NULL;
-    
+
     if(m_asyncResponses.peek(r, 1) &&
        r.m_type == TYPE_INT && r.m_status == Request::RQ_STATUS_SUCCESS)
     {
@@ -842,7 +842,7 @@ Chuck_Array * Chuck_IO_Serial::getInts()
         initialize_object(arr, &t_array);
         m_asyncResponses.get(r);
     }
-    
+
     return arr;
 }
 
@@ -855,9 +855,9 @@ Chuck_Array * Chuck_IO_Serial::getFloats()
     }
 
     Request r;
-    
+
     Chuck_Array * arr = NULL;
-    
+
     if(m_asyncResponses.peek(r, 1) &&
        r.m_type == TYPE_FLOAT && r.m_status == Request::RQ_STATUS_SUCCESS)
     {
@@ -865,7 +865,7 @@ Chuck_Array * Chuck_IO_Serial::getFloats()
         initialize_object(arr, &t_array);
         m_asyncResponses.get(r);
     }
-    
+
     return arr;
 }
 
@@ -876,35 +876,35 @@ Chuck_String * Chuck_IO_Serial::getString()
         EM_log(CK_LOG_WARNING, "(Serial.getString): warning: file not open");
         return NULL;
     }
-    
+
     Request r;
-    
+
     Chuck_String * str = NULL;
-    
+
     if(m_asyncResponses.peek(r, 1) &&
        r.m_type == TYPE_STRING && r.m_status == Request::RQ_STATUS_SUCCESS)
     {
         str = (Chuck_String *) r.m_val;
         m_asyncResponses.get(r);
     }
-    
+
     return str;
 }
 
 
 t_CKBOOL Chuck_IO_Serial::get_buffer(t_CKINT timeout_ms)
 {
-#ifndef WIN32    
+#ifndef WIN32
     fd_set fds;
     FD_ZERO(&fds);
     FD_SET(m_fd, &fds);
-    
+
     timeval tv;
     tv.tv_sec = timeout_ms/1000;
     tv.tv_usec = 1000 * (timeout_ms%1000);
-    
+
     int result = select(m_fd+1, &fds, NULL, NULL, &tv);
-    
+
     if(result > 0 && FD_ISSET(m_fd, &fds))
     {
         result = ::read(m_fd, m_io_buf, m_io_buf_max);
@@ -912,9 +912,9 @@ t_CKBOOL Chuck_IO_Serial::get_buffer(t_CKINT timeout_ms)
         {
             m_io_buf_available = result;
             m_io_buf_pos = 0;
-            
+
             EM_log(CK_LOG_FINE, "(SerialIO::get_buffer): read() returned %i bytes", result);
-            
+
             return TRUE;
         }
         else
@@ -926,9 +926,9 @@ t_CKBOOL Chuck_IO_Serial::get_buffer(t_CKINT timeout_ms)
     {
         EM_log(CK_LOG_FINE, "(SerialIO::get_buffer): select() timeout");
     }
-    
+
     return FALSE;
-    
+
 #else
 
     int result = ::read(m_fd, m_io_buf, m_io_buf_max);
@@ -936,7 +936,7 @@ t_CKBOOL Chuck_IO_Serial::get_buffer(t_CKINT timeout_ms)
     {
         m_io_buf_available = result;
         m_io_buf_pos = 0;
-        
+
         return TRUE;
     }
 
@@ -951,17 +951,17 @@ t_CKBOOL Chuck_IO_Serial::get_buffer(t_CKINT timeout_ms)
 t_CKINT Chuck_IO_Serial::peek_buffer()
 {
     // fprintf(stderr, "Chuck_IO_Serial::peek_buffer %i/%i\n", m_io_buf_pos, m_io_buf_available);
-    
+
     if(m_io_buf_pos >= m_io_buf_available)
     {
         // refresh data
         while(!m_do_exit && !m_eof && !get_buffer(5))
             ;
-        
+
         if(m_do_exit || m_eof)
             return -1;
     }
-    
+
     return m_io_buf[m_io_buf_pos];
 }
 
@@ -970,17 +970,17 @@ t_CKINT Chuck_IO_Serial::peek_buffer()
 t_CKINT Chuck_IO_Serial::pull_buffer()
 {
     // fprintf(stderr, "Chuck_IO_Serial::pull_buffer %i/%i\n", m_io_buf_pos, m_io_buf_available);
-    
+
     if(m_io_buf_pos >= m_io_buf_available)
     {
         // refresh data
         while(!m_do_exit && !m_eof && !get_buffer(5))
             ;
-        
+
         if(m_do_exit || m_eof)
             return -1;
     }
-    
+
     return m_io_buf[m_io_buf_pos++];
 }
 
@@ -992,10 +992,10 @@ t_CKINT Chuck_IO_Serial::buffer_bytes_to_tmp(t_CKINT num_bytes)
     {
         if(peek_buffer() == -1)
             break;
-        
+
         m_tmp_buf[len++] = pull_buffer();
     }
-    
+
     return len;
 }
 
@@ -1004,12 +1004,12 @@ t_CKBOOL Chuck_IO_Serial::handle_line(Chuck_IO_Serial::Request &r)
 {
     t_CKUINT len = 0;
     Chuck_String * str;
-    
+
     while(!m_do_exit)
     {
         if(peek_buffer() == -1)
             break;
-        
+
         if(peek_buffer() == '\r')
         {
             // consume newline character
@@ -1017,7 +1017,7 @@ t_CKBOOL Chuck_IO_Serial::handle_line(Chuck_IO_Serial::Request &r)
             if(peek_buffer() == '\n') pull_buffer(); // handle \r\n
             break;
         }
-        
+
         if(peek_buffer() == '\n')
         {
             // consume newline character
@@ -1025,40 +1025,40 @@ t_CKBOOL Chuck_IO_Serial::handle_line(Chuck_IO_Serial::Request &r)
             if(peek_buffer() == '\r') pull_buffer(); // handle \n\r (unlikely)
             break;
         }
-                
+
         m_tmp_buf[len++] = pull_buffer();
-        
+
         if(len >= m_tmp_buf_max)
         {
             EM_log(CK_LOG_WARNING, "(Serial.handle_line): warning: line exceeds buffer length, truncating to %i characters", m_tmp_buf_max);
             break;
         }
     }
-    
+
     if(m_do_exit)
         goto error;
     // TODO: eof
-    
+
     str = new Chuck_String;
     str->str = std::string((char *)m_tmp_buf, len);
-    
+
     r.m_val = (t_CKUINT) str;
     r.m_status = Chuck_IO_Serial::Request::RQ_STATUS_SUCCESS;
 
     return TRUE;
-    
+
 error:
     r.m_val = 0;
     r.m_status = Chuck_IO_Serial::Request::RQ_STATUS_FAILURE;
-    
+
 #ifdef WIN32
     HANDLE hFile = (HANDLE) _get_osfhandle(m_fd);
     DWORD error;
     ClearCommError(hFile, &error, NULL);
-    
+
     PurgeComm(hFile, PURGE_RXCLEAR);
 #endif
-    
+
     return TRUE;
 }
 
@@ -1072,19 +1072,19 @@ t_CKBOOL Chuck_IO_Serial::handle_float_ascii(Chuck_IO_Serial::Request & r)
     t_CKFLOAT val = 0;
     int numRead = 0;
     Chuck_Array8 * array = new Chuck_Array8(0);
-    
+
     for(int i = 0; i < r.m_num && !m_do_exit; i++)
     {
         t_CKUINT len = 0;
-        
+
         while(!m_do_exit)
         {
             if(peek_buffer() == -1)
                 break;
-            
+
             // TODO: '\r'?
             int c = peek_buffer();
-            
+
             if(isdigit(c) || c=='.' || (len==0 && (c=='-' || c=='+')))
             {
                 m_tmp_buf[len++] = pull_buffer();
@@ -1093,29 +1093,29 @@ t_CKBOOL Chuck_IO_Serial::handle_float_ascii(Chuck_IO_Serial::Request & r)
             {
                 m_tmp_buf[len++] = '\0';
                 val = strtod((char *)m_tmp_buf, NULL);
-                
+
                 numRead++;
                 array->push_back(val);
-                
+
                 break;
             }
         }
     }
-    
+
     if(m_do_exit || m_eof)
         goto error;
 
     r.m_num = numRead;
     r.m_val = (t_CKUINT) array;
     r.m_status = Request::RQ_STATUS_SUCCESS;
-    
+
     return TRUE;
-    
+
 error:
     SAFE_DELETE(array);
     r.m_val = 0;
     r.m_status = Chuck_IO_Serial::Request::RQ_STATUS_FAILURE;
-    
+
     return TRUE;
 }
 
@@ -1127,14 +1127,14 @@ t_CKBOOL Chuck_IO_Serial::handle_int_ascii(Chuck_IO_Serial::Request & r)
     for(int i = 0; i < r.m_num; i++)
     {
         t_CKUINT len = 0;
-        
+
         while(!m_do_exit)
         {
             if(peek_buffer() == -1)
                 break;
-            
+
             int c = pull_buffer();
-            
+
             if(isdigit(c) || (len==0 && (c=='-' || c=='+')))
             {
                 m_tmp_buf[len++] = c;
@@ -1143,39 +1143,39 @@ t_CKBOOL Chuck_IO_Serial::handle_int_ascii(Chuck_IO_Serial::Request & r)
             {
                 m_tmp_buf[len++] = '\0';
                 val = strtol((char *)m_tmp_buf, NULL, 10);
-                
+
                 numRead++;
                 array->push_back(val);
-                
+
                 break;
             }
         }
     }
-    
+
     if(m_do_exit || m_eof)
         goto error;
-    
+
     r.m_num = numRead;
     r.m_val = (t_CKUINT) array;
     r.m_status = Request::RQ_STATUS_SUCCESS;
-    
+
     return TRUE;
-    
+
 error:
     SAFE_DELETE(array);
     r.m_val = 0;
     r.m_status = Chuck_IO_Serial::Request::RQ_STATUS_FAILURE;
-    
+
     return TRUE;
 }
 
 t_CKBOOL Chuck_IO_Serial::handle_byte(Chuck_IO_Serial::Request & r)
 {
     // binary
-    int size = 1;    
+    int size = 1;
     int num = r.m_num;
     t_CKUINT val = 0;
-    
+
     if(size*num > m_tmp_buf_max)
     {
         int new_num = (int) floorf(((float)m_tmp_buf_max)/size);
@@ -1183,14 +1183,14 @@ t_CKBOOL Chuck_IO_Serial::handle_byte(Chuck_IO_Serial::Request & r)
                num, size*num, new_num);
         num = new_num;
     }
-    
+
     t_CKINT len = buffer_bytes_to_tmp(num);
-    
+
     if(m_do_exit || m_eof)
         goto error;
 
     r.m_num = len;
-    
+
     if(r.m_num == 1)
         val = m_tmp_buf[0];
     else
@@ -1200,19 +1200,19 @@ t_CKBOOL Chuck_IO_Serial::handle_byte(Chuck_IO_Serial::Request & r)
         {
             array->set(i, m_tmp_buf[i]);
         }
-        
+
         val = (t_CKUINT) array;
     }
-    
+
     r.m_val = val;
     r.m_status = Request::RQ_STATUS_SUCCESS;
-    
+
     return TRUE;
-    
+
 error:
     r.m_val = 0;
     r.m_status = Chuck_IO_Serial::Request::RQ_STATUS_FAILURE;
-    
+
     return TRUE;
 }
 
@@ -1221,9 +1221,9 @@ t_CKBOOL Chuck_IO_Serial::handle_float_binary(Chuck_IO_Serial::Request & r)
     // binary
     int size = 4; // SPENCERTODO: should these be based on arch (64 bit)?
     assert(sizeof(t_CKSINGLE) == 4);
-    
+
     int num = r.m_num;
-    
+
     if(size*num > m_tmp_buf_max)
     {
         int new_num = (int) floorf(((float)m_tmp_buf_max)/size);
@@ -1231,23 +1231,23 @@ t_CKBOOL Chuck_IO_Serial::handle_float_binary(Chuck_IO_Serial::Request & r)
                num, size*num, new_num);
         num = new_num;
     }
-    
+
     r.m_num = buffer_bytes_to_tmp(size*num)/size;
-    
+
     t_CKUINT val = 0;
     t_CKSINGLE * m_floats = (t_CKSINGLE *) m_tmp_buf;
-    
+
     Chuck_Array8 * array = new Chuck_Array8(r.m_num);
     for(int i = 0; i < r.m_num; i++)
     {
         array->set(i, m_floats[i]);
     }
-        
+
     val = (t_CKUINT) array;
-    
+
     r.m_val = val;
     r.m_status = Request::RQ_STATUS_SUCCESS;
-    
+
     return TRUE;
 }
 
@@ -1255,9 +1255,9 @@ t_CKBOOL Chuck_IO_Serial::handle_int_binary(Chuck_IO_Serial::Request & r)
 {
     // binary
     int size = 4; // SPENCERTODO: should these be based on arch (64 bit)?
-    
+
     int num = r.m_num;
-    
+
     if(size*num > m_tmp_buf_max)
     {
         int new_num = (int) floorf(((float)m_tmp_buf_max)/size);
@@ -1265,23 +1265,23 @@ t_CKBOOL Chuck_IO_Serial::handle_int_binary(Chuck_IO_Serial::Request & r)
                num, size*num, new_num);
         num = new_num;
     }
-    
+
     r.m_num = buffer_bytes_to_tmp(size*num)/size;
-    
+
     t_CKUINT val = 0;
     uint32_t * m_ints = (uint32_t *) m_tmp_buf;
-    
+
     Chuck_Array4 * array = new Chuck_Array4(FALSE, r.m_num);
     for(int i = 0; i < r.m_num; i++)
     {
         array->set(i, m_ints[i]);
     }
-    
+
     val = (t_CKUINT) array;
-    
+
     r.m_val = val;
     r.m_status = Request::RQ_STATUS_SUCCESS;
-    
+
     return TRUE;
 }
 
@@ -1289,19 +1289,19 @@ t_CKBOOL Chuck_IO_Serial::handle_int_binary(Chuck_IO_Serial::Request & r)
 void Chuck_IO_Serial::read_cb()
 {
     m_do_read_thread = TRUE;
-    
+
     m_write_thread = new XThread;
 #ifdef WIN32
         m_read_thread->start((unsigned int (__stdcall *)(void*))shell_write_cb, this);
 #else
 	m_write_thread->start(shell_write_cb, this);
 #endif
-    
+
     while(m_do_read_thread && !m_do_exit)
     {
         Request r;
         int num_responses = 0;
-        
+
         while(m_asyncRequests.get(r) && m_do_read_thread && !m_do_exit)
         {
             if( m_asyncResponses.atMaximum() )
@@ -1309,7 +1309,7 @@ void Chuck_IO_Serial::read_cb()
                 EM_log(CK_LOG_SEVERE, "SerialIO.read_cb: error: response buffer overflow, dropping read");
                 continue;
             }
-            
+
             if(m_flags & Chuck_IO_File::TYPE_ASCII)
             {
                 switch(r.m_type)
@@ -1317,19 +1317,19 @@ void Chuck_IO_Serial::read_cb()
                     case TYPE_LINE:
                         handle_line(r);
                         break;
-                        
+
                     case TYPE_STRING:
                         handle_string(r);
                         break;
-                        
+
                     case TYPE_INT:
                         handle_int_ascii(r);
                         break;
-                        
+
                     case TYPE_FLOAT:
                         handle_float_ascii(r);
                         break;
-                        
+
                     default:
                         // this shouldnt happen
                         r.m_type = TYPE_NONE;
@@ -1353,7 +1353,7 @@ void Chuck_IO_Serial::read_cb()
                     case TYPE_FLOAT:
                         handle_float_binary(r);
                         break;
-                        
+
                     default:
                         // this shouldnt happen
                         r.m_type = TYPE_NONE;
@@ -1363,33 +1363,33 @@ void Chuck_IO_Serial::read_cb()
                         EM_log(CK_LOG_WARNING, "SerialIO.read_cb: error: invalid request");
                 }
             }
-            
+
             m_asyncResponses.put(r);
             num_responses++;
         }
-        
+
         if(m_asyncResponses.numElements() > 0)
             queue_broadcast(m_event_buffer);
-        
+
         usleep(100);
     }
-    
+
     m_write_thread->wait(-1);
-    
+
     close_int();
 }
 
 void Chuck_IO_Serial::write_cb()
 {
     m_do_write_thread = TRUE;
-    
+
     char *tmp_writethread_buf = new char[CHUCK_IO_DEFAULT_BUFSIZE];
     t_CKINT tmp_writethread_buf_max = CHUCK_IO_DEFAULT_BUFSIZE;
-    
+
     while(m_do_write_thread && !m_do_exit)
     {
         Request r;
-        
+
         while(m_asyncWriteRequests.get(r) && m_do_write_thread && !m_do_exit)
         {
             if(r.m_type == TYPE_WRITE)
@@ -1401,9 +1401,9 @@ void Chuck_IO_Serial::write_cb()
                     tmp_writethread_buf[numBytes] = c;
                     numBytes++;
                 }
-                
+
                 assert(numBytes < tmp_writethread_buf_max);
-                
+
                 if(numBytes)
                 {
                     fwrite(tmp_writethread_buf, 1, numBytes, m_cfd);
@@ -1411,11 +1411,11 @@ void Chuck_IO_Serial::write_cb()
                 }
             }
         }
-        
+
         // todo: replace with semaphore?
         usleep(100);
     }
-    
+
     delete[] tmp_writethread_buf;
     tmp_writethread_buf = NULL;
 }
@@ -1430,7 +1430,7 @@ t_CKBOOL Chuck_IO_Serial::setBaudRate( t_CKUINT rate )
     cfsetispeed(&tios, rate);
     cfsetospeed(&tios, rate);
     tcsetattr(m_fd, TCSAFLUSH, &tios);
-    
+
     return TRUE;
 #else
     DCB dcb;
@@ -1497,7 +1497,7 @@ t_CKBOOL Chuck_IO_Serial::setBaudRate( t_CKUINT rate )
     dcb.fRtsControl = RTS_CONTROL_ENABLE;
     dcb.fAbortOnError = TRUE;
     dcb.Parity = NOPARITY;
-    
+
     if(!SetCommState(hFile, &dcb))
     {
         //goto error;
@@ -1578,7 +1578,7 @@ CK_DLL_MFUN( serialio_writeBytes );
 CK_DLL_MFUN( serialio_flush )
 {
     Chuck_IO_Serial * cereal = (Chuck_IO_Serial *) SELF;
-    
+
     cereal->flush();
 }
 
@@ -1591,125 +1591,125 @@ t_CKBOOL init_class_serialio( Chuck_Env * env )
 {
     // init as base class
     Chuck_DL_Func * func = NULL;
-    
+
     // log
     EM_log( CK_LOG_SEVERE, "class 'SerialIO'" );
-    
+
     std::string doc = "Handles reading and writing for serial input/output devices, such as Arduino.";
-    
+
     Chuck_Type * type = type_engine_import_class_begin( env, "SerialIO", "IO",
                                                         env->global(), serialio_ctor, serialio_dtor, doc.c_str() );
     // TODO: ctor/dtor?
     if( !type )
         return FALSE;
-    
+
     // HACK; SPENCERTODO: better way to set this
     type->allocator = serialio_alloc;
-    
+
     // add list()
     func = make_new_sfun( "string[]", "list", serialio_list );
     func->doc = "Return list of available serial devices.";
     if( !type_engine_import_sfun( env, func ) ) goto error;
-    
+
     func = make_new_mfun("int", "open", serialio_open);
     func->add_arg("int", "i");
     func->add_arg("int", "baud");
     func->add_arg("int", "mode");
     func->doc = "Open serial device i with specified baud rate and mode (binary or ASCII).";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     func = make_new_mfun("void", "close", serialio_close);
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add ready (data available)
     func = make_new_mfun("int", "dataAvailable", serialio_ready);
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add readLine
     func = make_new_mfun("string", "readLine", serialio_readLine);
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add onLine
     func = make_new_mfun("SerialIO", "onLine", serialio_onLine);
     func->doc = "Wait for one line (ASCII mode only).";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add onByte
     func = make_new_mfun("SerialIO", "onByte", serialio_onByte);
     func->doc = "Wait for one byte (binary mode only).";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add onBytes
     func = make_new_mfun("SerialIO", "onBytes", serialio_onBytes);
     func->add_arg("int", "num");
     func->doc = "Wait for requested number of bytes (binary mode only).";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add onInts
     func = make_new_mfun("SerialIO", "onInts", serialio_onInts);
     func->add_arg("int", "num");
     func->doc = "Wait for requested number of ints (ASCII or binary mode).";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add onInts
     func = make_new_mfun("SerialIO", "onFloats", serialio_onFloats);
     func->add_arg("int", "num");
     func->doc = "Wait for requested number of floats (ASCII or binary mode).";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add getLine
     func = make_new_mfun("string", "getLine", serialio_getLine);
     func->doc = "Get next requested line.";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add getByte
     func = make_new_mfun("int", "getByte", serialio_getByte);
     func->doc = "Get next requested byte. ";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add getBytes
     func = make_new_mfun("int[]", "getBytes", serialio_getBytes);
     func->doc = "Get next requested number of bytes. ";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add getInts
     func = make_new_mfun("int[]", "getInts", serialio_getInts);
     func->doc = "Get next requested number of integers. ";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add writeByte
     func = make_new_mfun("void", "writeByte", serialio_writeByte);
     func->add_arg("int", "b");
     func->doc = "Write a single byte.";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add writeBytes
     func = make_new_mfun("void", "writeBytes", serialio_writeBytes);
     func->add_arg("int[]", "b");
     func->doc = "Write array of bytes.";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add setBaudRate
     func = make_new_mfun("int", "baudRate", serialio_setBaudRate);
     func->add_arg("int", "r");
     func->doc = "Set baud rate.";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add getBaudRate
     func = make_new_mfun("int", "baudRate", serialio_getBaudRate);
     func->doc = "Get current baud rate.";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add getBaudRate
     func = make_new_mfun("void", "flush", serialio_flush);
     func->doc = "Flush the IO buffer.";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add can_wait
     // func = make_new_mfun("int", "can_wait", serialio_canWait);
     // func->doc = "";
     // if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add baud rate constants
     type_engine_import_svar(env, "int", "B2400",   TRUE, (t_CKUINT) &Chuck_IO_Serial::CK_BAUD_2400, "2400 baud");
     type_engine_import_svar(env, "int", "B4800",   TRUE, (t_CKUINT) &Chuck_IO_Serial::CK_BAUD_4800, "4800 baud");
@@ -1736,17 +1736,17 @@ t_CKBOOL init_class_serialio( Chuck_Env * env )
     if( !type_engine_import_add_ex( env, "serial/list.ck" ) ) goto error;
     if( !type_engine_import_add_ex( env, "serial/write-bytes.ck" ) ) goto error;
     if( !type_engine_import_add_ex( env, "serial/write.ck" ) ) goto error;
-    
+
     // end the class import
     type_engine_import_class_end( env );
-    
+
     return TRUE;
-    
+
 error:
-    
+
     // end the class import
     type_engine_import_class_end( env );
-    
+
     return FALSE;
 }
 
@@ -1755,18 +1755,18 @@ error:
 CK_DLL_SFUN( serialio_list )
 {
     vector<string> devices = SerialIOManager::availableSerialDevices();
-    
+
     // ISSUE: 64-bit
     Chuck_Array4 * array = new Chuck_Array4(TRUE, 0);
     initialize_object( array, &t_array );
-    
+
     for(vector<string>::iterator i = devices.begin(); i != devices.end(); i++)
     {
         Chuck_String * name = new Chuck_String(*i);
         initialize_object(name, &t_string);
         array->push_back((t_CKUINT) name);
     }
-    
+
     RETURN->v_object = array;
 }
 
@@ -1798,28 +1798,28 @@ CK_DLL_MFUN( serialio_open )
     t_CKINT num = GET_NEXT_INT(ARGS);
     t_CKINT baud = GET_NEXT_INT(ARGS);
     t_CKINT mode = GET_NEXT_INT(ARGS);
-    
+
     RETURN->v_int = cereal->open(num, mode, baud);
 }
 
 CK_DLL_MFUN( serialio_close )
 {
     Chuck_IO_Serial * cereal = (Chuck_IO_Serial *) SELF;
-    
+
     cereal->close();
 }
 
 CK_DLL_MFUN( serialio_ready )
 {
     Chuck_IO_Serial * cereal = (Chuck_IO_Serial *) SELF;
-    
+
     RETURN->v_int = cereal->ready();
 }
 
 CK_DLL_MFUN( serialio_readLine )
 {
     Chuck_IO_Serial * cereal = (Chuck_IO_Serial *) SELF;
-    
+
     RETURN->v_string = cereal->readLine();
 }
 
@@ -1827,9 +1827,9 @@ CK_DLL_MFUN( serialio_readLine )
 CK_DLL_MFUN( serialio_onLine )
 {
     Chuck_IO_Serial * cereal = (Chuck_IO_Serial *) SELF;
-    
+
     cereal->readAsync(Chuck_IO_Serial::TYPE_LINE, 1);
-    
+
     RETURN->v_object = cereal;
 }
 
@@ -1837,9 +1837,9 @@ CK_DLL_MFUN( serialio_onLine )
 CK_DLL_MFUN( serialio_onByte )
 {
     Chuck_IO_Serial * cereal = (Chuck_IO_Serial *) SELF;
-    
+
     cereal->readAsync(Chuck_IO_Serial::TYPE_BYTE, 1);
-    
+
     RETURN->v_object = cereal;
 }
 
@@ -1847,11 +1847,11 @@ CK_DLL_MFUN( serialio_onByte )
 CK_DLL_MFUN( serialio_onBytes )
 {
     Chuck_IO_Serial * cereal = (Chuck_IO_Serial *) SELF;
-    
+
     t_CKINT num = GET_NEXT_INT(ARGS);
-    
+
     cereal->readAsync(Chuck_IO_Serial::TYPE_BYTE, num);
-    
+
     RETURN->v_object = cereal;
 }
 
@@ -1859,11 +1859,11 @@ CK_DLL_MFUN( serialio_onBytes )
 CK_DLL_MFUN( serialio_onInts )
 {
     Chuck_IO_Serial * cereal = (Chuck_IO_Serial *) SELF;
-    
+
     t_CKINT num = GET_NEXT_INT(ARGS);
-    
+
     cereal->readAsync(Chuck_IO_Serial::TYPE_INT, num);
-    
+
     RETURN->v_object = cereal;
 }
 
@@ -1871,11 +1871,11 @@ CK_DLL_MFUN( serialio_onInts )
 CK_DLL_MFUN( serialio_onFloats )
 {
     Chuck_IO_Serial * cereal = (Chuck_IO_Serial *) SELF;
-    
+
     t_CKINT num = GET_NEXT_INT(ARGS);
-    
+
     cereal->readAsync(Chuck_IO_Serial::TYPE_FLOAT, num);
-    
+
     RETURN->v_object = cereal;
 }
 

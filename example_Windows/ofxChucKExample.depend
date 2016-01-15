@@ -1,0 +1,2880 @@
+# depslib dependency file v1.0
+1452829949 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_absyn.cpp
+	<stdlib.h>
+	<stdio.h>
+	"chuck_absyn.h"
+	"chuck_utils.h"
+
+1452829949 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_absyn.h
+	"chuck_symbol.h"
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_symbol.h
+	"chuck_utils.h"
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_utils.h
+	"chuck_def.h"
+
+1452829949 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_def.h
+	<stdlib.h>
+	<memory.h>
+	<assert.h>
+
+1452829949 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_bbq.cpp
+	"chuck_bbq.h"
+	<math.h>
+	<memory.h>
+	<stdlib.h>
+
+1452829949 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_bbq.h
+	"digiio_rtaudio.h"
+	"midiio_rtmidi.h"
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\digiio_rtaudio.h
+	"chuck_def.h"
+	<string>
+	"RtAudio/RtAudio.h"
+
+1452829949 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\rtaudio\rtaudio.h
+	<string>
+	<vector>
+	"RtError.h"
+	<windows.h>
+	<process.h>
+	<pthread.h>
+	<sys/time.h>
+	<sstream>
+	<CoreAudio/AudioHardware.h>
+
+1452829949 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\rtaudio\rterror.h
+	<exception>
+	<iostream>
+	<string>
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\midiio_rtmidi.h
+	"chuck_def.h"
+	"rtmidi.h"
+	"util_buffers.h"
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\rtmidi.h
+	"RtAudio/RtAudio.h"
+	<string>
+	<vector>
+	<queue>
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\util_buffers.h
+	"chuck_oo.h"
+	"util_thread.h"
+	<vector>
+	<queue>
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_oo.h
+	"chuck_def.h"
+	<string>
+	<vector>
+	<map>
+	<queue>
+	<fstream>
+	"util_thread.h"
+	<dirent.h>
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\util_thread.h
+	"chuck_def.h"
+	<stdio.h>
+	<pthread.h>
+	<windows.h>
+	<process.h>
+
+1452830673 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_compile.cpp
+	"chuck_compile.h"
+	"chuck_lang.h"
+	"chuck_errmsg.h"
+	"chuck_otf.h"
+	"ugen_osc.h"
+	"ugen_xxx.h"
+	"ugen_filter.h"
+	"ugen_stk.h"
+	"uana_xform.h"
+	"uana_extract.h"
+	"ulib_machine.h"
+	"ulib_math.h"
+	"ulib_std.h"
+	"ulib_opsc.h"
+	"ulib_regex.h"
+	"chuck_io.h"
+	"dirent_win32.h"
+	<sys/stat.h>
+
+1452829949 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_compile.h
+	"chuck_def.h"
+	"chuck_parse.h"
+	"chuck_scan.h"
+	"chuck_type.h"
+	"chuck_emit.h"
+	"chuck_vm.h"
+	<list>
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_parse.h
+	"chuck_def.h"
+	"chuck_absyn.h"
+	<stdio.h>
+	<string>
+	<vector>
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_scan.h
+	"chuck_type.h"
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_type.h
+	"chuck_def.h"
+	"chuck_absyn.h"
+	"chuck_oo.h"
+	"chuck_dl.h"
+	"chuck_errmsg.h"
+
+1452829949 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_dl.h
+	"chuck_def.h"
+	"chuck_oo.h"
+	<string>
+	<vector>
+	<map>
+	<AvailabilityMacros.h>
+	"dlfcn.h"
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_errmsg.h
+	"chuck_def.h"
+	<stdio.h>
+
+1452829949 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_emit.h
+	"chuck_def.h"
+	"chuck_oo.h"
+	"chuck_type.h"
+	"chuck_frame.h"
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_frame.h
+	"chuck_def.h"
+	<string>
+	<vector>
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_vm.h
+	"chuck_oo.h"
+	"chuck_ugen.h"
+	"chuck_stats.h"
+	<string>
+	<map>
+	<vector>
+	<list>
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_ugen.h
+	"chuck_def.h"
+	"chuck_oo.h"
+	"chuck_dl.h"
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_stats.h
+	"chuck_def.h"
+	"util_thread.h"
+	<string>
+	<map>
+	<queue>
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_lang.h
+	"chuck_def.h"
+	"chuck_oo.h"
+	"chuck_dl.h"
+	<queue>
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_otf.h
+	"chuck_def.h"
+	"util_network.h"
+	<memory.h>
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\util_network.h
+	<sys/types.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<windows.h>
+	"chuck_def.h"
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\ugen_osc.h
+	"chuck_dl.h"
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\ugen_xxx.h
+	"chuck_dl.h"
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\ugen_filter.h
+	"chuck_dl.h"
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\ugen_stk.h
+	"chuck_dl.h"
+	<string>
+	<map>
+	<iostream>
+	<stdio.h>
+	<stdio.h>
+	<stdio.h>
+	<stdio.h>
+	"util_thread.h"
+	<string>
+	<vector>
+	<fstream>
+	<sstream>
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\uana_xform.h
+	"chuck_dl.h"
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\uana_extract.h
+	"chuck_dl.h"
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\ulib_machine.h
+	"chuck_dl.h"
+	"chuck_otf.h"
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\ulib_math.h
+	"chuck_dl.h"
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\ulib_std.h
+	"chuck_dl.h"
+
+1452219172 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\ulib_opsc.h
+	"chuck_def.h"
+	"chuck_dl.h"
+	"chuck_oo.h"
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\ulib_regex.h
+	"chuck_dl.h"
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_io.h
+	"chuck_oo.h"
+	"util_thread.h"
+	"util_buffers.h"
+	<list>
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\dirent_win32.h
+	<windows.h>
+	<string.h>
+	<assert.h>
+
+1452829949 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_console.cpp
+	"chuck_console.h"
+	"util_console.h"
+
+1452829949 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_console.h
+	"chuck_def.h"
+	"chuck_shell.h"
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_shell.h
+	"chuck_def.h"
+	"chuck_errmsg.h"
+	"chuck_vm.h"
+	<string>
+	<map>
+	<vector>
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\util_console.h
+	"chuck_def.h"
+
+1452829949 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_dl.cpp
+	"chuck_dl.h"
+	"chuck_errmsg.h"
+	"chuck_bbq.h"
+	"chuck_type.h"
+	"chuck_instr.h"
+	"chuck_globals.h"
+	"chuck_compile.h"
+	"chuck_vm.h"
+	<sstream>
+	<windows.h>
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_instr.h
+	<stdio.h>
+	"chuck_def.h"
+	<vector>
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_globals.h
+	"chuck_def.h"
+	"chuck_dl.h"
+	"util_network.h"
+	"util_thread.h"
+
+1452829949 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_emit.cpp
+	"chuck_emit.h"
+	"chuck_vm.h"
+	"chuck_errmsg.h"
+	"chuck_instr.h"
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_errmsg.cpp
+	<stdlib.h>
+	<stdarg.h>
+	<string.h>
+	"chuck_utils.h"
+	"chuck_errmsg.h"
+	"util_thread.h"
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_frame.cpp
+	"chuck_frame.h"
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_globals.cpp
+	"chuck_globals.h"
+	"chuck_bbq.h"
+	"chuck_errmsg.h"
+	"chuck_io.h"
+	"chuck_vm.h"
+	"ulib_std.h"
+	"ugen_stk.h"
+	"hidio_sdl.h"
+	<stdlib.h>
+	<stdio.h>
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\hidio_sdl.h
+	"chuck_def.h"
+	"util_buffers.h"
+	"util_thread.h"
+	"util_hid.h"
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\util_hid.h
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_instr.cpp
+	<math.h>
+	<limits.h>
+	"chuck_type.h"
+	"chuck_lang.h"
+	"chuck_instr.h"
+	"chuck_vm.h"
+	"chuck_ugen.h"
+	"chuck_bbq.h"
+	"chuck_dl.h"
+	"chuck_errmsg.h"
+	"chuck_globals.h"
+	"util_string.h"
+	<typeinfo>
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\util_string.h
+	"chuck_def.h"
+	<string>
+	<vector>
+	<list>
+
+1452830306 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_io.cpp
+	"chuck_io.h"
+	"chuck_errmsg.h"
+	"util_serial.h"
+	"chuck_instr.h"
+	"chuck_type.h"
+	"chuck_globals.h"
+	"chuck_vm.h"
+	<sys/select.h>
+	<poll.h>
+	<termios.h>
+	<unistd.h>
+	<io.h>
+	<fcntl.h>
+	<math.h>
+	<iostream>
+	<fstream>
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\util_serial.h
+	<vector>
+	<string>
+
+1452830321 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_lang.cpp
+	"chuck_lang.h"
+	"chuck_type.h"
+	"chuck_instr.h"
+	"chuck_vm.h"
+	"chuck_errmsg.h"
+	"chuck_ugen.h"
+	"chuck_globals.h"
+	"hidio_sdl.h"
+	"util_string.h"
+	"util_serial.h"
+	"midiio_rtmidi.h"
+	<iostream>
+	<iomanip>
+	<sstream>
+	<math.h>
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_oo.cpp
+	"chuck_oo.h"
+	"chuck_type.h"
+	"chuck_vm.h"
+	"chuck_instr.h"
+	"chuck_errmsg.h"
+	"chuck_dl.h"
+	<iostream>
+	<sstream>
+	<iomanip>
+	<typeinfo>
+	"dirent_win32.h"
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_otf.cpp
+	"chuck_otf.h"
+	"chuck_compile.h"
+	"chuck_errmsg.h"
+	"chuck_globals.h"
+	"util_thread.h"
+	"util_string.h"
+	<stdio.h>
+	<string.h>
+	<sys/types.h>
+	<sys/stat.h>
+	<signal.h>
+	<unistd.h>
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_parse.cpp
+	"chuck_parse.h"
+	"chuck_errmsg.h"
+	<string.h>
+	<windows.h>
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_scan.cpp
+	"chuck_type.h"
+	"chuck_scan.h"
+	"chuck_errmsg.h"
+	"chuck_vm.h"
+	"util_string.h"
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_shell.cpp
+	"chuck_shell.h"
+	"chuck_otf.h"
+	"chuck_globals.h"
+	"util_network.h"
+	"util_string.h"
+	<stdio.h>
+	<errno.h>
+	<ctype.h>
+	<unistd.h>
+	<sys/param.h>
+	<sys/types.h>
+	<dirent.h>
+	<windows.h>
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_stats.cpp
+	"chuck_stats.h"
+	"chuck_vm.h"
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_symbol.cpp
+	<stdio.h>
+	<string.h>
+	"chuck_utils.h"
+	"chuck_symbol.h"
+	"chuck_table.h"
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_table.h
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_system.cpp
+	<stdio.h>
+	<string.h>
+	<time.h>
+	"chuck_compile.h"
+	"chuck_vm.h"
+	"chuck_bbq.h"
+	"chuck_errmsg.h"
+	"chuck_lang.h"
+	"chuck_otf.h"
+	"chuck_shell.h"
+	"chuck_console.h"
+	"chuck_globals.h"
+	"util_math.h"
+	"util_string.h"
+	"util_thread.h"
+	"util_network.h"
+	"ulib_machine.h"
+	"hidio_sdl.h"
+	"chuck_system.h"
+	<signal.h>
+	<unistd.h>
+	<netinet/in.h>
+	<arpa/inet.h>
+	<sys/param.h>
+	<direct.h>
+
+1452830345 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\util_math.h
+	<math.h>
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_system.h
+	"chuck_compile.h"
+	"chuck_dl.h"
+	"chuck_vm.h"
+	<string>
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_table.cpp
+	<stdio.h>
+	<string.h>
+	"chuck_table.h"
+	"chuck_utils.h"
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_type.cpp
+	"chuck_type.h"
+	"chuck_parse.h"
+	"chuck_scan.h"
+	"chuck_vm.h"
+	"chuck_errmsg.h"
+	"chuck_lang.h"
+	"util_string.h"
+	"ugen_xxx.h"
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_ugen.cpp
+	"chuck_ugen.h"
+	"chuck_instr.h"
+	"chuck_type.h"
+	"chuck_vm.h"
+	"chuck_lang.h"
+	"chuck_errmsg.h"
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_utils.cpp
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"chuck_utils.h"
+	"chuck_errmsg.h"
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_vm.cpp
+	"chuck_vm.h"
+	"chuck_instr.h"
+	"chuck_lang.h"
+	"chuck_type.h"
+	"chuck_dl.h"
+	"chuck_io.h"
+	"chuck_globals.h"
+	"chuck_errmsg.h"
+	"ugen_xxx.h"
+	<algorithm>
+	<windows.h>
+	<unistd.h>
+	<pthread.h>
+	<typeinfo>
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_win32.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	"chuck_utils.h"
+	"chuck_errmsg.h"
+	"chuck_absyn.h"
+	<stddef.h>
+	<libintl.h>
+	<alloca.h>
+	<malloc.h>
+	<stdlib.h>
+	<stdlib.h>
+	<stdio.h>
+	<stdio.h>
+	<string.h>
+	<errno.h>
+	<stdlib.h>
+	<inttypes.h>
+	<stdlib.h>
+	<string.h>
+	"chuck_utils.h"
+	"chuck_absyn.h"
+	"chuck_errmsg.h"
+	"chuck.tab.h"
+	"chuck_win32.h"
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\chuck_win32.h
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\digiio_rtaudio.cpp
+	"digiio_rtaudio.h"
+	"chuck_vm.h"
+	"chuck_errmsg.h"
+	"chuck_globals.h"
+	<limits.h>
+	"RtAudio/RtAudio.h"
+	"momu/mo_audio.h"
+	"rtmidi.h"
+	<windows.h>
+	<sys/timeb.h>
+	<unistd.h>
+	<sys/time.h>
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\hidio_sdl.cpp
+	"hidio_sdl.h"
+	"util_hid.h"
+	"chuck_errmsg.h"
+	"chuck_globals.h"
+	"chuck_vm.h"
+	<unistd.h>
+	"chuck_def.h"
+	<limits.h>
+	<vector>
+	<map>
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\midiio_rtmidi.cpp
+	"midiio_rtmidi.h"
+	"chuck_errmsg.h"
+	"chuck_globals.h"
+	"chuck_vm.h"
+	<vector>
+	<map>
+	<fstream>
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\rtmidi.cpp
+	"rtmidi.h"
+	<sstream>
+	<iostream>
+	<stdio.h>
+	<CoreMIDI/CoreMIDI.h>
+	<CoreAudio/HostTime.h>
+	<pthread.h>
+	<sys/time.h>
+	<alsa/asoundlib.h>
+	<pthread.h>
+	<sys/time.h>
+	<unistd.h>
+	<dmedia/midi.h>
+	<windows.h>
+	<mmsystem.h>
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\uana_extract.cpp
+	"uana_extract.h"
+	"chuck_type.h"
+	"chuck_vm.h"
+	"chuck_instr.h"
+	"chuck_lang.h"
+	"chuck_errmsg.h"
+	"util_math.h"
+	"util_xforms.h"
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\util_xforms.h
+	<math.h>
+	"chuck_def.h"
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\uana_xform.cpp
+	"uana_xform.h"
+	"chuck_type.h"
+	"chuck_vm.h"
+	"chuck_instr.h"
+	"chuck_lang.h"
+	"util_buffers.h"
+	"util_xforms.h"
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\ugen_filter.cpp
+	"ugen_filter.h"
+	"chuck_type.h"
+	<math.h>
+	<stdlib.h>
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\ugen_osc.cpp
+	"ugen_osc.h"
+	"chuck_type.h"
+	"chuck_ugen.h"
+	<math.h>
+	<stdio.h>
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\ugen_stk.cpp
+	"ugen_stk.h"
+	"chuck_type.h"
+	"util_math.h"
+	"chuck_vm.h"
+	"chuck_lang.h"
+	"chuck_globals.h"
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	<float.h>
+	<limits.h>
+	<stdio.h>
+	"ugen_stk.h"
+	<math.h>
+	<math.h>
+	<cmath>
+	<limits>
+	<math.h>
+	<math.h>
+	<math.h>
+	<iostream>
+	<iostream>
+	<iostream>
+	<iostream>
+	<math.h>
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	<stdio.h>
+	<math.h>
+	<stdlib.h>
+	<stdlib.h>
+	<math.h>
+	<math.h>
+	<stdlib.h>
+	<time.h>
+	<math.h>
+	<iostream>
+	<iostream>
+	<math.h>
+	<math.h>
+	<string.h>
+	<stdlib.h>
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	<math.h>
+	<stdio.h>
+	<math.h>
+	<string.h>
+	<math.h>
+	<stdio.h>
+	<string.h>
+	<unistd.h>
+	<windows.h>
+	<stdio.h>
+	<sys/stat.h>
+	<sys/types.h>
+	<iostream>
+	<math.h>
+	<math.h>
+	<math.h>
+	<math.h>
+	<stdlib.h>
+	<math.h>
+	<math.h>
+	<stdlib.h>
+	<math.h>
+	<sys/stat.h>
+	<sys/types.h>
+	<math.h>
+	<string.h>
+	<iostream>
+	"util_raw.h"
+	<cstring>
+	<iostream>
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\util_raw.h
+	"chuck_def.h"
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\ugen_xxx.cpp
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<sys/stat.h>
+	<limits.h>
+	<sndfile.h>
+	"util_sndfile.h"
+	"ugen_xxx.h"
+	"chuck_type.h"
+	"chuck_ugen.h"
+	"chuck_vm.h"
+	"chuck_globals.h"
+	"chuck_instr.h"
+	<fstream>
+	"util_raw.h"
+
+1452830392 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\util_sndfile.h
+	<stdio.h>
+	<stdlib.h>
+	<sys/types.h>
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\ulib_machine.cpp
+	"ulib_machine.h"
+	"chuck_type.h"
+	"chuck_vm.h"
+	"chuck_errmsg.h"
+	"chuck_globals.h"
+	"chuck_instr.h"
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\ulib_math.cpp
+	"chuck_type.h"
+	"ulib_math.h"
+	"util_math.h"
+	"ulib_std.h"
+	<limits.h>
+	<float.h>
+	<stdlib.h>
+	<time.h>
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\ulib_regex.cpp
+	"ulib_regex.h"
+	"chuck_errmsg.h"
+	"chuck_instr.h"
+	"chuck_type.h"
+	"regex/regex.h"
+	<regex.h>
+
+1452811399 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\regex\regex.h
+	"tre.h"
+
+1452811399 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\regex\tre.h
+	"tre-config.h"
+	<sys/types.h>
+	<libutf8.h>
+	<wchar.h>
+
+1452811399 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\regex\tre-config.h
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\ulib_std.cpp
+	"ulib_std.h"
+	<stdlib.h>
+	<time.h>
+	<math.h>
+	"util_buffers.h"
+	"util_console.h"
+	"util_math.h"
+	"util_string.h"
+	"util_thread.h"
+	"chuck_type.h"
+	"chuck_instr.h"
+	"chuck_globals.h"
+	<windows.h>
+	<unistd.h>
+	<sstream>
+	<iostream>
+	"util_thread.h"
+	<fstream>
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\util_buffers.cpp
+	<stdlib.h>
+	"util_buffers.h"
+	"chuck_errmsg.h"
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\util_console.cpp
+	"util_console.h"
+	"chuck_errmsg.h"
+	<stdio.h>
+	<readline/readline.h>
+	<stdlib.h>
+	<string.h>
+	<termios.h>
+	<termio.h>
+	<unistd.h>
+	<sys/ioctl.h>
+	<conio.h>
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\util_hid.cpp
+	"chuck_def.h"
+	"chuck_errmsg.h"
+	"util_hid.h"
+	"hidio_sdl.h"
+	<limits.h>
+	<vector>
+	<map>
+	<mach/mach.h>
+	<mach/mach_error.h>
+	<IOKit/IOKitLib.h>
+	<IOKit/IOCFPlugIn.h>
+	<Kernel/IOKit/hidsystem/IOHIDUsageTables.h>
+	<IOKit/hid/IOHIDLib.h>
+	<IOKit/hid/IOHIDKeys.h>
+	<IOKit/IOMessage.h>
+	<CoreFoundation/CoreFoundation.h>
+	<Carbon/Carbon.h>
+	<AvailabilityMacros.h>
+	<ApplicationServices/ApplicationServices.h>
+	<IOBluetooth/IOBluetoothUserLib.h>
+	"util_buffers.h"
+	"objc/objc.h"
+	"objc/objc-runtime.h"
+	"objc/objc-class.h"
+	<windows.h>
+	<dinput.h>
+	<sys/types.h>
+	<sys/stat.h>
+	<unistd.h>
+	<dirent.h>
+	<linux/unistd.h>
+	<string.h>
+	<fcntl.h>
+	<sys/poll.h>
+	<sys/ioctl.h>
+	<errno.h>
+	<linux/joystick.h>
+	<linux/input.h>
+
+1452830502 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\util_math.c
+	"util_math.h"
+	<math.h>
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\util_network.c
+	"util_network.h"
+	"chuck_utils.h"
+	<stdio.h>
+	<winsock.h>
+	<sys/types.h>
+	<sys/socket.h>
+	<sys/time.h>
+	<unistd.h>
+	<netinet/in.h>
+	<netinet/tcp.h>
+	<arpa/inet.h>
+	<netdb.h>
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\util_opsc.cpp
+	"util_opsc.h"
+	"util_network.h"
+	"util_thread.h"
+	"chuck_errmsg.h"
+	"chuck_globals.h"
+	"chuck_vm.h"
+	<algorithm>
+	<windows.h>
+	<sys/types.h>
+	<sys/socket.h>
+	<sys/time.h>
+	<unistd.h>
+	<netinet/in.h>
+	<netinet/tcp.h>
+	<arpa/inet.h>
+	<netdb.h>
+	<sys/time.h>
+	"util_network.h"
+	"util_thread.h"
+	<winsock.h>
+	<sys/types.h>
+	<sys/socket.h>
+	<sys/time.h>
+	<unistd.h>
+	<netinet/in.h>
+	<netinet/tcp.h>
+	<arpa/inet.h>
+	<netdb.h>
+	"stdarg.h"
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\util_opsc.h
+	<windows.h>
+	<cstdio>
+	<cstdio>
+	"stdlib.h"
+	"string.h"
+	"chuck_oo.h"
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\util_raw.c
+	"util_raw.h"
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\util_serial.cpp
+	"chuck_def.h"
+	"util_serial.h"
+	"chuck_errmsg.h"
+	<CoreFoundation/CoreFoundation.h>
+	<IOKit/IOKitLib.h>
+	<IOKit/serial/IOSerialKeys.h>
+	<IOKit/IOBSD.h>
+	<sys/types.h>
+	<dirent.h>
+	<unistd.h>
+	<windows.h>
+
+1452830545 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\util_sndfile.c
+	"util_sndfile.h"
+	"chuck_def.h"
+	<math.h>
+	<stdio.h>
+	<assert.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	<ctype.h>
+	<stdio.h>
+	<fcntl.h>
+	<string.h>
+	<ctype.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	<string.h>
+	<stdio.h>
+	<string.h>
+	<math.h>
+	<stdarg.h>
+	<string.h>
+	<ctype.h>
+	<math.h>
+	<time.h>
+	<stdio.h>
+	<stdlib.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdio.h>
+	<fcntl.h>
+	<string.h>
+	<ctype.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<sf_unistd.h>
+	<string.h>
+	<fcntl.h>
+	<errno.h>
+	<sys/stat.h>
+	<Files.h>
+	<windows.h>
+	<io.h>
+	<io.h>
+	<direct.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdlib.h>
+	<malloc.h>
+	<stdio.h>
+	<fcntl.h>
+	<string.h>
+	<ctype.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdlib.h>
+	<stdio.h>
+	<fcntl.h>
+	<string.h>
+	<ctype.h>
+	<stdio.h>
+	<assert.h>
+	<stdio.h>
+	<assert.h>
+	<stdlib.h>
+	<string.h>
+	<stdlib.h>
+	<string.h>
+	<sys/stat.h>
+	<stdio.h>
+	<fcntl.h>
+	<string.h>
+	<ctype.h>
+	<stdio.h>
+	<fcntl.h>
+	<string.h>
+	<ctype.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdio.h>
+	<fcntl.h>
+	<string.h>
+	<ctype.h>
+	<stdio.h>
+	<fcntl.h>
+	<string.h>
+	<ctype.h>
+	<stdio.h>
+	<stdlib.h>
+	<fcntl.h>
+	<string.h>
+	<ctype.h>
+	<stdio.h>
+	<assert.h>
+	<stdio.h>
+	<fcntl.h>
+	<string.h>
+	<ctype.h>
+	<stdio.h>
+	<stdio.h>
+	<assert.h>
+	<stdio.h>
+	<string.h>
+	<ctype.h>
+	<stdarg.h>
+	<stdio.h>
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
+	<fcntl.h>
+	<string.h>
+	<ctype.h>
+	<stdio.h>
+	<assert.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	<stdio.h>
+	<string.h>
+	<math.h>
+	<ctype.h>
+	<stdio.h>
+	<string.h>
+	<ctype.h>
+	<stdarg.h>
+	<stdio.h>
+	<fcntl.h>
+	<string.h>
+	<ctype.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdio.h>
+	<string.h>
+	<ctype.h>
+	<time.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	<time.h>
+	<stdio.h>
+	<string.h>
+	<ctype.h>
+	<time.h>
+	<stdio.h>
+	<fcntl.h>
+	<string.h>
+	<ctype.h>
+	<stdio.h>
+	<stdlib.h>
+	<fcntl.h>
+	<string.h>
+	<ctype.h>
+
+1410256993 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\files.h
+	<MacTypes.h>
+	<MixedMode.h>
+	<OSUtils.h>
+	<TextCommon.h>
+	<UTCUtils.h>
+	<Finder.h>
+
+1410256993 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\mactypes.h
+	<ConditionalMacros.h>
+
+1410256993 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\conditionalmacros.h
+
+1410256993 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\mixedmode.h
+	<MacTypes.h>
+
+1410256994 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\osutils.h
+	<MacTypes.h>
+	<MixedMode.h>
+	<MacMemory.h>
+	<Patches.h>
+	<DateTimeUtils.h>
+	<Endian.h>
+
+1410256993 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\macmemory.h
+	<MacTypes.h>
+	<MixedMode.h>
+
+1410256994 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\patches.h
+	<MacTypes.h>
+
+1410256993 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\datetimeutils.h
+	<ConditionalMacros.h>
+	<MacTypes.h>
+
+1410256993 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\endian.h
+	<ConditionalMacros.h>
+	<MacTypes.h>
+
+1410256994 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\textcommon.h
+	<MacTypes.h>
+
+1410256994 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\utcutils.h
+	<MacTypes.h>
+	<MacErrors.h>
+
+1410256993 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\macerrors.h
+	<ConditionalMacros.h>
+
+1410256993 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\finder.h
+	<MacTypes.h>
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\util_string.cpp
+	"util_string.h"
+	<Windows.h>
+	<linux/limits.h>
+	<stdio.h>
+	<glob.h>
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\util_thread.cpp
+	"util_thread.h"
+	"util_buffers.h"
+	"chuck_errmsg.h"
+	<unistd.h>
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\chuck\util_xforms.c
+	"util_xforms.h"
+	<stdlib.h>
+	<math.h>
+
+1452830843 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\regex\regcomp.c
+	"config.h"
+	<string.h>
+	<errno.h>
+	<stdlib.h>
+	"tre.h"
+	"tre-internal.h"
+	"xmalloc.h"
+
+1452811399 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\regex\config.h
+
+1452811399 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\regex\tre-internal.h
+	<wchar.h>
+	<wctype.h>
+	<ctype.h>
+	"tre.h"
+	<stdio.h>
+
+1452811399 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\regex\xmalloc.h
+	<stdlib.h>
+
+1452830853 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\regex\regerror.c
+	"config.h"
+	<string.h>
+	<wchar.h>
+	<wctype.h>
+	"tre-internal.h"
+	"tre.h"
+	<libintl.h>
+
+1452830858 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\regex\regexec.c
+	"config.h"
+	<alloca.h>
+	<assert.h>
+	<stdlib.h>
+	<string.h>
+	<wchar.h>
+	<wctype.h>
+	<ctype.h>
+	<malloc.h>
+	<limits.h>
+	"tre-internal.h"
+	"tre.h"
+	"xmalloc.h"
+
+1452830863 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\regex\tre-ast.c
+	"config.h"
+	<assert.h>
+	"tre-ast.h"
+	"tre-mem.h"
+
+1452811399 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\regex\tre-ast.h
+	"tre-mem.h"
+	"tre-internal.h"
+	"tre-compile.h"
+
+1452811399 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\regex\tre-mem.h
+	<stdlib.h>
+
+1452811399 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\regex\tre-compile.h
+
+1452830868 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\regex\tre-compile.c
+	"config.h"
+	<stdio.h>
+	<assert.h>
+	<string.h>
+	"tre-internal.h"
+	"tre-mem.h"
+	"tre-stack.h"
+	"tre-ast.h"
+	"tre-parse.h"
+	"tre-compile.h"
+	"tre.h"
+	"xmalloc.h"
+
+1452811399 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\regex\tre-stack.h
+	"tre.h"
+
+1452811399 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\regex\tre-parse.h
+
+1452830874 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\regex\tre-filter.c
+	"config.h"
+	<stdio.h>
+	"tre-internal.h"
+	"tre-filter.h"
+
+1452811399 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\regex\tre-filter.h
+
+1452830881 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\regex\tre-match-approx.c
+	"config.h"
+	<alloca.h>
+	<assert.h>
+	<stdlib.h>
+	<string.h>
+	<limits.h>
+	<wchar.h>
+	<wctype.h>
+	<ctype.h>
+	<malloc.h>
+	"tre-internal.h"
+	"tre-match-utils.h"
+	"tre.h"
+	"xmalloc.h"
+
+1452811399 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\regex\tre-match-utils.h
+
+1452830886 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\regex\tre-match-backtrack.c
+	"config.h"
+	<alloca.h>
+	<assert.h>
+	<stdlib.h>
+	<string.h>
+	<wchar.h>
+	<wctype.h>
+	<ctype.h>
+	<malloc.h>
+	"tre-internal.h"
+	"tre-mem.h"
+	"tre-match-utils.h"
+	"tre.h"
+	"xmalloc.h"
+
+1452811399 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\regex\tre-match-parallel.c
+	"config.h"
+	<alloca.h>
+	<assert.h>
+	<stdlib.h>
+	<string.h>
+	<wchar.h>
+	<wctype.h>
+	<ctype.h>
+	<malloc.h>
+	"tre-internal.h"
+	"tre-match-utils.h"
+	"tre.h"
+	"xmalloc.h"
+
+1452830893 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\regex\tre-mem.c
+	"config.h"
+	<stdlib.h>
+	<string.h>
+	"tre-internal.h"
+	"tre-mem.h"
+	"xmalloc.h"
+
+1452830899 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\regex\tre-parse.c
+	"config.h"
+	<string.h>
+	<assert.h>
+	<limits.h>
+	"xmalloc.h"
+	"tre-mem.h"
+	"tre-ast.h"
+	"tre-stack.h"
+	"tre-parse.h"
+
+1452830904 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\regex\tre-stack.c
+	"config.h"
+	<stdlib.h>
+	<assert.h>
+	"tre-internal.h"
+	"tre-stack.h"
+	"xmalloc.h"
+
+1452830909 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\regex\xmalloc.c
+	"config.h"
+	<stdlib.h>
+	<assert.h>
+	<stdio.h>
+	"xmalloc.h"
+
+1452829949 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\libs\rtaudio\rtaudio.cpp
+	"RtAudio.h"
+	<iostream>
+	<cstdlib>
+	<cstring>
+	<climits>
+	<CoreServices/CoreServices.h>
+	<jack/jack.h>
+	<unistd.h>
+	<cstdio>
+	"asiosys.h"
+	"asio.h"
+	"iasiothiscallresolver.h"
+	"asiodrivers.h"
+	<cmath>
+	<dsound.h>
+	<assert.h>
+	<algorithm>
+	"tchar.h"
+	<alsa/asoundlib.h>
+	<unistd.h>
+	<pulse/error.h>
+	<pulse/simple.h>
+	<cstdio>
+	<unistd.h>
+	<sys/ioctl.h>
+	<unistd.h>
+	<fcntl.h>
+	"soundcard.h"
+	<errno.h>
+	<math.h>
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\src\ofck-entities.cpp
+	"ofck-entities.h"
+	<algorithm>
+	<string>
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\src\ofck-entities.h
+	"ofck.h"
+	"ofMain.h"
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\src\ofck.h
+	"chuck_dl.h"
+	"x-vector3d.h"
+	"ofMain.h"
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\src\x-vector3d.h
+	<math.h>
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\ofmain.h
+	"ofConstants.h"
+	"ofFileUtils.h"
+	"ofLog.h"
+	"ofSystemUtils.h"
+	"ofThread.h"
+	"ofURLFileLoader.h"
+	"ofUtils.h"
+	"ofBaseTypes.h"
+	"ofTypes.h"
+	"ofColor.h"
+	"ofPoint.h"
+	"ofRectangle.h"
+	"ofXml.h"
+	"ofParameter.h"
+	"ofParameterGroup.h"
+	"ofMath.h"
+	"ofVectorMath.h"
+	"ofSerial.h"
+	"ofArduino.h"
+	"ofFbo.h"
+	"ofGLRenderer.h"
+	"ofGLUtils.h"
+	"ofLight.h"
+	"ofMaterial.h"
+	"ofShader.h"
+	"ofTexture.h"
+	"ofVbo.h"
+	"ofVboMesh.h"
+	"ofGLProgrammableRenderer.h"
+	"ofGLRenderer.h"
+	"ofCairoRenderer.h"
+	"ofGraphics.h"
+	"ofImage.h"
+	"ofPath.h"
+	"ofPixels.h"
+	"ofPolyline.h"
+	"ofRendererCollection.h"
+	"ofTessellator.h"
+	"ofTrueTypeFont.h"
+	"ofBaseApp.h"
+	"ofAppRunner.h"
+	"ofSoundStream.h"
+	"ofSoundPlayer.h"
+	"ofVideoGrabber.h"
+	"ofVideoPlayer.h"
+	"ofEvents.h"
+	"of3dUtils.h"
+	"ofCamera.h"
+	"ofEasyCam.h"
+	"ofMesh.h"
+	"ofNode.h"
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\utils\ofconstants.h
+	<stdint.h>
+	<TargetConditionals.h>
+	<windows.h>
+	"GL\glew.h"
+	"GL\wglew.h"
+	"glu.h"
+	<stdint.h>
+	<functional>
+	<unistd.h>
+	"GL/glew.h"
+	<OpenGL/gl.h>
+	<ApplicationServices/ApplicationServices.h>
+	<unistd.h>
+	"bcm_host.h"
+	"GLES/gl.h"
+	"GLES/glext.h"
+	"GLES2/gl2.h"
+	"GLES2/gl2ext.h"
+	"EGL/egl.h"
+	"EGL/eglext.h"
+	<GL/glew.h>
+	<GL/gl.h>
+	<GL/glx.h>
+	<typeinfo>
+	<unistd.h>
+	<GLES/gl.h>
+	<GLES/glext.h>
+	<GLES2/gl2.h>
+	<GLES2/gl2ext.h>
+	"tesselator.h"
+	<cstdlib>
+	<cstdio>
+	<cstdarg>
+	<cmath>
+	<ctime>
+	<cstdlib>
+	<string>
+	<iostream>
+	<vector>
+	<cstring>
+	<sstream>
+	<iomanip>
+	<fstream>
+	<algorithm>
+	<cfloat>
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\glew\include\gl\glew.h
+	<stddef.h>
+	<inttypes.h>
+	<stdint.h>
+	<inttypes.h>
+	<OpenGL/glu.h>
+	<GL/glu.h>
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\glew\include\gl\wglew.h
+	<windows.h>
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\glu\include\glu.h
+	"glu_mangle.h"
+	<GL/gl.h>
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\tess2\include\tesselator.h
+	<TargetConditionals.h>
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\utils\offileutils.h
+	"ofConstants.h"
+	"Poco/File.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\file.h
+	"Poco/Foundation.h"
+	"Poco/Timestamp.h"
+	<vector>
+	"File_WINCE.h"
+	"Poco/File_WIN32U.h"
+	"Poco/File_WIN32.h"
+	"Poco/File_VX.h"
+	"Poco/File_UNIX.h"
+	"Poco/File_VMS.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\foundation.h
+	"Poco/Config.h"
+	"Poco/Platform.h"
+	"Poco/Platform_WIN32.h"
+	"Poco/Platform_VMS.h"
+	"Poco/Platform_VX.h"
+	"Poco/Platform_POSIX.h"
+	"Poco/Bugcheck.h"
+	"Poco/Types.h"
+	<string>
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\config.h
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\platform.h
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\platform_win32.h
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\platform_vms.h
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\platform_vx.h
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\platform_posix.h
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\bugcheck.h
+	"Poco/Foundation.h"
+	<string>
+	<iostream>
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\types.h
+	"Poco/Foundation.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\timestamp.h
+	"Poco/Foundation.h"
+	<ctime>
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\file_wince.h
+	"Poco/Foundation.h"
+	"Poco/Timestamp.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\file_win32u.h
+	"Poco/Foundation.h"
+	"Poco/Timestamp.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\file_win32.h
+	"Poco/Foundation.h"
+	"Poco/Timestamp.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\file_vx.h
+	"Poco/Foundation.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\file_unix.h
+	"Poco/Foundation.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\file_vms.h
+	"Poco/Foundation.h"
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\utils\oflog.h
+	"ofConstants.h"
+	"ofFileUtils.h"
+	"ofTypes.h"
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\types\oftypes.h
+	"ofConstants.h"
+	"ofColor.h"
+	<memory>
+	<tr1/memory>
+	"Poco/Mutex.h"
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\types\ofcolor.h
+	<limits>
+	"ofMath.h"
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\math\ofmath.h
+	"ofPoint.h"
+	"ofConstants.h"
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\types\ofpoint.h
+	"ofVec3f.h"
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\math\ofvec3f.h
+	"ofVec2f.h"
+	"ofVec4f.h"
+	"ofConstants.h"
+	<cmath>
+	<iostream>
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\math\ofvec2f.h
+	"ofConstants.h"
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\math\ofvec4f.h
+	"ofConstants.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\mutex.h
+	"Poco/Foundation.h"
+	"Poco/Exception.h"
+	"Poco/ScopedLock.h"
+	"Poco/Mutex_WINCE.h"
+	"Poco/Mutex_WIN32.h"
+	"Poco/Mutex_VX.h"
+	"Poco/Mutex_POSIX.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\exception.h
+	"Poco/Foundation.h"
+	<stdexcept>
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\scopedlock.h
+	"Poco/Foundation.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\mutex_wince.h
+	"Poco/Foundation.h"
+	"Poco/Exception.h"
+	"Poco/UnWindows.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\unwindows.h
+	<windows.h>
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\mutex_win32.h
+	"Poco/Foundation.h"
+	"Poco/Exception.h"
+	"Poco/UnWindows.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\mutex_vx.h
+	"Poco/Foundation.h"
+	"Poco/Exception.h"
+	<semLib.h>
+	<errno.h>
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\mutex_posix.h
+	"Poco/Foundation.h"
+	"Poco/Exception.h"
+	<pthread.h>
+	<errno.h>
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\utils\ofsystemutils.h
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\utils\ofthread.h
+	"Poco/AtomicCounter.h"
+	"Poco/Thread.h"
+	"Poco/Runnable.h"
+	"ofConstants.h"
+	"ofTypes.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\atomiccounter.h
+	"Poco/Foundation.h"
+	"Poco/UnWindows.h"
+	<libkern/OSAtomic.h>
+	"Poco/Mutex.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\thread.h
+	"Poco/Foundation.h"
+	"Poco/Mutex.h"
+	"Poco/Thread_WINCE.h"
+	"Poco/Thread_WIN32.h"
+	"Poco/Thread_VX.h"
+	"Poco/Thread_POSIX.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\thread_wince.h
+	"Poco/Foundation.h"
+	"Poco/Runnable.h"
+	"Poco/UnWindows.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\runnable.h
+	"Poco/Foundation.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\thread_win32.h
+	"Poco/Foundation.h"
+	"Poco/Runnable.h"
+	"Poco/UnWindows.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\thread_vx.h
+	"Poco/Foundation.h"
+	"Poco/Runnable.h"
+	"Poco/SignalHandler.h"
+	"Poco/Event.h"
+	"Poco/RefCountedObject.h"
+	"Poco/AutoPtr.h"
+	<taskLib.h>
+	<taskVarLib.h>
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\signalhandler.h
+	"Poco/Foundation.h"
+	<vector>
+	<setjmp.h>
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\event.h
+	"Poco/Foundation.h"
+	"Poco/Exception.h"
+	"Poco/Event_WIN32.h"
+	"Poco/Event_VX.h"
+	"Poco/Event_POSIX.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\event_win32.h
+	"Poco/Foundation.h"
+	"Poco/Exception.h"
+	"Poco/UnWindows.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\event_vx.h
+	"Poco/Foundation.h"
+	"Poco/Exception.h"
+	<semLib.h>
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\event_posix.h
+	"Poco/Foundation.h"
+	"Poco/Exception.h"
+	<pthread.h>
+	<errno.h>
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\refcountedobject.h
+	"Poco/Foundation.h"
+	"Poco/AtomicCounter.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\autoptr.h
+	"Poco/Foundation.h"
+	"Poco/Exception.h"
+	<algorithm>
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\thread_posix.h
+	"Poco/Foundation.h"
+	"Poco/Runnable.h"
+	"Poco/SignalHandler.h"
+	"Poco/Event.h"
+	"Poco/RefCountedObject.h"
+	"Poco/AutoPtr.h"
+	<pthread.h>
+	<limits.h>
+	<sys/select.h>
+	<errno.h>
+	<cstring>
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\utils\ofurlfileloader.h
+	<deque>
+	<queue>
+	"ofThread.h"
+	"ofEvents.h"
+	"ofFileUtils.h"
+	"Poco/Condition.h"
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\events\ofevents.h
+	"ofConstants.h"
+	"ofPoint.h"
+	"ofEventUtils.h"
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\events\ofeventutils.h
+	"ofConstants.h"
+	"Poco/PriorityEvent.h"
+	"Poco/PriorityDelegate.h"
+	"ofDelegate.h"
+	<stdio.h>
+	<stdlib.h>
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\priorityevent.h
+	"Poco/AbstractEvent.h"
+	"Poco/PriorityStrategy.h"
+	"Poco/AbstractPriorityDelegate.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\abstractevent.h
+	"Poco/Foundation.h"
+	"Poco/SingletonHolder.h"
+	"Poco/SharedPtr.h"
+	"Poco/ActiveResult.h"
+	"Poco/ActiveMethod.h"
+	"Poco/Mutex.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\singletonholder.h
+	"Poco/Foundation.h"
+	"Poco/Mutex.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\sharedptr.h
+	"Poco/Foundation.h"
+	"Poco/Exception.h"
+	"Poco/AtomicCounter.h"
+	<algorithm>
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\activeresult.h
+	"Poco/Foundation.h"
+	"Poco/Mutex.h"
+	"Poco/Event.h"
+	"Poco/RefCountedObject.h"
+	"Poco/Exception.h"
+	<algorithm>
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\activemethod.h
+	"Poco/Foundation.h"
+	"Poco/ActiveResult.h"
+	"Poco/ActiveRunnable.h"
+	"Poco/ActiveStarter.h"
+	"Poco/AutoPtr.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\activerunnable.h
+	"Poco/Foundation.h"
+	"Poco/ActiveResult.h"
+	"Poco/Runnable.h"
+	"Poco/RefCountedObject.h"
+	"Poco/AutoPtr.h"
+	"Poco/Exception.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\activestarter.h
+	"Poco/Foundation.h"
+	"Poco/ThreadPool.h"
+	"Poco/ActiveRunnable.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\threadpool.h
+	"Poco/Foundation.h"
+	"Poco/Thread.h"
+	"Poco/Mutex.h"
+	<vector>
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\prioritystrategy.h
+	"Poco/NotificationStrategy.h"
+	"Poco/SharedPtr.h"
+	<vector>
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\notificationstrategy.h
+	"Poco/Foundation.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\abstractprioritydelegate.h
+	"Poco/Foundation.h"
+	"Poco/AbstractDelegate.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\abstractdelegate.h
+	"Poco/Foundation.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\prioritydelegate.h
+	"Poco/Foundation.h"
+	"Poco/AbstractPriorityDelegate.h"
+	"Poco/PriorityExpire.h"
+	"Poco/FunctionPriorityDelegate.h"
+	"Poco/Mutex.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\priorityexpire.h
+	"Poco/Foundation.h"
+	"Poco/Timestamp.h"
+	"Poco/AbstractPriorityDelegate.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\functionprioritydelegate.h
+	"Poco/Foundation.h"
+	"Poco/AbstractPriorityDelegate.h"
+	"Poco/Mutex.h"
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\events\ofdelegate.h
+	"Poco/AbstractPriorityDelegate.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\condition.h
+	"Poco/Foundation.h"
+	"Poco/Mutex.h"
+	"Poco/ScopedUnlock.h"
+	"Poco/Event.h"
+	"Poco/Exception.h"
+	<deque>
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\scopedunlock.h
+	"Poco/Foundation.h"
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\utils\ofutils.h
+	"ofConstants.h"
+	<bitset>
+	"ofLog.h"
+	<shellapi.h>
+	"Poco/Path.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\path.h
+	"Poco/Foundation.h"
+	<vector>
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\types\ofbasetypes.h
+	"ofPoint.h"
+	"ofRectangle.h"
+	"ofConstants.h"
+	"ofColor.h"
+	"ofMesh.h"
+	"ofPixels.h"
+	"ofMatrix4x4.h"
+	"ofTypes.h"
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\types\ofrectangle.h
+	"ofConstants.h"
+	"ofPoint.h"
+	"ofLog.h"
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\3d\ofmesh.h
+	"ofVec3f.h"
+	"ofVec2f.h"
+	"ofColor.h"
+	"ofUtils.h"
+	"ofConstants.h"
+	"ofGLUtils.h"
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\gl\ofglutils.h
+	"ofConstants.h"
+	"ofTypes.h"
+	"ofPixels.h"
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\graphics\ofpixels.h
+	"ofConstants.h"
+	"ofUtils.h"
+	"ofColor.h"
+	"ofMath.h"
+	<limits>
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\math\ofmatrix4x4.h
+	"ofVec3f.h"
+	"ofVec4f.h"
+	"ofQuaternion.h"
+	"ofConstants.h"
+	<cmath>
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\math\ofquaternion.h
+	"ofConstants.h"
+	"ofVec3f.h"
+	"ofVec4f.h"
+	<cmath>
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\utils\ofxml.h
+	"ofMain.h"
+	<numeric>
+	<Poco/DOM/Document.h>
+	<Poco/DOM/DocumentFragment.h>
+	<Poco/DOM/Element.h>
+	<Poco/DOM/DOMParser.h>
+	<Poco/DOM/DOMException.h>
+	<Poco/SAX/SAXException.h>
+	<Poco/XML/XMLString.h>
+	<Poco/XML/XMLWriter.h>
+	<Poco/DOM/DOMParser.h>
+	<Poco/DOM/DOMWriter.h>
+	<Poco/DOM/Document.h>
+	<Poco/DOM/Attr.h>
+	<Poco/DOM/Node.h>
+	<Poco/DOM/Text.h>
+	<Poco/DOM/NodeIterator.h>
+	<Poco/DOM/NodeFilter.h>
+	<Poco/DOM/NamedNodeMap.h>
+	<Poco/DOM/ChildNodesList.h>
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\dom\document.h
+	"Poco/XML/XML.h"
+	"Poco/DOM/AbstractContainerNode.h"
+	"Poco/DOM/DocumentEvent.h"
+	"Poco/DOM/Element.h"
+	"Poco/XML/XMLString.h"
+	"Poco/XML/NamePool.h"
+	"Poco/AutoReleasePool.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\xml\xml.h
+	"Poco/Foundation.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\dom\abstractcontainernode.h
+	"Poco/XML/XML.h"
+	"Poco/DOM/AbstractNode.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\dom\abstractnode.h
+	"Poco/XML/XML.h"
+	"Poco/DOM/Node.h"
+	"Poco/DOM/MutationEvent.h"
+	"Poco/XML/XMLString.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\dom\node.h
+	"Poco/XML/XML.h"
+	"Poco/DOM/EventTarget.h"
+	"Poco/XML/XMLString.h"
+	"Poco/SAX/NamespaceSupport.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\dom\eventtarget.h
+	"Poco/XML/XML.h"
+	"Poco/DOM/DOMObject.h"
+	"Poco/XML/XMLString.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\dom\domobject.h
+	"Poco/XML/XML.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\xml\xmlstring.h
+	"Poco/XML/XML.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\sax\namespacesupport.h
+	"Poco/XML/XML.h"
+	"Poco/XML/XMLString.h"
+	<set>
+	<map>
+	<vector>
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\dom\mutationevent.h
+	"Poco/XML/XML.h"
+	"Poco/DOM/Event.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\dom\event.h
+	"Poco/XML/XML.h"
+	"Poco/XML/XMLString.h"
+	"Poco/DOM/DOMObject.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\dom\documentevent.h
+	"Poco/XML/XML.h"
+	"Poco/XML/XMLString.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\dom\element.h
+	"Poco/XML/XML.h"
+	"Poco/DOM/AbstractContainerNode.h"
+	"Poco/XML/Name.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\xml\name.h
+	"Poco/XML/XML.h"
+	"Poco/XML/XMLString.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\xml\namepool.h
+	"Poco/XML/XML.h"
+	"Poco/XML/XMLString.h"
+	"Poco/XML/Name.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\autoreleasepool.h
+	"Poco/Foundation.h"
+	<list>
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\dom\documentfragment.h
+	"Poco/XML/XML.h"
+	"Poco/DOM/AbstractContainerNode.h"
+	"Poco/XML/XMLString.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\dom\domparser.h
+	"Poco/XML/XML.h"
+	"Poco/SAX/SAXParser.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\sax\saxparser.h
+	"Poco/XML/XML.h"
+	"Poco/SAX/XMLReader.h"
+	"Poco/XML/ParserEngine.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\sax\xmlreader.h
+	"Poco/XML/XML.h"
+	"Poco/XML/XMLString.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\xml\parserengine.h
+	"Poco/XML/XML.h"
+	<expat.h>
+	"Poco/XML/expat.h"
+	"Poco/XML/XMLString.h"
+	"Poco/XML/XMLStream.h"
+	"Poco/SAX/Locator.h"
+	"Poco/TextEncoding.h"
+	<map>
+	<vector>
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\xml\expat.h
+	<stdlib.h>
+	"expat_external.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\xml\expat_external.h
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\xml\xmlstream.h
+	"Poco/XML/XML.h"
+	<istream>
+	<ostream>
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\sax\locator.h
+	"Poco/XML/XML.h"
+	"Poco/XML/XMLString.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\textencoding.h
+	"Poco/Foundation.h"
+	"Poco/SharedPtr.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\dom\domexception.h
+	"Poco/XML/XML.h"
+	"Poco/XML/XMLException.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\xml\xmlexception.h
+	"Poco/XML/XML.h"
+	"Poco/Exception.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\sax\saxexception.h
+	"Poco/XML/XML.h"
+	"Poco/XML/XMLException.h"
+	"Poco/XML/XMLString.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\xml\xmlwriter.h
+	"Poco/XML/XML.h"
+	"Poco/SAX/ContentHandler.h"
+	"Poco/SAX/LexicalHandler.h"
+	"Poco/SAX/DTDHandler.h"
+	"Poco/SAX/NamespaceSupport.h"
+	"Poco/XML/XMLString.h"
+	"Poco/XML/XMLStream.h"
+	"Poco/XML/Name.h"
+	"Poco/TextEncoding.h"
+	"Poco/StreamConverter.h"
+	<vector>
+	<map>
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\sax\contenthandler.h
+	"Poco/XML/XML.h"
+	"Poco/XML/XMLString.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\sax\lexicalhandler.h
+	"Poco/XML/XML.h"
+	"Poco/XML/XMLString.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\sax\dtdhandler.h
+	"Poco/XML/XML.h"
+	"Poco/XML/XMLString.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\streamconverter.h
+	"Poco/Foundation.h"
+	"Poco/TextEncoding.h"
+	"Poco/UnbufferedStreamBuf.h"
+	<istream>
+	<ostream>
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\unbufferedstreambuf.h
+	"Poco/Foundation.h"
+	"Poco/StreamUtil.h"
+	<streambuf>
+	<iosfwd>
+	<ios>
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\streamutil.h
+	"Poco/Foundation.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\dom\domwriter.h
+	"Poco/XML/XML.h"
+	"Poco/XML/XMLString.h"
+	"Poco/XML/XMLStream.h"
+	"Poco/TextEncoding.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\dom\attr.h
+	"Poco/XML/XML.h"
+	"Poco/DOM/AbstractNode.h"
+	"Poco/DOM/Element.h"
+	"Poco/XML/Name.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\dom\text.h
+	"Poco/XML/XML.h"
+	"Poco/DOM/CharacterData.h"
+	"Poco/XML/XMLString.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\dom\characterdata.h
+	"Poco/XML/XML.h"
+	"Poco/DOM/AbstractNode.h"
+	"Poco/XML/XMLString.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\dom\nodeiterator.h
+	"Poco/XML/XML.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\dom\nodefilter.h
+	"Poco/XML/XML.h"
+	"Poco/XML/XMLString.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\dom\namednodemap.h
+	"Poco/XML/XML.h"
+	"Poco/DOM/DOMObject.h"
+	"Poco/XML/XMLString.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\dom\childnodeslist.h
+	"Poco/XML/XML.h"
+	"Poco/DOM/NodeList.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\dom\nodelist.h
+	"Poco/XML/XML.h"
+	"Poco/DOM/DOMObject.h"
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\types\ofparameter.h
+	"ofEvents.h"
+	"ofTypes.h"
+	"ofUtils.h"
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\types\ofparametergroup.h
+	<map>
+	"Poco/Any.h"
+	"ofConstants.h"
+	"ofLog.h"
+	"ofParameter.h"
+	"ofTypes.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\any.h
+	"Poco/Exception.h"
+	<algorithm>
+	<typeinfo>
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\math\ofvectormath.h
+	"ofVec2f.h"
+	"ofVec3f.h"
+	"ofVec4f.h"
+	"ofMatrix3x3.h"
+	"ofMatrix4x4.h"
+	"ofQuaternion.h"
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\math\ofmatrix3x3.h
+	"ofConstants.h"
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\communication\ofserial.h
+	"ofConstants.h"
+	"ofTypes.h"
+	<termios.h>
+	<winbase.h>
+	<tchar.h>
+	<iostream>
+	<string.h>
+	<setupapi.h>
+	<regstr.h>
+	<winioctl.h>
+	<initguid.h>
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\communication\ofarduino.h
+	<list>
+	<vector>
+	<string>
+	<iostream>
+	"ofEvents.h"
+	"ofSerial.h"
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\gl\offbo.h
+	"ofTexture.h"
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\gl\oftexture.h
+	"ofPoint.h"
+	"ofRectangle.h"
+	"ofBaseTypes.h"
+	"ofConstants.h"
+	"ofVboMesh.h"
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\gl\ofvbomesh.h
+	"ofMesh.h"
+	"ofVbo.h"
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\gl\ofvbo.h
+	"ofConstants.h"
+	"ofVec3f.h"
+	"ofColor.h"
+	"ofUtils.h"
+	"ofMesh.h"
+	"ofGLUtils.h"
+	<map>
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\gl\ofglrenderer.h
+	"ofBaseTypes.h"
+	"ofPolyline.h"
+	"ofMatrix4x4.h"
+	<stack>
+	"ofGraphics.h"
+	"ofMatrixStack.h"
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\graphics\ofpolyline.h
+	"ofPoint.h"
+	"ofConstants.h"
+	<deque>
+	"ofRectangle.h"
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\graphics\ofgraphics.h
+	"ofConstants.h"
+	"ofColor.h"
+	"ofPoint.h"
+	"ofMatrix4x4.h"
+	"ofRectangle.h"
+	"ofTypes.h"
+	"ofBaseTypes.h"
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\utils\ofmatrixstack.h
+	<stack>
+	"ofConstants.h"
+	"ofRectangle.h"
+	"ofGraphics.h"
+	"ofMatrix4x4.h"
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\gl\oflight.h
+	"ofNode.h"
+	"ofColor.h"
+	"of3dGraphics.h"
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\3d\ofnode.h
+	"ofVectorMath.h"
+	"of3dUtils.h"
+	"ofGraphics.h"
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\3d\of3dutils.h
+	"ofVectorMath.h"
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\graphics\of3dgraphics.h
+	"ofConstants.h"
+	"ofColor.h"
+	"ofPoint.h"
+	"ofMatrix4x4.h"
+	"ofRectangle.h"
+	"ofTypes.h"
+	"ofBaseTypes.h"
+	"ofGLRenderer.h"
+	"of3dPrimitives.h"
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\3d\of3dprimitives.h
+	"ofVboMesh.h"
+	"ofRectangle.h"
+	"ofNode.h"
+	"ofTexture.h"
+	<map>
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\gl\ofmaterial.h
+	"ofColor.h"
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\gl\ofshader.h
+	"ofConstants.h"
+	"ofBaseTypes.h"
+	"ofTexture.h"
+	"ofMatrix4x4.h"
+	"Poco/RegularExpression.h"
+	<map>
+	"ofAppBaseWindow.h"
+
+1410256990 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\poco\include\poco\regularexpression.h
+	"Poco/Foundation.h"
+	<vector>
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\app\ofappbasewindow.h
+	"ofPoint.h"
+	"ofTypes.h"
+	<X11/Xlib.h>
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\gl\ofglprogrammablerenderer.h
+	"ofBaseTypes.h"
+	"ofPolyline.h"
+	"ofMatrix4x4.h"
+	"ofShader.h"
+	"ofGraphics.h"
+	"ofMatrixStack.h"
+	<stack>
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\graphics\ofcairorenderer.h
+	"cairo-features.h"
+	"cairo-pdf.h"
+	"cairo-svg.h"
+	"cairo.h"
+	<deque>
+	<stack>
+	"ofMatrix4x4.h"
+	"ofBaseTypes.h"
+	"ofPath.h"
+
+1410256988 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\cairo\include\cairo\cairo-features.h
+
+1410256988 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\cairo\include\cairo\cairo-pdf.h
+	"cairo.h"
+
+1410256988 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\cairo\include\cairo\cairo.h
+	"cairo-version.h"
+	"cairo-features.h"
+	"cairo-deprecated.h"
+
+1410256988 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\cairo\include\cairo\cairo-version.h
+
+1410256988 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\cairo\include\cairo\cairo-deprecated.h
+
+1410256988 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\cairo\include\cairo\cairo-svg.h
+	"cairo.h"
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\graphics\ofpath.h
+	"ofConstants.h"
+	"ofPoint.h"
+	"ofColor.h"
+	"ofPolyline.h"
+	"ofBaseTypes.h"
+	"ofVboMesh.h"
+	"ofTessellator.h"
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\graphics\oftessellator.h
+	"ofConstants.h"
+	"ofMesh.h"
+	"ofTypes.h"
+	"ofPolyline.h"
+	"tesselator.h"
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\graphics\ofimage.h
+	"ofFileUtils.h"
+	"ofTexture.h"
+	"ofPixels.h"
+	"ofBaseTypes.h"
+	"ofConstants.h"
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\graphics\ofrenderercollection.h
+	"ofBaseTypes.h"
+	"ofGLRenderer.h"
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\graphics\oftruetypefont.h
+	<vector>
+	"ofPoint.h"
+	"ofRectangle.h"
+	"ofConstants.h"
+	"ofPath.h"
+	"ofTexture.h"
+	"ofMesh.h"
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\app\ofbaseapp.h
+	"ofPoint.h"
+	"ofEvents.h"
+	"ofBaseTypes.h"
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\app\ofapprunner.h
+	"ofConstants.h"
+	"ofPoint.h"
+	"ofRectangle.h"
+	"ofTypes.h"
+	<X11/Xlib.h>
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\sound\ofsoundstream.h
+	"ofConstants.h"
+	"ofBaseTypes.h"
+	"ofBaseApp.h"
+	"ofTypes.h"
+	"ofBaseSoundStream.h"
+	"ofRtAudioSoundStream.h"
+	"ofPASoundStream.h"
+	"ofxAndroidSoundStream.h"
+	"ofxiOSSoundStream.h"
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\sound\ofbasesoundstream.h
+	"ofConstants.h"
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\sound\ofrtaudiosoundstream.h
+	"ofConstants.h"
+	"ofBaseSoundStream.h"
+	"ofTypes.h"
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\sound\ofsoundplayer.h
+	"ofConstants.h"
+	"ofTypes.h"
+	"ofBaseTypes.h"
+	"ofBaseSoundPlayer.h"
+	"ofQuicktimeSoundPlayer.h"
+	"ofFmodSoundPlayer.h"
+	"ofOpenALSoundPlayer.h"
+	"ofxiOSSoundPlayer.h"
+	"ofxAndroidSoundPlayer.h"
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\sound\ofbasesoundplayer.h
+	"ofConstants.h"
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\sound\offmodsoundplayer.h
+	"ofConstants.h"
+	"ofBaseSoundPlayer.h"
+	"fmod.h"
+	"fmod_errors.h"
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\fmodex\include\fmod.h
+	"fmod_codec.h"
+	"fmod_dsp.h"
+	"fmod_memoryinfo.h"
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\fmodex\include\fmod_codec.h
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\fmodex\include\fmod_dsp.h
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\fmodex\include\fmod_memoryinfo.h
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\fmodex\include\fmod_errors.h
+	"fmod.h"
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\sound\ofopenalsoundplayer.h
+	"ofConstants.h"
+	"ofBaseSoundPlayer.h"
+	"ofEvents.h"
+	"ofThread.h"
+	<OpenAL/al.h>
+	<OpenAL/alc.h>
+	<AL/al.h>
+	<AL/alc.h>
+	"kiss_fft.h"
+	"kiss_fftr.h"
+	<sndfile.h>
+	<mpg123.h>
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\video\ofvideograbber.h
+	"ofConstants.h"
+	"ofTexture.h"
+	"ofBaseTypes.h"
+	"ofPixels.h"
+	"ofTypes.h"
+	"ofxiOSVideoGrabber.h"
+	"ofQuickTimeGrabber.h"
+	"ofQTKitGrabber.h"
+	"ofDirectShowGrabber.h"
+	"ofGstVideoGrabber.h"
+	"ofxAndroidVideoGrabber.h"
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\video\ofquicktimegrabber.h
+	"ofConstants.h"
+	"ofQtUtils.h"
+	"ofTexture.h"
+	"ofBaseTypes.h"
+	"ofPixels.h"
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\video\ofqtutils.h
+	"ofConstants.h"
+	<QuickTime/QuickTime.h>
+	<CoreServices/CoreServices.h>
+	<ApplicationServices/ApplicationServices.h>
+	<QTML.h>
+	<FixMath.h>
+	<QuickTimeComponents.h>
+	<TextUtils.h>
+	<MediaHandlers.h>
+
+1410256994 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\qtml.h
+	<MacTypes.h>
+	<MacMemory.h>
+	<MacWindows.h>
+	<OSUtils.h>
+	<Files.h>
+
+1410256993 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\macwindows.h
+	<MacTypes.h>
+	<Aliases.h>
+	<AppleEvents.h>
+	<Collections.h>
+	<Drag.h>
+	<Events.h>
+	<Menus.h>
+	<MixedMode.h>
+	<QDOffscreen.h>
+	<Quickdraw.h>
+	<TextCommon.h>
+	<Icons.h>
+	<MacErrors.h>
+
+1410256993 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\aliases.h
+	<MacTypes.h>
+	<AppleTalk.h>
+	<Files.h>
+
+1410256993 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\appletalk.h
+	<MacTypes.h>
+	<OSUtils.h>
+
+1410256993 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\appleevents.h
+	<MacTypes.h>
+	<MixedMode.h>
+	<Notification.h>
+	<Events.h>
+	<AEDataModel.h>
+
+1410256994 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\notification.h
+	<MacTypes.h>
+	<OSUtils.h>
+
+1410256993 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\events.h
+	<OSUtils.h>
+	<Quickdraw.h>
+	<MacTypes.h>
+	<Endian.h>
+
+1410256994 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\quickdraw.h
+	<Components.h>
+	<MacTypes.h>
+	<MixedMode.h>
+	<QuickdrawText.h>
+
+1410256993 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\components.h
+	<MacErrors.h>
+	<MacTypes.h>
+	<MixedMode.h>
+
+1410256994 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\quickdrawtext.h
+	<MacTypes.h>
+	<MixedMode.h>
+
+1410256993 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\aedatamodel.h
+	<MacTypes.h>
+	<MixedMode.h>
+
+1410256993 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\collections.h
+	<MacTypes.h>
+	<MixedMode.h>
+
+1410256993 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\drag.h
+	<MacTypes.h>
+	<Events.h>
+	<Files.h>
+	<AppleEvents.h>
+	<Quickdraw.h>
+
+1410256993 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\menus.h
+	<MacTypes.h>
+	<Events.h>
+	<Quickdraw.h>
+	<Fonts.h>
+	<TextCommon.h>
+	<Processes.h>
+	<AppleEvents.h>
+	<Collections.h>
+	<MacErrors.h>
+
+1410256993 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\fonts.h
+	<MacTypes.h>
+	<Files.h>
+	<Quickdraw.h>
+	<TextCommon.h>
+	<MacErrors.h>
+
+1410256994 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\processes.h
+	<MacTypes.h>
+	<Events.h>
+	<Files.h>
+
+1410256994 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\qdoffscreen.h
+	<MacErrors.h>
+	<Quickdraw.h>
+
+1410256993 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\icons.h
+	<MacTypes.h>
+	<Quickdraw.h>
+	<Files.h>
+	<CodeFragments.h>
+
+1410256993 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\codefragments.h
+	<MacTypes.h>
+	<Files.h>
+
+1410256993 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\fixmath.h
+	<MacTypes.h>
+
+1410256994 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\quicktimecomponents.h
+	<MacTypes.h>
+	<MixedMode.h>
+	<Components.h>
+	<ImageCompression.h>
+	<Movies.h>
+	<Quickdraw.h>
+	<Video.h>
+	<Sound.h>
+	<QuickTimeMusic.h>
+
+1410256993 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\imagecompression.h
+	<MacTypes.h>
+	<Quickdraw.h>
+	<QDOffscreen.h>
+	<Components.h>
+	<StandardFile.h>
+
+1410256994 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\standardfile.h
+	<MacTypes.h>
+	<Dialogs.h>
+	<Files.h>
+
+1410256993 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\dialogs.h
+	<MacTypes.h>
+	<MixedMode.h>
+	<Events.h>
+	<MacWindows.h>
+	<TextEdit.h>
+	<Controls.h>
+	<MacErrors.h>
+
+1410256994 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\textedit.h
+	<MacTypes.h>
+	<Quickdraw.h>
+	<MixedMode.h>
+
+1410256993 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\controls.h
+	<MacTypes.h>
+	<Quickdraw.h>
+	<Menus.h>
+	<TextEdit.h>
+	<Drag.h>
+	<Icons.h>
+	<Collections.h>
+	<MacErrors.h>
+
+1410256994 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\movies.h
+	<Quickdraw.h>
+	<Aliases.h>
+	<Events.h>
+	<Menus.h>
+	<Components.h>
+	<ImageCompression.h>
+
+1410256994 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\video.h
+	<Quickdraw.h>
+
+1410256994 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\sound.h
+	<MacTypes.h>
+	<Dialogs.h>
+	<Components.h>
+	<MixedMode.h>
+	<Movies.h>
+
+1410256994 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\quicktimemusic.h
+	<Components.h>
+	<ImageCompression.h>
+	<Movies.h>
+	<Quickdraw.h>
+	<Video.h>
+	<MacMemory.h>
+	<Sound.h>
+	<Endian.h>
+
+1410256994 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\textutils.h
+	<MacTypes.h>
+	<NumberFormatting.h>
+	<StringCompare.h>
+	<DateTimeUtils.h>
+
+1410256994 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\numberformatting.h
+	<ConditionalMacros.h>
+	<MacTypes.h>
+	<IntlResources.h>
+
+1410256993 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\intlresources.h
+	<MacTypes.h>
+
+1410256994 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\stringcompare.h
+	<MacTypes.h>
+	<TextCommon.h>
+	<Script.h>
+
+1410256994 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\script.h
+	<MacTypes.h>
+	<Quickdraw.h>
+	<IntlResources.h>
+	<Events.h>
+
+1410256993 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\quicktime\include\mediahandlers.h
+	<ConditionalMacros.h>
+	<MacTypes.h>
+	<Components.h>
+	<Movies.h>
+	<Sound.h>
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\video\ofqtkitgrabber.h
+	"ofMain.h"
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\video\ofdirectshowgrabber.h
+	"ofConstants.h"
+	"ofTexture.h"
+	"ofBaseTypes.h"
+	"ofPixels.h"
+	"videoInput.h"
+
+1410256994 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\videoinput\include\videoinput.h
+	<stdlib.h>
+	<stdio.h>
+	<math.h>
+	<string.h>
+	<wchar.h>
+	<string>
+	<vector>
+	<windows.h>
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\video\ofgstvideograbber.h
+	"ofGstUtils.h"
+	"ofTypes.h"
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\video\ofgstutils.h
+	"ofConstants.h"
+	"ofConstants.h"
+	"ofBaseTypes.h"
+	"ofPixels.h"
+	"ofTypes.h"
+	"ofEvents.h"
+	"ofThread.h"
+	<gst/gst.h>
+	<gst/gstpad.h>
+	"Poco/Condition.h"
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\video\ofvideoplayer.h
+	"ofConstants.h"
+	"ofTexture.h"
+	"ofBaseTypes.h"
+	"ofTypes.h"
+	"ofGstVideoPlayer.h"
+	"ofQuickTimePlayer.h"
+	"ofQTKitPlayer.h"
+	"ofxiOSVideoPlayer.h"
+	"ofxAndroidVideoPlayer.h"
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\video\ofgstvideoplayer.h
+	"ofGstUtils.h"
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\video\ofquicktimeplayer.h
+	"ofConstants.h"
+	"ofBaseTypes.h"
+	"ofPixels.h"
+	"ofQtUtils.h"
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\video\ofqtkitplayer.h
+	"ofMain.h"
+
+1410256989 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\3d\ofcamera.h
+	"ofRectangle.h"
+	"ofAppRunner.h"
+	"ofNode.h"
+
+1410256997 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\libs\openframeworks\3d\ofeasycam.h
+	"ofCamera.h"
+	"ofEvents.h"
+
+1452829950 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\src\ofck.cpp
+	"ofck.h"
+	"chuck_dl.h"
+	"chuck_def.h"
+	"chuck_type.h"
+	"chuck_instr.h"
+	"chuck_vm.h"
+	"chuck_compile.h"
+	"ofxChucK.h"
+	"ofck-entities.h"
+	<stdio.h>
+	<limits.h>
+
+1452829950 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\src\ofxchuck.h
+	<string>
+	"ofck.h"
+	"ofck-entities.h"
+
+1452831821 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\addons\ofxchuck\src\ofxchuck.cpp
+	"ofxChucK.h"
+	"chuck_system.h"
+	"ofck.h"
+
+1410256994 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\apps\myapps\ofxchuckexample\icon.rc
+
+1452829949 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\apps\myapps\ofxchuckexample\src\main.cpp
+	"ofMain.h"
+	"ofApp.h"
+
+1452832352 c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\apps\myapps\ofxchuckexample\src\ofapp.h
+	"ofMain.h"
+	"ofxChucK.h"
+
+1452829949 source:c:\users\sanjay\documents\educational\school\stanford university\sophomore year\winter quarter\music 256b\openframeworks\apps\myapps\ofxchuckexample\src\ofapp.cpp
+	"ofApp.h"
+
