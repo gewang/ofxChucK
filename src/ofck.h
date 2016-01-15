@@ -49,12 +49,16 @@ public:
     Chuck_Object * chuckObject() { return m_chuckObject; }
     // allocate the chuck object
     bool initChucKSideObject();
-    
+
 public:
     // update
     virtual void update( double delta );
     // render
     virtual void render();
+
+public:
+    // late-binding commands
+    virtual bool eval( const std::string & command ) { }
 
 public:
     // update all, cascading to children

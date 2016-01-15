@@ -12,6 +12,7 @@
 #include "ofck-entities.h"
 #include <algorithm>
 #include <string>
+#include <sstream>
 using namespace std;
 
 
@@ -55,7 +56,7 @@ VREntity * VREntityFactory::makeEntity( const std::string & type )
     // check type
     if( type == "flare" ) { e = new VRFlare(); }
     else if( type == "points" ) { }
-    else if( type == "lines" ) { }
+    else if( type == "lines" ) { e = new VRLinesEntity(); }
     else if( type == "linestrip" ) { }
     else if( type == "triangles" ) { }
     else if( type == "trianglestrip" ) { }
@@ -73,6 +74,80 @@ VREntity * VREntityFactory::makeEntity( const std::string & type )
     
     // done
     return e;
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// constructor
+//------------------------------------------------------------------------------
+VRLinesEntity::VRLinesEntity()
+{
+    // do nothing
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// render
+//------------------------------------------------------------------------------
+void VRLinesEntity::render()
+{
+    // actual size
+    int N = m_vertices.size() / 2 * 2;
+    // loop over lines
+    for( int i = 0; i < N; i+=2 )
+    {
+        // render
+        ofLine( m_vertices[i].x, m_vertices[i].y, m_vertices[i].z,
+                m_vertices[i+1].x, m_vertices[i+1].x, m_vertices[i+1].x );
+    }
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// command: add
+//------------------------------------------------------------------------------
+bool VRLinesEntity::eval( const std::string & theLine )
+{
+    string line = lowerCase( theLine );
+
+    // word
+    string token;
+    // string stream
+    istringstream istr( line );
+    // the command
+    string command;
+    // get it
+    istr >> command;
+    
+    // sanity check
+    if( command == "" )
+    {
+        // empty command
+        cerr << "[VRLinesEntity]: empty EVAL command!" << endl;
+        // done
+        return false;
+    };
+
+    // check
+    if( command == "add" ) // add point
+    {
+        // the number
+        float x1, y1, z1, x2, y2, z2;
+        
+        // loop
+        while( istr >> x1 >> y1 >> z1 >> x2 >> y2 >> z2 )
+        {
+            // push as float
+            m_vertices.push_back( Vector3D(x1,y1,z1) );
+            m_vertices.push_back( Vector3D(x2,y2,z2) );
+        }
+    }
 }
 
 

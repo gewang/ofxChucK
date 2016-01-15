@@ -29,7 +29,6 @@ void ofApp::setup()
     // set up light
     m_light = new ofLight();
     m_light->setDiffuseColor( ofColor(100, 255, 100) );
-    m_light->enable();
     m_light->setGlobalPosition( 1000, 1000, 1000 );
 
     // compile and run another file
@@ -120,7 +119,7 @@ void ofApp::draw()
     // update it
     vr->root()->renderAll();
 
-    // undo light
+    // stop rendering light
     m_light->disable();
     
     // done with camera

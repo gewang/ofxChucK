@@ -67,15 +67,40 @@ protected:
 
 
 //------------------------------------------------------------------------------
+// name: classVRLinesEntity
+// desc: lines; EVAL: "add x1 y1 z1 x2 y2 z2" to add
+//------------------------------------------------------------------------------
+class VRLinesEntity : public VREntity
+{
+public:
+    // constructor
+    VRLinesEntity();
+    // render
+    virtual void render();
+    // command: add
+    virtual bool eval( const std::string & command );
+
+public:
+    // pairs of vertices
+    std::vector<Vector3D> m_vertices;
+};
+
+
+
+
+//------------------------------------------------------------------------------
 // name: class VRDotEntity
 // desc: dot entity
 //------------------------------------------------------------------------------
 class VRDotEntity : public VREntity
 {
 public:
+    // constructor
     VRDotEntity();
+    // render
     virtual void render();
-    
+
+public:
     ofSpherePrimitive sphere;
 };
 
