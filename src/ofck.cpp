@@ -45,6 +45,7 @@ CK_DLL_MFUN(vrentity_addChild);
 CK_DLL_MFUN(vrentity_removeChild);
 CK_DLL_MFUN(vrentity_setString);
 CK_DLL_MFUN(vrentity_getString);
+CK_DLL_MFUN(vrentity_eval);
 
 // VR
 CK_DLL_SFUN(vr_getEntity);
@@ -128,8 +129,8 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
         QUERY->add_arg(QUERY, "string", "key");
         // name of object to retrieve
         QUERY->add_arg(QUERY, "string", "value");
-        
-        // string VR.getString(key,value) // set
+
+        // string VREntity.getString(key,value) // set
         QUERY->add_mfun(QUERY, vrentity_getString, "string", "getString");
         // name of object to retrieve
         QUERY->add_arg(QUERY, "string", "key");
