@@ -15,3 +15,13 @@ that allow communication and data sharing between ChucK and OpenFrameworks.
 6. Go to the `chuck.lex file` -- on the top right, check `Identity and Type` -- make sure Type is `Lex Source`.
 7. Go to `Build Settings` > `Apple LLVM 7.0 - Custom Compiler Flags` > `Other C Flags`. Add: `-D__MACOSX_CORE__`
 8. Add the following to the `System Frameworks` ( or `General` > `Linked Frameworks and Libraries`): `MultitouchSupport.framework`, `CoreMidi.framework`
+
+
+
+## Steps to get ofxChucK compiling on Windows with CodeBlocks:
+
+1. Use the CodeBlocks template in example_Windows to get started ASAP. Otherwise, see below for manual steps.
+2. Add the ofxChucK add-on to your project with the Project Generator.
+3. In CodeBlocks, go to [Project] > Build Options > Compiler Settings > #defines, and paste in (on separate lines) `__WINDOWS_DS__`, `__PLATFORM_WIN32__`, and `HAVE_CONFIG_H`.
+4. Then go to [Project] > Build Options > Linker Settings > Add, and add the libraries `dinput` and `dsound`.
+5. Hit build and hope for the best.
