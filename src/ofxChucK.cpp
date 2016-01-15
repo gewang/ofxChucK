@@ -35,14 +35,14 @@ bool TheChucK::initialize( int srate, int bufferSize, int channelsIn,
     // remember
     m_channelsIn = channelsIn;
     m_channelsOut = channelsOut;
-    
+
     // initialize!
     t_CKBOOL val = m_system->clientInitialize(
         srate, bufferSize, channelsIn, channelsOut, argc, argv );
-    
+
     // binding
     m_system->bind( ofck_query, "OF" );
-    
+
     // done
     return val;
 }
@@ -56,8 +56,18 @@ bool TheChucK::initialize( int srate, int bufferSize, int channelsIn,
 //------------------------------------------------------------------------------
 bool TheChucK::compileFile( const std::string & path, const std::string & args )
 {
+    // we need to double up the backslashes
+    // so ChucK does not get confused by the
+    // drive-colon prefix in Windows filenames
+    std::string safePath(ofToDataPath(path));
+    size_t matchPosition = -2;
+
+    // probably the most concise way to do find-and-replace in CPP without imports or C++11
+    while( (matchPosition = safePath.find("\\", matchPosition + 2)) != std::string::npos )
+        safePath.replace( matchPosition, 1, "\\\\" ); // four backslashes is really two
+
     // compile
-    return m_system->compileFile( ofToDataPath(path), args );
+    return m_system->compileFile( safePath, args );
 }
 
 
@@ -153,7 +163,7 @@ TheChucK * TheChucK::instance()
         // instantiate!
         ourInstance = new TheChucK;
     }
-    
+
     return ourInstance;
 }
 

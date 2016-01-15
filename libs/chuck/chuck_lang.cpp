@@ -50,6 +50,7 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
+#include <math.h>
 using namespace std;
 
 // dac tick
@@ -76,9 +77,9 @@ t_CKBOOL init_class_object( Chuck_Env * env, Chuck_Type * type )
 
     // log
     EM_log( CK_LOG_SEVERE, "class 'object'" );
-    
+
     const char * doc = "Base class for all class types in ChucK.";
-    
+
     // init as base class
     if( !type_engine_import_class_begin( env, type, env->global(), object_ctor, object_dtor, doc ) )
         return FALSE;
@@ -94,14 +95,14 @@ t_CKBOOL init_class_object( Chuck_Env * env, Chuck_Type * type )
 
     // end the class import
     type_engine_import_class_end( env );
-    
+
     return TRUE;
 
 error:
 
     // end the class import
     type_engine_import_class_end( env );
-    
+
     return FALSE;
 }
 
@@ -230,7 +231,7 @@ t_CKBOOL init_class_uana( Chuck_Env * env, Chuck_Type * type )
     // add upchuck
     func = make_new_mfun( "UAnaBlob", "upchuck", uana_upchuck );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add fvals
     func = make_new_mfun( "float[]", "fvals", uana_fvals );
     if( !type_engine_import_mfun( env, func ) ) goto error;
@@ -243,7 +244,7 @@ t_CKBOOL init_class_uana( Chuck_Env * env, Chuck_Type * type )
     func = make_new_mfun( "float", "fval", uana_fval );
     func->add_arg( "int", "index" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add cval
     func = make_new_mfun( "complex", "cval", uana_cval );
     func->add_arg( "int", "index" );
@@ -290,10 +291,10 @@ t_CKBOOL init_class_blob( Chuck_Env * env, Chuck_Type * type )
 {
     Chuck_DL_Func * func = NULL;
     // Chuck_Value * value = NULL;
-    
+
     // log
     EM_log( CK_LOG_SEVERE, "class 'uanablob'" );
-    
+
     // init class
     // TODO: ctor/dtor
     if( !type_engine_import_class_begin( env, type, env->global(), uanablob_ctor, uanablob_dtor ) )
@@ -331,7 +332,7 @@ t_CKBOOL init_class_blob( Chuck_Env * env, Chuck_Type * type )
 
     // end class import
     type_engine_import_class_end( env );
-    
+
     // done
     return TRUE;
 
@@ -339,7 +340,7 @@ error:
 
     // end class import
     type_engine_import_class_end( env );
-    
+
     // error
     return FALSE;
 }
@@ -359,7 +360,7 @@ t_CKBOOL init_class_event( Chuck_Env * env, Chuck_Type * type )
 
     // log
     EM_log( CK_LOG_SEVERE, "class 'event'" );
-    
+
     const char *doc = "The Event class allows exact synchronization across an arbitrary number of shreds.";
 
     // init as base class
@@ -397,14 +398,14 @@ t_CKBOOL init_class_event( Chuck_Env * env, Chuck_Type * type )
     assert( value->func_ref != NULL );
     // remember it
     Chuck_Event::our_can_wait = value->func_ref->vt_index;
-    
+
     return TRUE;
 
 error:
 
     // end the class import
     type_engine_import_class_end( env );
-    
+
     return FALSE;
 }
 
@@ -425,12 +426,12 @@ t_CKBOOL init_class_shred( Chuck_Env * env, Chuck_Type * type )
     EM_log( CK_LOG_SEVERE, "class 'shred'" );
 
     const char *doc = "Shred facilitates various operations and interactions with shreds running in the ChucK virtual machine.";
-    
+
     // init as base class
     // TODO: ctor/dtor?
     if( !type_engine_import_class_begin( env, type, env->global(), NULL, NULL, doc ) )
         return FALSE;
-    
+
     // add dtor
     // not
 
@@ -439,7 +440,7 @@ t_CKBOOL init_class_shred( Chuck_Env * env, Chuck_Type * type )
     func->add_arg( "int", "id" );
     func->doc = "Return a Shred object corresponding to the provided shred ID.";
     if( !type_engine_import_sfun( env, func ) ) goto error;
-    
+
     // add clone()
     func = make_new_mfun( "void", "clone", shred_clone );
     if( !type_engine_import_mfun( env, func ) ) goto error;
@@ -488,22 +489,22 @@ t_CKBOOL init_class_shred( Chuck_Env * env, Chuck_Type * type )
     func->add_arg( "int", "index" );
     func->doc = "Return the argument at the specified index.";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add sourcePath() (added 1.3.0.0)
     func = make_new_mfun( "string", "sourcePath", shred_sourcePath );
     func->doc = "Return the path of the source code file from which this shred's code is derived.";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add path() (added 1.3.2.0)
     func = make_new_mfun( "string", "path", shred_sourcePath );
     func->doc = "Return the file path of the source code file from which this shred's code is derived (same as .sourcePath()).";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add sourceDir() (added 1.3.0.0)
     func = make_new_mfun( "string", "sourceDir", shred_sourceDir );
     func->doc = "Return the enclosing directory of the source code file from which this shred's code is derived.";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add dir() (added 1.3.2.0)
     func = make_new_mfun( "string", "dir", shred_sourceDir );
     func->doc = "Return the enclosing directory of the source code file from which this shred's code is derived (same as .sourceDir()).";
@@ -514,17 +515,17 @@ t_CKBOOL init_class_shred( Chuck_Env * env, Chuck_Type * type )
     func->add_arg( "int", "levelsUp" );
     func->doc = "Return the enclosing directory, the specified number of parent directories up.";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // end the class import
     type_engine_import_class_end( env );
-    
+
     return TRUE;
 
 error:
 
     // end the class import
     type_engine_import_class_end( env );
-    
+
     return FALSE;
 }
 
@@ -539,17 +540,17 @@ t_CKBOOL init_class_vec3( Chuck_Env * env, Chuck_Type * type )
 {
     // init as base class
     Chuck_DL_Func * func = NULL;
-    
+
     // log
     EM_log( CK_LOG_SEVERE, "class 'vec3' (primitive)" );
 
     // document
     const char *doc = "vec3 is a primitive type for a 3-dimensional vector; potentially useful for 3D coordinates, RGB color, or as a value/goal/slew interpolator.";
-    
+
     // init as base class
     if( !type_engine_import_class_begin( env, type, env->global(), NULL, NULL, doc ) )
         return FALSE;
-    
+
     // add set(float,float,float)
     func = make_new_mfun( "void", "set", vec3_set );
     func->add_arg( "float", "x" );
@@ -561,11 +562,11 @@ t_CKBOOL init_class_vec3( Chuck_Env * env, Chuck_Type * type )
     func = make_new_mfun( "void", "setAll", vec3_setAll );
     func->add_arg( "float", "value" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add magnitude()
     func = make_new_mfun( "float", "magnitude", vec3_magnitude );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add normalize()
     func = make_new_mfun( "void", "normalize", vec3_normalize );
     if( !type_engine_import_mfun( env, func ) ) goto error;
@@ -599,7 +600,7 @@ t_CKBOOL init_class_vec3( Chuck_Env * env, Chuck_Type * type )
     func = make_new_mfun( "void", "updateSet", vec3_updateSet_goalAndValue );
     func->add_arg( "float", "goalAndValue" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add update( float, float )
     func = make_new_mfun( "void", "updateSet", vec3_updateSet_goalAndValue_slew );
     func->add_arg( "float", "goal" );
@@ -610,11 +611,11 @@ t_CKBOOL init_class_vec3( Chuck_Env * env, Chuck_Type * type )
     type_engine_import_class_end( env );
 
     return TRUE;
-    
+
 error:
     // end the class import
     type_engine_import_class_end( env );
-    
+
     return FALSE;
 }
 
@@ -629,17 +630,17 @@ t_CKBOOL init_class_vec4( Chuck_Env * env, Chuck_Type * type )
 {
     // init as base class
     Chuck_DL_Func * func = NULL;
-    
+
     // log
     EM_log( CK_LOG_SEVERE, "class 'vec4' (primitive)" );
-    
+
     // document
     const char *doc = "vec4 is a primitive type for a 4-dimensional vector; potentially useful for 4D coordinatesm and RGBA color.";
-    
+
     // init as base class
     if( !type_engine_import_class_begin( env, type, env->global(), NULL, NULL, doc ) )
         return FALSE;
-    
+
     // add set(float,float,float)
     func = make_new_mfun( "void", "set", vec4_set );
     func->add_arg( "float", "x" );
@@ -647,29 +648,29 @@ t_CKBOOL init_class_vec4( Chuck_Env * env, Chuck_Type * type )
     func->add_arg( "float", "z" );
     func->add_arg( "float", "w" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add setAll(float)
     func = make_new_mfun( "void", "setAll", vec4_setAll );
     func->add_arg( "float", "value" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add magnitude()
     func = make_new_mfun( "float", "magnitude", vec4_magnitude );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add normalize()
     func = make_new_mfun( "void", "normalize", vec4_normalize );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // end the class import
     type_engine_import_class_end( env );
-    
+
     return TRUE;
-    
+
 error:
     // end the class import
     type_engine_import_class_end( env );
-    
+
     return FALSE;
 }
 
@@ -684,16 +685,16 @@ t_CKBOOL init_class_io( Chuck_Env * env, Chuck_Type * type )
 {
     // init as base class
     Chuck_DL_Func * func = NULL;
-    
+
     // log
     EM_log( CK_LOG_SEVERE, "class 'io'" );
-    
+
     // init as base class
     // TODO: ctor/dtor?
     // TODO: replace dummy with pure function
     if( !type_engine_import_class_begin( env, type, env->global(), NULL, NULL ) )
         return FALSE;
-    
+
     // add good()
     func = make_new_mfun( "int", "good", io_dummy );
     if( !type_engine_import_mfun( env, func ) ) goto error;
@@ -705,58 +706,58 @@ t_CKBOOL init_class_io( Chuck_Env * env, Chuck_Type * type )
     // add flush()
     func = make_new_mfun( "void", "flush", io_dummy );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add mode(int)
     func = make_new_mfun( "int", "mode", io_dummy );
     func->add_arg( "int", "flag" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add mode()
     func = make_new_mfun( "int", "mode", io_dummy );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
 	// TODO: add this later?
     // add read()
     // func = make_new_mfun( "string", "read", io_dummy );
     // func->add_arg( "int", "length" );
     // if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add readLine()
     func = make_new_mfun( "string", "readLine", io_dummy );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add readInt()
     func = make_new_mfun( "int", "readInt", io_dummy );
     func->add_arg( "int", "flags" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add readFloat()
     // func = make_new_mfun( "float", "readFloat", io_dummy );
     // if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add eof()
     func = make_new_mfun( "int", "eof", io_dummy );
     if( !type_engine_import_mfun( env, func ) ) goto error;
 
     // add more()
     func = make_new_mfun( "int", "more", io_dummy );
-    if( !type_engine_import_mfun( env, func ) ) goto error;    
-    
+    if( !type_engine_import_mfun( env, func ) ) goto error;
+
     // add write(string)
     func = make_new_mfun( "void", "write", io_dummy );
     func->add_arg( "string", "val" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add write(int)
     func = make_new_mfun( "void", "write", io_dummy );
     func->add_arg( "int", "val" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add write(float)
     func = make_new_mfun( "void", "write", io_dummy );
     func->add_arg( "float", "val" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add newline
     func = make_new_sfun( "string", "newline", io_newline );
     if( !type_engine_import_sfun( env, func ) ) goto error;
@@ -766,49 +767,49 @@ t_CKBOOL init_class_io( Chuck_Env * env, Chuck_Type * type )
     if( !type_engine_import_sfun( env, func ) ) goto error;
     initialize_object( g_newline, &t_string );
     g_newline->str = "\n";
-    
+
     // add READ_INT32
     if( !type_engine_import_svar( env, "int", "READ_INT32",
                                  TRUE, (t_CKUINT)&Chuck_IO::INT32 ) ) goto error;
-    
+
     // add READ_INT16
     if( !type_engine_import_svar( env, "int", "READ_INT16",
                                  TRUE, (t_CKUINT)&Chuck_IO::INT16 ) ) goto error;
-    
+
     // add READ_INT8
     if( !type_engine_import_svar( env, "int", "READ_INT8",
                                  TRUE, (t_CKUINT)&Chuck_IO::INT8 ) ) goto error;
-    
+
     // add INT32
     if( !type_engine_import_svar( env, "int", "INT32",
                                  TRUE, (t_CKUINT)&Chuck_IO::INT32 ) ) goto error;
-    
+
     // add INT16
     if( !type_engine_import_svar( env, "int", "INT16",
                                  TRUE, (t_CKUINT)&Chuck_IO::INT16 ) ) goto error;
-    
+
     // add INT8
     if( !type_engine_import_svar( env, "int", "INT8",
                                  TRUE, (t_CKUINT)&Chuck_IO::INT8 ) ) goto error;
-    
+
     // add MODE_SYNC
     if( !type_engine_import_svar( env, "int", "MODE_SYNC",
                                  TRUE, (t_CKUINT)&Chuck_IO::MODE_SYNC ) ) goto error;
-    
+
     // add MODE_ASYNC
     if( !type_engine_import_svar( env, "int", "MODE_ASYNC",
                                  TRUE, (t_CKUINT)&Chuck_IO::MODE_ASYNC ) ) goto error;
-    
+
     // end the class import
     type_engine_import_class_end( env );
-    
+
     return TRUE;
-    
+
 error:
-    
+
     // end the class import
     type_engine_import_class_end( env );
-    
+
     return FALSE;
 }
 
@@ -823,95 +824,95 @@ t_CKBOOL init_class_fileio( Chuck_Env * env, Chuck_Type * type )
 {
     // init as base class
     Chuck_DL_Func * func = NULL;
-    
+
     // log
     EM_log( CK_LOG_SEVERE, "class 'fileio'" );
-    
+
     // init as base class
     // TODO: ctor/dtor?
     // TODO: replace dummy with pure function
     if( !type_engine_import_class_begin( env, type, env->global(), fileio_ctor, fileio_dtor ) )
         return FALSE;
-    
+
     // add open(string)
     func = make_new_mfun( "int", "open", fileio_open );
     func->add_arg( "string", "path" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add open(string, flags)
     func = make_new_mfun( "int", "open", fileio_openflags );
     func->add_arg( "string", "path" );
     func->add_arg( "int", "flags" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add good()
     func = make_new_mfun( "int", "good", fileio_good );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add close()
     func = make_new_mfun( "void", "close", fileio_close );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add flush()
     func = make_new_mfun( "void", "flush", fileio_flush );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add mode()
     func = make_new_mfun( "int", "mode", fileio_getmode );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add mode(int)
     func = make_new_mfun( "int", "mode", fileio_setmode );
     func->add_arg( "int", "flag" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add size()
     func = make_new_mfun( "int", "size", fileio_size );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add seek(int)
     func = make_new_mfun( "void", "seek", fileio_seek );
     func->add_arg( "int", "pos" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add tell()
     func = make_new_mfun( "int", "tell", fileio_tell );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add isDir()
     func = make_new_mfun( "int", "isDir", fileio_isdir );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add dirList()
     func = make_new_mfun( "string[]", "dirList", fileio_dirlist );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add read()
     // func = make_new_mfun( "string", "read", fileio_read );
     // func->add_arg( "int", "length" );
     // if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add readLine()
     func = make_new_mfun( "string", "readLine", fileio_readline );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add readInt()
     // func = make_new_mfun( "int", "readInt", fileio_readint );
     // if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add readInt(int)
     func = make_new_mfun( "int", "readInt", fileio_readintflags );
     func->add_arg( "int", "flags" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add readFloat()
     // func = make_new_mfun( "float", "readFloat", fileio_readfloat );
     // if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add eof()
     func = make_new_mfun( "int", "eof", fileio_eof );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add more()
     func = make_new_mfun( "int", "more", fileio_more );
     if( !type_engine_import_mfun( env, func ) ) goto error;
@@ -920,57 +921,57 @@ t_CKBOOL init_class_fileio( Chuck_Env * env, Chuck_Type * type )
     func = make_new_mfun( "void", "write", fileio_writestring );
     func->add_arg( "string", "val" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add write(int)
     func = make_new_mfun( "void", "write", fileio_writeint );
     func->add_arg( "int", "val" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add write(int,flags)
     func = make_new_mfun( "void", "write", fileio_writeintflags );
     func->add_arg( "int", "val" );
     func->add_arg( "int", "flags" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add write(float)
     func = make_new_mfun( "void", "write", fileio_writefloat );
     func->add_arg( "float", "val" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add FLAG_READ_WRITE
     if( !type_engine_import_svar( env, "int", "READ_WRITE",
                                   TRUE, (t_CKUINT)&Chuck_IO_File::FLAG_READ_WRITE ) ) goto error;
-    
+
     // add FLAG_READONLY
     if( !type_engine_import_svar( env, "int", "READ",
                                   TRUE, (t_CKUINT)&Chuck_IO_File::FLAG_READONLY ) ) goto error;
-    
+
     // add FLAG_WRITEONLY
     if( !type_engine_import_svar( env, "int", "WRITE",
                                   TRUE, (t_CKUINT)&Chuck_IO_File::FLAG_WRITEONLY ) ) goto error;
-    
+
     // add FLAG_APPEND
     if( !type_engine_import_svar( env, "int", "APPEND",
                                   TRUE, (t_CKUINT)&Chuck_IO_File::FLAG_APPEND ) ) goto error;
-    
+
     // add TYPE_ASCII
     if( !type_engine_import_svar( env, "int", "ASCII",
                                   TRUE, (t_CKUINT)&Chuck_IO_File::TYPE_ASCII ) ) goto error;
-    
+
     // add TYPE_BINARY
     if( !type_engine_import_svar( env, "int", "BINARY",
                                   TRUE, (t_CKUINT)&Chuck_IO_File::TYPE_BINARY ) ) goto error;
-    
+
     // end the class import
     type_engine_import_class_end( env );
-    
+
     return TRUE;
-    
+
 error:
-    
+
     // end the class import
     type_engine_import_class_end( env );
-    
+
     return FALSE;
 }
 
@@ -985,70 +986,70 @@ t_CKBOOL init_class_chout( Chuck_Env * env, Chuck_Type * type )
 {
     // init as base class
     Chuck_DL_Func * func = NULL;
-    
+
     // log
     EM_log( CK_LOG_SEVERE, "class 'chout'" );
-    
+
     // TODO: ctor/dtor?
     if( !type_engine_import_class_begin( env, type, env->global(), NULL, NULL ) )
         return FALSE;
-    
+
     // add good()
     func = make_new_mfun( "int", "good", chout_good );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add close()
     func = make_new_mfun( "void", "close", chout_close );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add flush()
     func = make_new_mfun( "void", "flush", chout_flush );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add mode()
     func = make_new_mfun( "int", "mode", chout_getmode );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add mode(int)
     func = make_new_mfun( "int", "mode", chout_setmode );
     func->add_arg( "int", "flag" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add readLine()
     func = make_new_mfun( "string", "readLine", chout_readline );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add readInt()
     // func = make_new_mfun( "int", "readInt", chout_readint );
     // if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add readInt(int)
     func = make_new_mfun( "int", "readInt", chout_readintflags );
     func->add_arg( "int", "flags" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add readFloat()
     // func = make_new_mfun( "float", "readFloat", chout_readfloat );
     // if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add eof()
     func = make_new_mfun( "int", "eof", chout_eof );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add more()
     func = make_new_mfun( "int", "more", chout_more );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add write(string)
     func = make_new_mfun( "void", "write", chout_writestring );
     func->add_arg( "string", "val" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add write(int)
     func = make_new_mfun( "void", "write", chout_writeint );
     func->add_arg( "int", "val" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add write(float)
     func = make_new_mfun( "void", "write", chout_writefloat );
     func->add_arg( "float", "val" );
@@ -1056,14 +1057,14 @@ t_CKBOOL init_class_chout( Chuck_Env * env, Chuck_Type * type )
 
     // end the class import
     type_engine_import_class_end( env );
-    
+
     return TRUE;
-    
+
 error:
-    
+
     // end the class import
     type_engine_import_class_end( env );
-    
+
     return FALSE;
 }
 
@@ -1078,85 +1079,85 @@ t_CKBOOL init_class_cherr( Chuck_Env * env, Chuck_Type * type )
 {
     // init as base class
     Chuck_DL_Func * func = NULL;
-    
+
     // log
     EM_log( CK_LOG_SEVERE, "class 'cherr'" );
-    
+
     // TODO: ctor/dtor?
     if( !type_engine_import_class_begin( env, type, env->global(), NULL, NULL ) )
         return FALSE;
-    
+
     // add good()
     func = make_new_mfun( "int", "good", cherr_good );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add close()
     func = make_new_mfun( "void", "close", cherr_close );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add flush()
     func = make_new_mfun( "void", "flush", cherr_flush );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add mode()
     func = make_new_mfun( "int", "mode", cherr_getmode );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add mode(int)
     func = make_new_mfun( "int", "mode", cherr_setmode );
     func->add_arg( "int", "flag" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add readLine()
     func = make_new_mfun( "string", "readLine", cherr_readline );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add readInt()
     // func = make_new_mfun( "int", "readInt", cherr_readint );
     // if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add readInt(int)
     func = make_new_mfun( "int", "readInt", cherr_readintflags );
     func->add_arg( "int", "flags" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add readFloat()
     // func = make_new_mfun( "float", "readFloat", cherr_readfloat );
     // if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add eof()
     func = make_new_mfun( "int", "eof", cherr_eof );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add more()
     func = make_new_mfun( "int", "more", cherr_more );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add write(string)
     func = make_new_mfun( "void", "write", cherr_writestring );
     func->add_arg( "string", "val" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add write(int)
     func = make_new_mfun( "void", "write", cherr_writeint );
     func->add_arg( "int", "val" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add write(float)
     func = make_new_mfun( "void", "write", cherr_writefloat );
     func->add_arg( "float", "val" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // end the class import
     type_engine_import_class_end( env );
-    
+
     return TRUE;
-    
+
 error:
-    
+
     // end the class import
     type_engine_import_class_end( env );
-    
+
     return FALSE;
 }
 
@@ -1209,51 +1210,51 @@ t_CKBOOL init_class_string( Chuck_Env * env, Chuck_Type * type )
     func = make_new_mfun( "string", "trim", string_trim );
     func->doc = "Return a new string in which leading and trailing whitespace has been removed.";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add toString()
     func = make_new_mfun( "string", "toString", string_toString );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add charAt()
     func = make_new_mfun( "int", "charAt", string_charAt );
     func->add_arg("int", "index");
     func->doc = "Return a character at the specified index.";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add setCharAt()
     func = make_new_mfun( "int", "setCharAt", string_setCharAt );
     func->add_arg("int", "index");
     func->add_arg("int", "theChar");
     func->doc = "Set the character at the specified index.";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add substring()
     func = make_new_mfun( "string", "substring", string_substring );
     func->add_arg("int", "start");
     func->doc = "Return a new string containing the substring from the start index to the end of the string.";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add substring()
     func = make_new_mfun( "string", "substring", string_substringN );
     func->add_arg("int", "start");
     func->add_arg("int", "length");
     func->doc = "Return a new string containing the substring from the start index of the specified length.";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add insert()
     func = make_new_mfun( "void", "insert", string_insert );
     func->add_arg("int", "position");
     func->add_arg("string", "str");
     func->doc = "Insert str at the specified position.";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add replace()
     func = make_new_mfun( "void", "replace", string_replace );
     func->add_arg( "int", "position" );
     func->add_arg( "string", "str" );
     func->doc = "Replace characters from the start position to the end of the string with str.";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add replace()
     func = make_new_mfun( "void", "replace", string_replaceN );
     func->add_arg( "int", "position" );
@@ -1261,59 +1262,59 @@ t_CKBOOL init_class_string( Chuck_Env * env, Chuck_Type * type )
     func->add_arg( "string", "str" );
     func->doc = "Replace length characters from the start position with str.";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add find()
     func = make_new_mfun( "int", "find", string_find );
     func->add_arg( "int", "theChar" );
     func->doc = "Return the index of the first occurence of theChar, or -1 if theChar is not found.";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add find()
     func = make_new_mfun( "int", "find", string_findStart );
     func->add_arg( "int", "theChar" );
     func->add_arg( "int", "start" );
     func->doc = "Return the index of the first occurence of theChar at or after the start position, or -1 if theChar is not found.";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add find()
     func = make_new_mfun( "int", "find", string_findStr );
     func->add_arg( "string", "str" );
     func->doc = "Return the index of the first occurence of str, or -1 if str is not found.";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add find()
     func = make_new_mfun( "int", "find", string_findStrStart );
     func->add_arg( "string", "str" );
     func->add_arg( "int", "start" );
     func->doc = "Return the index of the first occurence of str at or after the start position, or -1 if str is not found.";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add rfind()
     func = make_new_mfun( "int", "rfind", string_rfind );
     func->add_arg( "int", "theChar" );
     func->doc = "Return the index of the last occurence of theChar, or -1 if theChar is not found.";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add rfind()
     func = make_new_mfun( "int", "rfind", string_rfindStart );
     func->add_arg( "int", "theChar" );
     func->add_arg( "int", "start" );
     func->doc = "Return the index of the last occurence of theChar at or before the start position, or -1 if theChar is not found.";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add rfind()
     func = make_new_mfun( "int", "rfind", string_rfindStr );
     func->add_arg( "string", "str" );
     func->doc = "Return the index of the last occurence of str, or -1 if str is not found.";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add rfind()
     func = make_new_mfun( "int", "rfind", string_rfindStrStart );
     func->add_arg( "string", "str" );
     func->add_arg( "int", "start" );
     func->doc = "Return the index of the last occurence of str at or before the start position, or -1 if str is not found.";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add erase()
     func = make_new_mfun( "void", "erase", string_erase );
     func->add_arg( "int", "start" );
@@ -1330,12 +1331,12 @@ t_CKBOOL init_class_string( Chuck_Env * env, Chuck_Type * type )
     func = make_new_mfun( "float", "toFloat", string_toFloat );
     func->doc = "Attempt to convert the contents of the string to an float and return the result, or 0 if conversion failed.";
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add parent()
     // disable for now
 //    func = make_new_mfun( "string", "parent", string_parent );
 //    if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
 //    // add toTime()
 //    func = make_new_mfun( "float", "toTime", string_toFloat );
 //    if( !type_engine_import_mfun( env, func ) ) goto error;
@@ -1343,7 +1344,7 @@ t_CKBOOL init_class_string( Chuck_Env * env, Chuck_Type * type )
 //    // add toDur()
 //    func = make_new_mfun( "float", "toDur", string_toFloat );
 //    if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
 /*    // add at()
     func = make_new_mfun( "int", "ch", string_set_at );
     func->add_arg( "int", "index" );
@@ -1355,14 +1356,14 @@ t_CKBOOL init_class_string( Chuck_Env * env, Chuck_Type * type )
 */
     // end the class import
     type_engine_import_class_end( env );
-    
+
     return TRUE;
 
 error:
 
     // end the class import
     type_engine_import_class_end( env );
-    
+
     return FALSE;
 }
 
@@ -1445,7 +1446,7 @@ t_CKBOOL init_class_array( Chuck_Env * env, Chuck_Type * type )
     if( !type_engine_import_add_ex( env, "array/array_resize.ck" ) ) goto error;
     if( !type_engine_import_add_ex( env, "array/array_storage.ck" ) ) goto error;
     if( !type_engine_import_add_ex( env, "array/array_sub_assign.ck" ) ) goto error;
-    
+
     type_engine_import_class_end( env );
 
     return TRUE;
@@ -1454,7 +1455,7 @@ error:
 
     // end the class import
     type_engine_import_class_end( env );
-    
+
     return FALSE;
 }
 
@@ -1511,12 +1512,12 @@ t_CKBOOL init_class_Midi( Chuck_Env * env )
     func = make_new_mfun( "int", "open", MidiIn_open );
     func->add_arg( "int", "port" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add open() (added 1.3.0.0)
     func = make_new_mfun( "int", "open", MidiIn_open_named );
     func->add_arg( "string", "name" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add good()
     func = make_new_mfun( "int", "good", MidiIn_good );
     if( !type_engine_import_mfun( env, func ) ) goto error;
@@ -1549,7 +1550,7 @@ t_CKBOOL init_class_Midi( Chuck_Env * env )
 
     // end the class import
     type_engine_import_class_end( env );
-    
+
     // init base class
     if( !type_engine_import_class_begin( env, "MidiOut", "Object",
                                          env->global(), MidiOut_ctor, MidiOut_dtor ) )
@@ -1559,12 +1560,12 @@ t_CKBOOL init_class_Midi( Chuck_Env * env )
     func = make_new_mfun( "int", "open", MidiOut_open );
     func->add_arg( "int", "port" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add open() (added 1.3.0.0)
     func = make_new_mfun( "int", "open", MidiOut_open_named );
     func->add_arg( "string", "name" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add good()
     func = make_new_mfun( "int", "good", MidiOut_good );
     if( !type_engine_import_mfun( env, func ) ) goto error;
@@ -1593,16 +1594,16 @@ t_CKBOOL init_class_Midi( Chuck_Env * env )
 
     // end the class import
     type_engine_import_class_end( env );
-    
+
 #endif // __DISABLE_MIDI__
-    
+
     return TRUE;
 
 error:
 
     // end the class import
     type_engine_import_class_end( env );
-    
+
     return FALSE;
 }
 
@@ -1656,19 +1657,19 @@ t_CKBOOL init_class_HID( Chuck_Env * env )
     // add member variable
     HidMsg_offset_device_type = type_engine_import_mvar( env, "int", "deviceType", FALSE );
     if( HidMsg_offset_device_type == CK_INVALID_OFFSET ) goto error;
-    
+
     // add member variable
     HidMsg_offset_device_num = type_engine_import_mvar( env, "int", "deviceNum", FALSE );
     if( HidMsg_offset_device_num == CK_INVALID_OFFSET ) goto error;
-    
+
     // add member variable
     HidMsg_offset_type = type_engine_import_mvar( env, "int", "type", FALSE );
     if( HidMsg_offset_type == CK_INVALID_OFFSET ) goto error;
-    
+
     // add member variable
     HidMsg_offset_which = type_engine_import_mvar( env, "int", "which", FALSE );
     if( HidMsg_offset_which == CK_INVALID_OFFSET ) goto error;
-    
+
     // add member variable
     HidMsg_offset_idata = type_engine_import_mvar( env, "int", "idata", FALSE );
     if( HidMsg_offset_idata == CK_INVALID_OFFSET ) goto error;
@@ -1684,115 +1685,115 @@ t_CKBOOL init_class_HID( Chuck_Env * env )
     // add member variable
     HidMsg_offset_deltax = type_engine_import_mvar( env, "int", "deltaX", FALSE );
     if( HidMsg_offset_deltax == CK_INVALID_OFFSET ) goto error;
-    
+
     // add member variable
     HidMsg_offset_deltay = type_engine_import_mvar( env, "int", "deltaY", FALSE );
     if( HidMsg_offset_deltay == CK_INVALID_OFFSET ) goto error;
-    
+
     // add member variable
     HidMsg_offset_cursorx = type_engine_import_mvar( env, "int", "cursorX", FALSE );
     if( HidMsg_offset_cursorx == CK_INVALID_OFFSET ) goto error;
-    
+
     // add member variable
     HidMsg_offset_cursory = type_engine_import_mvar( env, "int", "cursorY", FALSE );
     if( HidMsg_offset_cursory == CK_INVALID_OFFSET ) goto error;
-    
+
     // add member variable
     HidMsg_offset_scaledcursorx = type_engine_import_mvar( env, "float", "scaledCursorX", FALSE );
     if( HidMsg_offset_scaledcursorx == CK_INVALID_OFFSET ) goto error;
-    
+
     // add member variable
     HidMsg_offset_scaledcursory = type_engine_import_mvar( env, "float", "scaledCursorY", FALSE );
     if( HidMsg_offset_scaledcursory == CK_INVALID_OFFSET ) goto error;
-    
+
     // add member variable
     HidMsg_offset_x = type_engine_import_mvar( env, "int", "x", FALSE );
     if( HidMsg_offset_x == CK_INVALID_OFFSET ) goto error;
-    
+
     // add member variable
     HidMsg_offset_y = type_engine_import_mvar( env, "int", "y", FALSE );
     if( HidMsg_offset_y == CK_INVALID_OFFSET ) goto error;
-    
+
     // add member variable
     HidMsg_offset_z = type_engine_import_mvar( env, "int", "z", FALSE );
     if( HidMsg_offset_z == CK_INVALID_OFFSET ) goto error;
-    
+
     // add member variable (added 1.3.0.0)
     HidMsg_offset_touchx = type_engine_import_mvar( env, "float", "touchX", FALSE );
     if( HidMsg_offset_touchx == CK_INVALID_OFFSET ) goto error;
-    
+
     // add member variable (added 1.3.0.0)
     HidMsg_offset_touchy = type_engine_import_mvar( env, "float", "touchY", FALSE );
     if( HidMsg_offset_touchy == CK_INVALID_OFFSET ) goto error;
-    
+
     // add member variable (added 1.3.0.0)
     HidMsg_offset_touchsize = type_engine_import_mvar( env, "float", "touchSize", FALSE );
     if( HidMsg_offset_touchsize == CK_INVALID_OFFSET ) goto error;
-    
+
     // add member variable
     HidMsg_offset_axis_position = type_engine_import_mvar( env, "int", "axis_position", FALSE );
     if( HidMsg_offset_axis_position == CK_INVALID_OFFSET ) goto error;
-    
+
     // add member variable
     HidMsg_offset_axis_position2 = type_engine_import_mvar( env, "float", "axisPosition", FALSE );
     if( HidMsg_offset_axis_position2 == CK_INVALID_OFFSET ) goto error;
-    
+
     // add member variable
     HidMsg_offset_hat_position = type_engine_import_mvar( env, "int", "hatPosition", FALSE );
     if( HidMsg_offset_hat_position == CK_INVALID_OFFSET ) goto error;
-    
+
     // add member variable
     HidMsg_offset_ascii = type_engine_import_mvar( env, "int", "ascii", FALSE );
     if( HidMsg_offset_ascii == CK_INVALID_OFFSET ) goto error;
-    
+
     // add member variable
     HidMsg_offset_key = type_engine_import_mvar( env, "int", "key", FALSE );
     if( HidMsg_offset_key == CK_INVALID_OFFSET ) goto error;
-    
+
     // add member variable
     HidMsg_offset_scaled_axis_position = type_engine_import_mvar( env, "float", "scaled_axis_position", FALSE );
     if( HidMsg_offset_scaled_axis_position == CK_INVALID_OFFSET ) goto error;
-        
+
     // add is_axis_motion()
     func = make_new_mfun( "int", "is_axis_motion", HidMsg_is_axis_motion ); // deprecated
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add isAxisMotion()
     func = make_new_mfun( "int", "isAxisMotion", HidMsg_is_axis_motion );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add is_button_down()
     func = make_new_mfun( "int", "is_button_down", HidMsg_is_button_down ); // deprecated
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add isButtonDown()
     func = make_new_mfun( "int", "isButtonDown", HidMsg_is_button_down );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add is_button_up()
     func = make_new_mfun( "int", "is_button_up", HidMsg_is_button_up ); // deprecated
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add isButtonUp()
     func = make_new_mfun( "int", "isButtonUp", HidMsg_is_button_up );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add is_mouse_motion()
     func = make_new_mfun( "int", "is_mouse_motion", HidMsg_is_mouse_motion ); // deprecated
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add isMouseMotion()
     func = make_new_mfun( "int", "isMouseMotion", HidMsg_is_mouse_motion );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add is_hat_motion()
     func = make_new_mfun( "int", "is_hat_motion", HidMsg_is_hat_motion ); // deprecated
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add isHatMotion()
     func = make_new_mfun( "int", "isHatMotion", HidMsg_is_hat_motion );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add isWheelMotion()
     func = make_new_mfun( "int", "isWheelMotion", HidMsg_is_wheel_motion );
     if( !type_engine_import_mfun( env, func ) ) goto error;
@@ -1808,84 +1809,84 @@ t_CKBOOL init_class_HID( Chuck_Env * env )
     if( !type_engine_import_class_begin( env, "Hid", "Event",
                                          env->global(), HidIn_ctor, HidIn_dtor ) )
         return FALSE;
-    
+
     // add open()
     func = make_new_mfun( "int", "open", HidIn_open );
     func->add_arg( "int", "type" );
     func->add_arg( "int", "num" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add open()
     func = make_new_mfun( "int", "open", HidIn_open_named );
     func->add_arg( "string", "name" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add openJoystick()
     func = make_new_mfun( "int", "openJoystick", HidIn_open_joystick );
     func->add_arg( "int", "num" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add openMouse()
     func = make_new_mfun( "int", "openMouse", HidIn_open_mouse );
     func->add_arg( "int", "num" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add openKeyboard()
     func = make_new_mfun( "int", "openKeyboard", HidIn_open_keyboard );
     func->add_arg( "int", "num" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add openTiltSensor()
     func = make_new_mfun( "int", "openTiltSensor", HidIn_open_tiltsensor );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add good()
     func = make_new_mfun( "int", "good", HidIn_good );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add num()
     func = make_new_mfun( "int", "num", HidIn_num );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add name()
     func = make_new_mfun( "string", "name", HidIn_name );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add printerr()
     func = make_new_mfun( "void", "printerr", HidIn_printerr );
     func->add_arg( "int", "print_or_not" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add recv()
     func = make_new_mfun( "int", "recv", HidIn_recv );
     func->add_arg( "HidMsg", "msg" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add read()
     func = make_new_mfun( "int", "read", HidIn_read );
     func->add_arg( "int", "type" );
     func->add_arg( "int", "which" );
     func->add_arg( "HidMsg", "msg" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add send()
     func = make_new_mfun( "int", "send", HidIn_send );
     func->add_arg( "HidMsg", "msg" );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add can_wait()
     func = make_new_mfun( "int", "can_wait", HidIn_can_wait );
     if( !type_engine_import_mfun( env, func ) ) goto error;
-    
+
     // add readTiltSensor()
     func = make_new_sfun( "int[]", "readTiltSensor", HidIn_read_tilt_sensor );
     if( !type_engine_import_sfun( env, func ) ) goto error;
-    
+
     // add globalTiltPollRate()
     func = make_new_sfun( "dur", "globalTiltPollRate", HidIn_ctrl_tiltPollRate );
     func->add_arg( "dur", "d" );
     if( !type_engine_import_sfun( env, func ) ) goto error;
-    
+
     // add globalTiltPollRate()
     func = make_new_sfun( "dur", "globalTiltPollRate", HidIn_cget_tiltPollRate );
     if( !type_engine_import_sfun( env, func ) ) goto error;
@@ -1893,11 +1894,11 @@ t_CKBOOL init_class_HID( Chuck_Env * env )
     // add startCursorTrack()
     func = make_new_sfun( "int", "startCursorTrack", HidIn_start_cursor_track );
     if( !type_engine_import_sfun( env, func ) ) goto error;
-    
+
     // add stopCursorTrack()
     func = make_new_sfun( "int", "stopCursorTrack", HidIn_stop_cursor_track );
     if( !type_engine_import_sfun( env, func ) ) goto error;
-    
+
     // add member variable
     HidIn_offset_data = type_engine_import_mvar( env, "int", "@Hid_data", FALSE );
     if( HidIn_offset_data == CK_INVALID_OFFSET ) goto error;
@@ -1906,95 +1907,95 @@ t_CKBOOL init_class_HID( Chuck_Env * env )
     if( type_engine_import_svar( env, "int", "JOYSTICK", TRUE,
                                  ( t_CKUINT ) &CK_HID_DEV_JOYSTICK ) == FALSE )
         goto error;
-    
+
     // add static member variable keyboard
     if( type_engine_import_svar( env, "int", "KEYBOARD", TRUE,
                                  ( t_CKUINT ) &CK_HID_DEV_KEYBOARD ) == FALSE )
         goto error;
-    
+
     // add static member variable mouse
     if( type_engine_import_svar( env, "int", "MOUSE", TRUE,
                                  ( t_CKUINT ) &CK_HID_DEV_MOUSE ) == FALSE )
         goto error;
-    
+
     // add static member variable wii_remote
     if( type_engine_import_svar( env, "int", "WII_REMOTE", TRUE,
                                  ( t_CKUINT ) &CK_HID_DEV_WIIREMOTE ) == FALSE )
         goto error;
-    
+
     // add static member variable wii_remote
     if( type_engine_import_svar( env, "int", "TILT_SENSOR", TRUE,
                                  ( t_CKUINT ) &CK_HID_DEV_TILTSENSOR ) == FALSE )
         goto error;
-    
+
     // add static member variable tablet
     if( type_engine_import_svar( env, "int", "TABLET", TRUE,
                                  ( t_CKUINT ) &CK_HID_DEV_TABLET ) == FALSE )
         goto error;
-    
+
     // add static member variable axisMotion
     if( type_engine_import_svar( env, "int", "AXIS_MOTION", TRUE,
                                  ( t_CKUINT ) &CK_HID_JOYSTICK_AXIS ) == FALSE )
         goto error;
-    
+
     // add static member variable buttonDown
     if( type_engine_import_svar( env, "int", "BUTTON_DOWN", TRUE,
                                  ( t_CKUINT ) &CK_HID_BUTTON_DOWN ) == FALSE )
         goto error;
-    
+
     // add static member variable buttonUp
     if( type_engine_import_svar( env, "int", "BUTTON_UP", TRUE,
                                  ( t_CKUINT ) &CK_HID_BUTTON_UP ) == FALSE )
         goto error;
-    
+
     // add static member variable joystickHat
     if( type_engine_import_svar( env, "int", "JOYSTICK_HAT", TRUE,
                                  ( t_CKUINT ) &CK_HID_JOYSTICK_HAT ) == FALSE )
         goto error;
-    
+
     // add static member variable JOYSTICK_BALL
     if( type_engine_import_svar( env, "int", "JOYSTICK_BALL", TRUE,
                                  ( t_CKUINT ) &CK_HID_JOYSTICK_BALL ) == FALSE )
         goto error;
-    
+
     // add static member variable mouseMotion
     if( type_engine_import_svar( env, "int", "MOUSE_MOTION", TRUE,
                                  ( t_CKUINT ) &CK_HID_MOUSE_MOTION ) == FALSE )
         goto error;
-    
+
     // add static member variable mouseWheel
     if( type_engine_import_svar( env, "int", "MOUSE_WHEEL", TRUE,
                                  ( t_CKUINT ) &CK_HID_MOUSE_WHEEL ) == FALSE )
         goto error;
-    
+
     // add static member variable DEVICE_CONNECTED
     if( type_engine_import_svar( env, "int", "DEVICE_CONNECTED", TRUE,
                                  ( t_CKUINT ) &CK_HID_DEVICE_CONNECTED ) == FALSE )
         goto error;
-    
+
     // add static member variable DEVICE_DISCONNECTED
     if( type_engine_import_svar( env, "int", "DEVICE_DISCONNECTED", TRUE,
                                  ( t_CKUINT ) &CK_HID_DEVICE_DISCONNECTED ) == FALSE )
         goto error;
-    
+
     // add static member variable ACCELEROMETER
     if( type_engine_import_svar( env, "int", "ACCELEROMETER", TRUE,
                                  ( t_CKUINT ) &CK_HID_ACCELEROMETER ) == FALSE )
         goto error;
-    
+
     // add static member variable LED
     if( type_engine_import_svar( env, "int", "LED", TRUE,
                                  ( t_CKUINT ) &CK_HID_LED ) == FALSE )
         goto error;
-    
+
     // add static member variable LED
     if( type_engine_import_svar( env, "int", "FORCE_FEEDBACK", TRUE,
                                  ( t_CKUINT ) &CK_HID_FORCE_FEEDBACK ) == FALSE )
         goto error;
-    
+
     // end the class import
     type_engine_import_class_end( env );
-    
+
     /*
     // init base class
     if( !type_engine_import_class_begin( env, "HidOut", "Object",
@@ -2041,7 +2042,7 @@ error:
 
     // end the class import
     type_engine_import_class_end( env );
-    
+
     return FALSE;
 }
 
@@ -2095,7 +2096,7 @@ t_CKBOOL init_class_MidiRW( Chuck_Env * env )
 
     // end the class import
     type_engine_import_class_end( env );
-    
+
         // init base class
     if( !type_engine_import_class_begin( env, "MidiMsgOut", "Object",
                                          env->global(), MidiMsgOut_ctor, MidiMsgOut_dtor ) )
@@ -2151,7 +2152,7 @@ t_CKBOOL init_class_MidiRW( Chuck_Env * env )
     type_engine_import_class_end( env );
 
 #endif // __DISABLE_MIDI__
-    
+
     // initialize
     // HidInManager::init();
 
@@ -2161,7 +2162,7 @@ error:
 
     // end the class import
     type_engine_import_class_end( env );
-    
+
     return FALSE;
 }
 
@@ -2429,7 +2430,7 @@ CK_DLL_MFUN( uana_upchuck )
         EM_error3( "UAna.upchuck() encountered NULL shred; operation aborting!" );
         return;
     }
-    
+
     // get VM
     Chuck_VM * vm = derhs->vm_ref;
     // ensure
@@ -2460,7 +2461,7 @@ CK_DLL_MFUN( uana_upchuck )
 {
     // get as uana
     Chuck_UAna * uana = (Chuck_UAna *)SELF;
-    
+
     // TODO: return
     RETURN->v_object = NULL;
 } */
@@ -2606,13 +2607,13 @@ CK_DLL_DTOR( uanablob_dtor )
     // release it
     arr8->release();
     OBJ_MEMBER_INT(SELF, uanablob_offset_fvals) = 0;
-    
+
     // get array
     Chuck_Array16 * arr16 = (Chuck_Array16 *)OBJ_MEMBER_INT(SELF, uanablob_offset_cvals);
     // release it
     arr16->release();
     OBJ_MEMBER_INT(SELF, uanablob_offset_cvals) = 0;
-    
+
     OBJ_MEMBER_TIME(SELF, uanablob_offset_when) = 0;
 }
 
@@ -2910,14 +2911,14 @@ CK_DLL_SFUN( io_newline )
 // FileIO API
 //-----------------------------------------------------------------------------
 CK_DLL_CTOR( fileio_ctor )
-{ } 
+{ }
 
 CK_DLL_DTOR( fileio_dtor )
 { }
 
 CK_DLL_MFUN( fileio_open )
 {
-    std::string filename = GET_NEXT_STRING(ARGS)->str;    
+    std::string filename = GET_NEXT_STRING(ARGS)->str;
     Chuck_IO_File * f = (Chuck_IO_File *)SELF;
     t_CKINT default_flags =
         Chuck_IO_File::FLAG_READ_WRITE | Chuck_IO_File::TYPE_ASCII;
@@ -2961,7 +2962,7 @@ CK_DLL_MFUN( fileio_getmode )
 CK_DLL_MFUN( fileio_setmode )
 {
     t_CKINT flag = GET_NEXT_INT(ARGS);
-    
+
     Chuck_IO_File * f = (Chuck_IO_File *)SELF;
     f->mode( flag );
     RETURN->v_int = 0;
@@ -2976,7 +2977,7 @@ CK_DLL_MFUN( fileio_size )
 CK_DLL_MFUN( fileio_seek )
 {
     t_CKINT pos = GET_NEXT_INT(ARGS);
-    
+
     Chuck_IO_File * f = (Chuck_IO_File *)SELF;
     f->seek(pos);
 }
@@ -3005,7 +3006,7 @@ CK_DLL_MFUN( fileio_read )
 {
     t_CKINT len = GET_NEXT_INT(ARGS);
     Chuck_IO_File * f = (Chuck_IO_File *)SELF;
-    
+
     Chuck_String * s = f->read( len );
     RETURN->v_object = s;
 }
@@ -3022,7 +3023,7 @@ CK_DLL_MFUN( fileio_readint )
 {
     Chuck_IO_File * f = (Chuck_IO_File *)SELF;
     t_CKINT defaultflags = Chuck_IO::INT32;
-    
+
     /* (ATODO: doesn't look like asynchronous reading will work)
      if (f->mode() == Chuck_IO::MODE_ASYNC)
      {
@@ -3054,12 +3055,12 @@ CK_DLL_MFUN( fileio_readint )
 }
 
 CK_DLL_MFUN( fileio_readintflags )
-{    
+{
     t_CKINT flags = GET_NEXT_INT(ARGS);
-    
+
     Chuck_IO_File * f = (Chuck_IO_File *)SELF;
     t_CKINT ret = f->readInt( flags );
-    
+
     RETURN->v_int = ret;
 }
 
@@ -3087,7 +3088,7 @@ CK_DLL_MFUN( fileio_more )
 CK_DLL_MFUN( fileio_writestring )
 {
     std::string val = GET_NEXT_STRING(ARGS)->str;
-    
+
     Chuck_IO_File * f = (Chuck_IO_File *)SELF;
     if (f->mode() == Chuck_IO::MODE_ASYNC)
     {
@@ -3119,7 +3120,7 @@ CK_DLL_MFUN( fileio_writestring )
 CK_DLL_MFUN( fileio_writeint )
 {
     t_CKINT val = GET_NEXT_INT(ARGS);
-    
+
     Chuck_IO_File * f = (Chuck_IO_File *)SELF;
     if (f->mode() == Chuck_IO::MODE_ASYNC)
     {
@@ -3152,7 +3153,7 @@ CK_DLL_MFUN( fileio_writeintflags )
 {
     t_CKINT val = GET_NEXT_INT(ARGS);
     t_CKINT flags = GET_NEXT_INT(ARGS);
-    
+
     Chuck_IO_File * f = (Chuck_IO_File *)SELF;
     if (f->mode() == Chuck_IO::MODE_ASYNC)
     {
@@ -3185,7 +3186,7 @@ CK_DLL_MFUN( fileio_writeintflags )
 CK_DLL_MFUN( fileio_writefloat )
 {
     t_CKFLOAT val = GET_NEXT_FLOAT(ARGS);
-    
+
     Chuck_IO_File * f = (Chuck_IO_File *)SELF;
     if (f->mode() == Chuck_IO::MODE_ASYNC)
     {
@@ -3257,7 +3258,7 @@ CK_DLL_MFUN( chout_setmode )
  {
  t_CKINT len = GET_NEXT_INT(ARGS);
  Chuck_IO_File * f = (Chuck_IO_File *)SELF;
- 
+
  Chuck_String * s = f->read( len );
  RETURN->v_object = s;
  }
@@ -3277,12 +3278,12 @@ CK_DLL_MFUN( chout_readint )
 }
 
 CK_DLL_MFUN( chout_readintflags )
-{    
+{
     t_CKINT flags = GET_NEXT_INT(ARGS);
-    
+
     Chuck_IO_Chout * c = Chuck_IO_Chout::getInstance();
     t_CKINT ret = c->readInt( flags );
-    
+
     RETURN->v_int = ret;
 }
 
@@ -3318,7 +3319,7 @@ CK_DLL_MFUN( chout_writestring )
 CK_DLL_MFUN( chout_writeint )
 {
     t_CKINT val = GET_NEXT_INT(ARGS);
-    
+
     Chuck_IO_Chout * c = Chuck_IO_Chout::getInstance();
     c->write(val);
 }
@@ -3326,7 +3327,7 @@ CK_DLL_MFUN( chout_writeint )
 CK_DLL_MFUN( chout_writefloat )
 {
     t_CKFLOAT val = GET_NEXT_FLOAT(ARGS);
-    
+
     Chuck_IO_Chout * c = Chuck_IO_Chout::getInstance();
     c->write(val);
 }
@@ -3376,7 +3377,7 @@ CK_DLL_MFUN( cherr_setmode )
  {
  t_CKINT len = GET_NEXT_INT(ARGS);
  Chuck_IO_File * f = (Chuck_IO_File *)SELF;
- 
+
  Chuck_String * s = f->read( len );
  RETURN->v_object = s;
  }
@@ -3396,12 +3397,12 @@ CK_DLL_MFUN( cherr_readint )
 }
 
 CK_DLL_MFUN( cherr_readintflags )
-{    
+{
     t_CKINT flags = GET_NEXT_INT(ARGS);
-    
+
     Chuck_IO_Cherr * c = Chuck_IO_Cherr::getInstance();
     t_CKINT ret = c->readInt( flags );
-    
+
     RETURN->v_int = ret;
 }
 
@@ -3429,7 +3430,7 @@ CK_DLL_MFUN( cherr_more )
 CK_DLL_MFUN( cherr_writestring )
 {
     std::string val = GET_NEXT_STRING(ARGS)->str;
-    
+
     Chuck_IO_Cherr * c = Chuck_IO_Cherr::getInstance();
     c->write( val );
 }
@@ -3437,7 +3438,7 @@ CK_DLL_MFUN( cherr_writestring )
 CK_DLL_MFUN( cherr_writeint )
 {
     t_CKINT val = GET_NEXT_INT(ARGS);
-    
+
     Chuck_IO_Chout * c = Chuck_IO_Chout::getInstance();
     c->write(val);
 }
@@ -3445,7 +3446,7 @@ CK_DLL_MFUN( cherr_writeint )
 CK_DLL_MFUN( cherr_writefloat )
 {
     t_CKFLOAT val = GET_NEXT_FLOAT(ARGS);
-    
+
     Chuck_IO_Cherr * c = Chuck_IO_Cherr::getInstance();
     c->write(val);
 }
@@ -3521,26 +3522,26 @@ CK_DLL_MFUN( shred_getArg )
 
     Chuck_String * str = (Chuck_String *)instantiate_and_initialize_object( &t_string, NULL );
     str->str = ( i < num ? derhs->args[i] : "" );
-    RETURN->v_string = str; 
+    RETURN->v_string = str;
 }
 
 CK_DLL_MFUN( shred_sourcePath ) // added 1.3.0.0
 {
     Chuck_VM_Shred * derhs = (Chuck_VM_Shred *)SELF;
-    
+
     Chuck_String * str = (Chuck_String *)instantiate_and_initialize_object( &t_string, NULL );
     str->str = derhs->code->filename;
-    RETURN->v_string = str; 
+    RETURN->v_string = str;
 }
 
 CK_DLL_MFUN( shred_sourceDir ) // added 1.3.0.0
 {
     Chuck_VM_Shred * derhs = (Chuck_VM_Shred *)SELF;
-    
+
     Chuck_String * str = (Chuck_String *)instantiate_and_initialize_object( &t_string, NULL );
-    
+
     str->str = extract_filepath_dir(derhs->code->filename);
-    
+
     RETURN->v_string = str;
 }
 
@@ -3558,7 +3559,7 @@ CK_DLL_MFUN( shred_sourceDir2 ) // added 1.3.2.0
     str->str = extract_filepath_dir(derhs->code->filename);
     // up
     str->str = dir_go_up( str->str, i );
-    
+
     RETURN->v_string = str;
 }
 
@@ -3566,9 +3567,9 @@ CK_DLL_MFUN( shred_sourceDir2 ) // added 1.3.2.0
 CK_DLL_SFUN( shred_fromId ) // added 1.3.2.0
 {
     t_CKINT shred_id = GET_NEXT_INT(ARGS);
-    
+
     Chuck_VM_Shred * derhs = SHRED->vm_ref->shreduler()->lookup(shred_id);
-    
+
     RETURN->v_object = derhs;
 }
 
@@ -3629,14 +3630,14 @@ CK_DLL_MFUN(string_charAt)
 {
     Chuck_String * str = (Chuck_String *) SELF;
     t_CKINT index = GET_NEXT_INT(ARGS);
-    
+
     if(index < 0 || index >= str->str.length())
     {
         throw_exception(SHRED, "IndexOutOfBoundsException", index);
         RETURN->v_int = -1;
         return;
     }
-    
+
     RETURN->v_int = str->str.at(index);
 }
 
@@ -3645,7 +3646,7 @@ CK_DLL_MFUN(string_setCharAt)
     Chuck_String * str = (Chuck_String *) SELF;
     t_CKINT index = GET_NEXT_INT(ARGS);
     t_CKINT the_char = GET_NEXT_INT(ARGS);
-    
+
     if(index < 0 || index >= str->str.length())
     {
         throw_exception(SHRED, "IndexOutOfBoundsException", index);
@@ -3661,7 +3662,7 @@ CK_DLL_MFUN(string_substring)
 {
     Chuck_String * str = (Chuck_String *) SELF;
     t_CKINT start = GET_NEXT_INT(ARGS);
-    
+
     if(start < 0 || start >= str->str.length())
     {
         throw_exception(SHRED, "IndexOutOfBoundsException", start);
@@ -3671,7 +3672,7 @@ CK_DLL_MFUN(string_substring)
 
     Chuck_String * ss = (Chuck_String *) instantiate_and_initialize_object(&t_string, SHRED);
     ss->str = str->str.substr(start);
-    
+
     RETURN->v_string = ss;
 }
 
@@ -3680,7 +3681,7 @@ CK_DLL_MFUN(string_substringN)
     Chuck_String * str = (Chuck_String *) SELF;
     t_CKINT start = GET_NEXT_INT(ARGS);
     t_CKINT length = GET_NEXT_INT(ARGS);
-    
+
     if(start < 0 || start >= str->str.length())
     {
         throw_exception(SHRED, "IndexOutOfBoundsException", start);
@@ -3694,10 +3695,10 @@ CK_DLL_MFUN(string_substringN)
         RETURN->v_string = NULL;
         return;
     }
-    
+
     Chuck_String * ss = (Chuck_String *) instantiate_and_initialize_object(&t_string, SHRED);
     ss->str = str->str.substr(start, length);
-    
+
     RETURN->v_string = ss;
 }
 
@@ -3706,7 +3707,7 @@ CK_DLL_MFUN(string_insert)
     Chuck_String * str = (Chuck_String *) SELF;
     t_CKINT position = GET_NEXT_INT(ARGS);
     Chuck_String * str2 = GET_NEXT_STRING(ARGS);
-    
+
     if(position < 0 || position >= str->str.length())
     {
         throw_exception(SHRED, "IndexOutOfBoundsException", position);
@@ -3727,7 +3728,7 @@ CK_DLL_MFUN(string_replace)
     Chuck_String * str = (Chuck_String *) SELF;
     t_CKINT position = GET_NEXT_INT(ARGS);
     Chuck_String * str2 = GET_NEXT_STRING(ARGS);
-    
+
     if(position < 0 || position >= str->str.length())
     {
         throw_exception(SHRED, "IndexOutOfBoundsException", position);
@@ -3744,7 +3745,7 @@ CK_DLL_MFUN(string_replace)
         length = str->str.length() - position;
     else
         length = str2->str.length();
-    
+
     str->str.replace(position, length, str2->str);
 }
 
@@ -3780,9 +3781,9 @@ CK_DLL_MFUN(string_find)
 {
     Chuck_String * str = (Chuck_String *) SELF;
     t_CKINT the_char = GET_NEXT_INT(ARGS);
-    
+
     string::size_type index = str->str.find(the_char);
-    
+
     if(index == string::npos)
         RETURN->v_int = -1;
     else
@@ -3794,7 +3795,7 @@ CK_DLL_MFUN(string_findStart)
     Chuck_String * str = (Chuck_String *) SELF;
     t_CKINT the_char = GET_NEXT_INT(ARGS);
     t_CKINT start = GET_NEXT_INT(ARGS);
-    
+
     if(start < 0 || start >= str->str.length())
     {
         throw_exception(SHRED, "IndexOutOfBoundsException", start);
@@ -3803,7 +3804,7 @@ CK_DLL_MFUN(string_findStart)
     }
 
     string::size_type index = str->str.find(the_char, start);
-    
+
     if(index == string::npos)
         RETURN->v_int = -1;
     else
@@ -3814,9 +3815,9 @@ CK_DLL_MFUN(string_findStr)
 {
     Chuck_String * str = (Chuck_String *) SELF;
     Chuck_String * the_str = GET_NEXT_STRING(ARGS);
-    
+
     string::size_type index = str->str.find(the_str->str);
-    
+
     if(index == string::npos)
         RETURN->v_int = -1;
     else
@@ -3828,16 +3829,16 @@ CK_DLL_MFUN(string_findStrStart)
     Chuck_String * str = (Chuck_String *) SELF;
     Chuck_String * the_str = GET_NEXT_STRING(ARGS);
     t_CKINT start = GET_NEXT_INT(ARGS);
-    
+
     if(start < 0 || start >= str->str.length())
     {
         throw_exception(SHRED, "IndexOutOfBoundsException", start);
         RETURN->v_int = -1;
         return;
     }
-    
+
     string::size_type index = str->str.find(the_str->str, start);
-    
+
     if(index == string::npos)
         RETURN->v_int = -1;
     else
@@ -3848,9 +3849,9 @@ CK_DLL_MFUN(string_rfind)
 {
     Chuck_String * str = (Chuck_String *) SELF;
     t_CKINT the_char = GET_NEXT_INT(ARGS);
-    
+
     string::size_type index = str->str.rfind(the_char);
-    
+
     if(index == string::npos)
         RETURN->v_int = -1;
     else
@@ -3862,16 +3863,16 @@ CK_DLL_MFUN(string_rfindStart)
     Chuck_String * str = (Chuck_String *) SELF;
     t_CKINT the_char = GET_NEXT_INT(ARGS);
     t_CKINT start = GET_NEXT_INT(ARGS);
-    
+
     if(start < 0 || start >= str->str.length())
     {
         throw_exception(SHRED, "IndexOutOfBoundsException", start);
         RETURN->v_int = -1;
         return;
     }
-    
+
     string::size_type index = str->str.rfind(the_char, start);
-    
+
     if(index == string::npos)
         RETURN->v_int = -1;
     else
@@ -3882,9 +3883,9 @@ CK_DLL_MFUN(string_rfindStr)
 {
     Chuck_String * str = (Chuck_String *) SELF;
     Chuck_String * the_str = GET_NEXT_STRING(ARGS);
-    
+
     string::size_type index = str->str.rfind(the_str->str);
-    
+
     if(index == string::npos)
         RETURN->v_int = -1;
     else
@@ -3896,16 +3897,16 @@ CK_DLL_MFUN(string_rfindStrStart)
     Chuck_String * str = (Chuck_String *) SELF;
     Chuck_String * the_str = GET_NEXT_STRING(ARGS);
     t_CKINT start = GET_NEXT_INT(ARGS);
-    
+
     if(start < 0 || start >= str->str.length())
     {
         throw_exception(SHRED, "IndexOutOfBoundsException", start);
         RETURN->v_int = -1;
         return;
     }
-    
+
     string::size_type index = str->str.rfind(the_str->str, start);
-    
+
     if(index == string::npos)
         RETURN->v_int = -1;
     else
@@ -3917,19 +3918,19 @@ CK_DLL_MFUN(string_erase)
     Chuck_String * str = (Chuck_String *) SELF;
     t_CKINT start = GET_NEXT_INT(ARGS);
     t_CKINT length = GET_NEXT_INT(ARGS);
-    
+
     if(start < 0 || start >= str->str.length())
     {
         throw_exception(SHRED, "IndexOutOfBoundsException", start);
         return;
     }
-    
+
     if(length < 0 || start+length > str->str.length())
     {
         throw_exception(SHRED, "IndexOutOfBoundsException", length);
         return;
     }
-    
+
     str->str.erase(start, length);
 }
 
@@ -3952,16 +3953,16 @@ CK_DLL_MFUN( string_toFloat )
 CK_DLL_MFUN( string_parent )
 {
     Chuck_String * str = (Chuck_String *) SELF;
-    
+
     string::size_type i = str->str.rfind('/', str->str.length()-2);
 #ifdef WIN32
     // SPENCERTODO: make this legit on windows
     if(i == string::npos)
         i = str->str.rfind('\\', str->str.length()-2);
 #endif // WIN32
-    
+
     Chuck_String * parent = (Chuck_String *) instantiate_and_initialize_object(&t_string, SHRED);
-    
+
     if(i != string::npos)
     {
         if(i == 0)
@@ -3969,7 +3970,7 @@ CK_DLL_MFUN( string_parent )
         else
             parent->str = str->str.substr(0, i);
     }
-    
+
     RETURN->v_string = parent;
 }
 
@@ -4271,37 +4272,37 @@ CK_DLL_MFUN( MidiOut_send )
 //-----------------------------------------------------------------------------
 CK_DLL_MFUN( HidMsg_is_axis_motion )
 {
-    RETURN->v_int = ( ( t_CKINT ) OBJ_MEMBER_INT( SELF, HidMsg_offset_type ) == 
+    RETURN->v_int = ( ( t_CKINT ) OBJ_MEMBER_INT( SELF, HidMsg_offset_type ) ==
                       CK_HID_JOYSTICK_AXIS ? 1 : 0 );
 }
 
 CK_DLL_MFUN( HidMsg_is_button_down )
 {
-    RETURN->v_int = ( ( t_CKINT ) OBJ_MEMBER_INT( SELF, HidMsg_offset_type ) == 
+    RETURN->v_int = ( ( t_CKINT ) OBJ_MEMBER_INT( SELF, HidMsg_offset_type ) ==
                       CK_HID_BUTTON_DOWN ? 1 : 0 );
 }
 
 CK_DLL_MFUN( HidMsg_is_button_up )
 {
-    RETURN->v_int = ( ( t_CKINT ) OBJ_MEMBER_INT( SELF, HidMsg_offset_type ) == 
+    RETURN->v_int = ( ( t_CKINT ) OBJ_MEMBER_INT( SELF, HidMsg_offset_type ) ==
                       CK_HID_BUTTON_UP ? 1 : 0 );
 }
 
 CK_DLL_MFUN( HidMsg_is_mouse_motion )
 {
-    RETURN->v_int = ( ( t_CKINT ) OBJ_MEMBER_INT( SELF, HidMsg_offset_type ) == 
+    RETURN->v_int = ( ( t_CKINT ) OBJ_MEMBER_INT( SELF, HidMsg_offset_type ) ==
                       CK_HID_MOUSE_MOTION ? 1 : 0 );
 }
 
 CK_DLL_MFUN( HidMsg_is_hat_motion )
 {
-    RETURN->v_int = ( ( t_CKINT ) OBJ_MEMBER_INT( SELF, HidMsg_offset_type ) == 
+    RETURN->v_int = ( ( t_CKINT ) OBJ_MEMBER_INT( SELF, HidMsg_offset_type ) ==
                       CK_HID_JOYSTICK_HAT ? 1 : 0 );
 }
 
 CK_DLL_MFUN( HidMsg_is_wheel_motion )
 {
-    RETURN->v_int = ( ( t_CKINT ) OBJ_MEMBER_INT( SELF, HidMsg_offset_type ) == 
+    RETURN->v_int = ( ( t_CKINT ) OBJ_MEMBER_INT( SELF, HidMsg_offset_type ) ==
                       CK_HID_MOUSE_WHEEL ? 1 : 0 );
 }
 
@@ -4410,7 +4411,7 @@ CK_DLL_MFUN( HidIn_recv )
         OBJ_MEMBER_INT(fake_msg, HidMsg_offset_which) = the_msg.eid;
         OBJ_MEMBER_INT(fake_msg, HidMsg_offset_idata) = the_msg.idata[0];
         OBJ_MEMBER_FLOAT(fake_msg, HidMsg_offset_fdata) = the_msg.fdata[0];
-        
+
         // mouse motion specific member variables
         OBJ_MEMBER_INT(fake_msg, HidMsg_offset_deltax) = the_msg.idata[0];
         OBJ_MEMBER_INT(fake_msg, HidMsg_offset_deltay) = the_msg.idata[1];
@@ -4418,24 +4419,24 @@ CK_DLL_MFUN( HidIn_recv )
         OBJ_MEMBER_INT(fake_msg, HidMsg_offset_cursory) = the_msg.idata[3];
         OBJ_MEMBER_FLOAT(fake_msg, HidMsg_offset_scaledcursorx) = the_msg.fdata[0];
         OBJ_MEMBER_FLOAT(fake_msg, HidMsg_offset_scaledcursory) = the_msg.fdata[1];
-        
+
         // axis motion specific member variables
         OBJ_MEMBER_INT(fake_msg, HidMsg_offset_axis_position) = the_msg.idata[0];
         OBJ_MEMBER_FLOAT(fake_msg, HidMsg_offset_scaled_axis_position) = the_msg.fdata[0];
         OBJ_MEMBER_FLOAT(fake_msg, HidMsg_offset_axis_position2) = the_msg.fdata[0];
-        
+
         // hat motion specific variables
         OBJ_MEMBER_INT(fake_msg, HidMsg_offset_hat_position) = the_msg.idata[0];
-        
+
         // keyboard specific variables
         OBJ_MEMBER_INT(fake_msg, HidMsg_offset_key) = the_msg.idata[1];
         OBJ_MEMBER_INT(fake_msg, HidMsg_offset_ascii) = the_msg.idata[2];
-        
+
         // accelerometer (tilt sensor, wii remote) specific members
         OBJ_MEMBER_INT(fake_msg, HidMsg_offset_x) = the_msg.idata[0];
         OBJ_MEMBER_INT(fake_msg, HidMsg_offset_y) = the_msg.idata[1];
         OBJ_MEMBER_INT(fake_msg, HidMsg_offset_z) = the_msg.idata[2];
-        
+
         // multitouch stuff - added 1.3.0.0
         OBJ_MEMBER_FLOAT(fake_msg, HidMsg_offset_touchx) = the_msg.fdata[0];
         OBJ_MEMBER_FLOAT(fake_msg, HidMsg_offset_touchy) = the_msg.fdata[1];
@@ -4449,21 +4450,21 @@ CK_DLL_MFUN( HidIn_read )
     t_CKINT type = GET_NEXT_INT(ARGS);
     t_CKINT num = GET_NEXT_INT(ARGS);
     Chuck_Object * fake_msg = GET_NEXT_OBJECT(ARGS);
-    
+
     HidMsg the_msg;
-    
+
     RETURN->v_int = min->read( type, num, &the_msg );
-    
+
     if( RETURN->v_int )
     {
         OBJ_MEMBER_INT(fake_msg, HidMsg_offset_device_type) = the_msg.device_type;
         OBJ_MEMBER_INT(fake_msg, HidMsg_offset_device_num) = the_msg.device_num;
         OBJ_MEMBER_INT(fake_msg, HidMsg_offset_type) = the_msg.type;
         OBJ_MEMBER_INT(fake_msg, HidMsg_offset_which) = the_msg.eid;
-        
+
         OBJ_MEMBER_INT(fake_msg, HidMsg_offset_idata) = the_msg.idata[0];
         OBJ_MEMBER_FLOAT(fake_msg, HidMsg_offset_fdata) = the_msg.fdata[0];
-        
+
         // mouse motion specific member members
         OBJ_MEMBER_INT(fake_msg, HidMsg_offset_deltax) = the_msg.idata[0];
         OBJ_MEMBER_INT(fake_msg, HidMsg_offset_deltay) = the_msg.idata[1];
@@ -4471,38 +4472,38 @@ CK_DLL_MFUN( HidIn_read )
         OBJ_MEMBER_INT(fake_msg, HidMsg_offset_cursory) = the_msg.idata[3];
         OBJ_MEMBER_FLOAT(fake_msg, HidMsg_offset_scaledcursorx) = the_msg.fdata[0];
         OBJ_MEMBER_FLOAT(fake_msg, HidMsg_offset_scaledcursory) = the_msg.fdata[1];
-        
+
         // joystick axis specific member members
         OBJ_MEMBER_INT(fake_msg, HidMsg_offset_axis_position) = the_msg.idata[0];
         OBJ_MEMBER_FLOAT(fake_msg, HidMsg_offset_scaled_axis_position) = the_msg.fdata[0];
         OBJ_MEMBER_FLOAT(fake_msg, HidMsg_offset_axis_position2) = the_msg.fdata[0];
-        
+
         // joystick hat specific member members
         OBJ_MEMBER_INT(fake_msg, HidMsg_offset_hat_position) = the_msg.idata[0];
-        
+
         // keyboard specific members
         OBJ_MEMBER_INT(fake_msg, HidMsg_offset_key) = the_msg.idata[1];
         OBJ_MEMBER_INT(fake_msg, HidMsg_offset_ascii) = the_msg.idata[2];
-        
+
         // accelerometer (tilt sensor, wii remote) specific members
         OBJ_MEMBER_INT(fake_msg, HidMsg_offset_x) = the_msg.idata[0];
         OBJ_MEMBER_INT(fake_msg, HidMsg_offset_y) = the_msg.idata[1];
         OBJ_MEMBER_INT(fake_msg, HidMsg_offset_z) = the_msg.idata[2];
     }
-}    
+}
 
 CK_DLL_MFUN( HidIn_send )
 {
     HidIn * min = (HidIn *)OBJ_MEMBER_INT(SELF, HidIn_offset_data);
     Chuck_Object * fake_msg = GET_NEXT_OBJECT(ARGS);
-    
+
     HidMsg the_msg;
     the_msg.device_type = OBJ_MEMBER_INT( fake_msg, HidMsg_offset_device_type );
     the_msg.device_num = OBJ_MEMBER_INT( fake_msg, HidMsg_offset_device_num );
     the_msg.type = OBJ_MEMBER_INT( fake_msg, HidMsg_offset_type );
     the_msg.eid = OBJ_MEMBER_INT( fake_msg, HidMsg_offset_which );
     the_msg.idata[0] = OBJ_MEMBER_INT( fake_msg, HidMsg_offset_idata );
-    
+
     RETURN->v_int = min->send( &the_msg );
 }
 
@@ -4516,19 +4517,19 @@ CK_DLL_SFUN( HidIn_read_tilt_sensor )
 {
     static HidIn * hi;
     static t_CKBOOL hi_good = TRUE;
-    
+
     Chuck_Array4 * array = new Chuck_Array4( FALSE, 3 );
     array->set( 0, 0 );
     array->set( 1, 0 );
     array->set( 2, 0 );
-    
+
     // TODO: reference count?
     array->add_ref();
     RETURN->v_object = array;
-    
+
     if( hi_good == FALSE )
         return;
-    
+
     if( !hi )
     {
         hi = new HidIn;
@@ -4540,12 +4541,12 @@ CK_DLL_SFUN( HidIn_read_tilt_sensor )
     }
 
     HidMsg msg;
-    
+
     if( !hi->read( CK_HID_ACCELEROMETER, 0, &msg ) )
     {
         return;
     }
-    
+
     array->set( 0, msg.idata[0] );
     array->set( 1, msg.idata[1] );
     array->set( 2, msg.idata[2] );
@@ -4562,16 +4563,16 @@ CK_DLL_SFUN( HidIn_ctrl_tiltPollRate )
         return;
     }
     t_CKFLOAT srate = SHRED->vm_ref->srate();
-    
+
     // get arg
     t_CKDUR v = GET_NEXT_DUR( ARGS );
-    
+
     // get in microseconds
     t_CKINT usec = (t_CKINT)( v / srate * 1000000 );
-    
+
     // make sure it's nonnegative
     if( usec < 0 ) usec = 0;
-    
+
     // go
     RETURN->v_dur = TiltSensor_setPollRate( usec ) * srate / 1000000;
 }
@@ -4587,7 +4588,7 @@ CK_DLL_SFUN( HidIn_cget_tiltPollRate )
         return;
     }
     t_CKFLOAT srate = SHRED->vm_ref->srate();
-    
+
     RETURN->v_dur = TiltSensor_getPollRate() * srate / 1000000;
 }
 

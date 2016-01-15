@@ -64,11 +64,11 @@ double trunc( double a )
 // name: remainder()
 // desc: ...
 //-----------------------------------------------------------------------------
-double remainder( long a, long b )
+/*double remainder( long a, long b )
 {
     long div = a/b;
     return a - b*div;
-}
+}*/
 
 
 #endif
@@ -102,7 +102,7 @@ double mtof( double f )
 // desc: freq to midi
 //-----------------------------------------------------------------------------
 double ftom( double f )
-{   
+{
     // return (f > 0 ? 17.3123405046 * log(.12231220585 * f) : -1500);
     // TODO: optimize
     return (f > 0 ? (log(f/440.0) / LOGTWO) * 12.0 + 69 : -1500);
