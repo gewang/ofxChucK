@@ -149,7 +149,11 @@ public:
     ofCamera * setCamera( const std::string & key, ofCamera * cam );
     // get a camera associated with a key
     ofCamera * getCamera( const std::string & key );
-    
+    // set light associated with a key
+    ofLight * setLight( const std::string & key, ofLight * light );
+    // get a light associated with a key
+    ofLight * getLight( const std::string & key );
+
 public:
     // instance
     static OFCKDB * instance() {
@@ -177,8 +181,10 @@ public:
     std::map<std::string, VREntity *> string2entity;
     // string to image map
     std::map<std::string, ofImage *> string2image;
-    // string to entity map
+    // string to camera map
     std::map<std::string, ofCamera *> string2camera;
+    // string to light map
+    std::map<std::string, ofLight *> string2light;
 
     // display sync event is broadcast right before each new graphics frame
     Chuck_Event displaySync;
@@ -210,6 +216,14 @@ public:
     float setFOV( float value );
     // get field of view
     float getFOV();
+    
+public:
+    // all lights on
+    void allLightsOn() { m_allLightsOn = true; }
+    // all lights off
+    void allLightsOff() { m_allLightsOn = false; }
+    // get state
+    bool lightSwitch() const { return m_allLightsOn; }
 
 public:
     // singleton
@@ -230,6 +244,10 @@ public:
 public:
     // scene graph root
     VREntity * m_root;
+
+public:
+    // all lights on or off
+    bool m_allLightsOn;
 };
 
 

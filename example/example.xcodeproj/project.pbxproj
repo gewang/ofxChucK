@@ -527,12 +527,14 @@
 				E45BE9720E8CC7DD009D7055 /* ApplicationServices.framework */,
 				E45BE9730E8CC7DD009D7055 /* AudioToolbox.framework */,
 				E45BE9750E8CC7DD009D7055 /* CoreAudio.framework */,
+				63A0B0911C3F351400C86099 /* CoreMIDI.framework */,
 				E45BE9760E8CC7DD009D7055 /* CoreFoundation.framework */,
 				E45BE9770E8CC7DD009D7055 /* CoreServices.framework */,
 				E45BE9790E8CC7DD009D7055 /* OpenGL.framework */,
 				E45BE97A0E8CC7DD009D7055 /* QuickTime.framework */,
 				E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */,
 				E7E077E715D3B6510020DFD4 /* QTKit.framework */,
+				63A0B08F1C3F350000C86099 /* MultitouchSupport.framework */,
 			);
 			name = "system frameworks";
 			sourceTree = "<group>";
@@ -565,15 +567,13 @@
 		E4B69B4A0A3A1720003C02F2 = {
 			isa = PBXGroup;
 			children = (
-				63A0B0911C3F351400C86099 /* CoreMIDI.framework */,
-				63A0B08F1C3F350000C86099 /* MultitouchSupport.framework */,
-				E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */,
-				E4EB6923138AFD0F00A09F29 /* Project.xcconfig */,
 				E4B69E1C0A3A1BDC003C02F2 /* src */,
 				E4EEC9E9138DF44700A80321 /* openFrameworks */,
 				BB4B014C10F69532006C3DED /* addons */,
 				E45BE5980E8CC70C009D7055 /* frameworks */,
 				E4B69B5B0A3A1756003C02F2 /* exampleDebug.app */,
+				E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */,
+				E4EB6923138AFD0F00A09F29 /* Project.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};

@@ -32,7 +32,8 @@ void ofApp::setup()
     m_light->setGlobalPosition( 1000, 1000, 1000 );
 
     // compile and run another file
-    chuck->compileFile( "ck/solar.ck" );
+    // chuck->compileFile( "ck/solar.ck" );
+    chuck->compileFile( "ck/lines.ck" );
     // chuck->compileFile( "ck/flares.ck" ); // need audio input
     // chuck->compileFile( "ck/dot-circle.ck" );
 
@@ -106,6 +107,8 @@ void ofApp::draw()
     ofEnableDepthTest();
     // set fov
     m_camera.setFov( 90 );
+    // set near clipping plane
+    m_camera.setNearClip( .1 );
     // set position
     m_camera.setPosition( ofVec3f(0,0,10) );
     // look at
@@ -114,7 +117,7 @@ void ofApp::draw()
     // start camera
     m_camera.begin();
     // render light
-    m_light->enable();
+    if( VR::instance()->lightSwitch() ) m_light->enable();
     
     // update it
     vr->root()->renderAll();

@@ -46,6 +46,8 @@ CK_DLL_MFUN(vrentity_removeChild);
 CK_DLL_MFUN(vrentity_setString);
 CK_DLL_MFUN(vrentity_getString);
 CK_DLL_MFUN(vrentity_eval);
+CK_DLL_MFUN(vrentity_eval_vec3);
+CK_DLL_MFUN(vrentity_eval_vec3_vec3);
 
 // VR
 CK_DLL_SFUN(vr_getEntity);
@@ -65,6 +67,8 @@ CK_DLL_SFUN(vr_displaySync);
 CK_DLL_SFUN(vr_loadImage);
 CK_DLL_SFUN(vr_makeEntity);
 CK_DLL_SFUN(vr_root);
+CK_DLL_SFUN(vr_allLightsOn);
+CK_DLL_SFUN(vr_allLightsOff);
 
 
 // internal data
@@ -97,6 +101,10 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
         // destructor
         QUERY->add_dtor(QUERY, vrentity_dtor);
         
+        // add .cpointer
+        vrentity_offset_cpointer = QUERY->add_mvar( QUERY, "int", "@cpointer", FALSE );
+        if( vrentity_offset_cpointer == CK_INVALID_OFFSET ) goto error;
+
         // add .loc
         vrentity_offset_location = QUERY->add_mvar( QUERY, "vec3", "loc", FALSE );
         if( vrentity_offset_location == CK_INVALID_OFFSET ) goto error;
@@ -123,17 +131,38 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
         // VREntity
         QUERY->add_arg(QUERY, "VREntity", "e" );
 
-        // string VREntity.setString(key,value) // set
+        // string VREntity.setString(key,value) // setString
         QUERY->add_mfun(QUERY, vrentity_setString, "string", "setString");
         // name of object to retrieve
         QUERY->add_arg(QUERY, "string", "key");
         // name of object to retrieve
         QUERY->add_arg(QUERY, "string", "value");
 
-        // string VREntity.getString(key,value) // set
+        // string VREntity.getString(key,value) // getString
         QUERY->add_mfun(QUERY, vrentity_getString, "string", "getString");
         // name of object to retrieve
         QUERY->add_arg(QUERY, "string", "key");
+        
+        // string VREntity.eval(command) // eval
+        QUERY->add_mfun(QUERY, vrentity_eval, "int", "eval");
+        // command to evaluate
+        QUERY->add_arg(QUERY, "string", "command");
+
+        // string VREntity.eval(command, vec3) // eval
+        QUERY->add_mfun(QUERY, vrentity_eval_vec3, "int", "eval");
+        // command to evaluate
+        QUERY->add_arg(QUERY, "string", "command");
+        // first vec3 argument
+        QUERY->add_arg(QUERY, "vec3", "v");
+
+        // string VREntity.eval(command) // eval
+        QUERY->add_mfun(QUERY, vrentity_eval_vec3_vec3, "int", "eval");
+        // command to evaluate
+        QUERY->add_arg(QUERY, "string", "command");
+        // first vec3 argument
+        QUERY->add_arg(QUERY, "vec3", "v1");
+        // second vec3 argument
+        QUERY->add_arg(QUERY, "vec3", "v2");
     }
     // end the class definition
     QUERY->end_class(QUERY);
@@ -233,6 +262,12 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
         
         // VREntity VR.root() // get scene graph root
         QUERY->add_sfun(QUERY, vr_root, "VREntity", "root");
+
+        // VREntity VR.allLightsOn()
+        QUERY->add_sfun(QUERY, vr_allLightsOn, "void", "allLightsOn");
+
+        // VREntity VR.allLightsOff()
+        QUERY->add_sfun(QUERY, vr_allLightsOff, "void", "allLightsOff");
     }
     // end the class definition
     QUERY->end_class(QUERY);
@@ -313,6 +348,52 @@ CK_DLL_MFUN( vrentity_getString )
     // return the value
     RETURN->v_string = str;
 }
+
+CK_DLL_MFUN( vrentity_eval )
+{
+    std::string command = GET_NEXT_STRING(ARGS)->str;
+    
+    // get the c VREntity pointer
+    VREntity * e = (VREntity *)OBJ_MEMBER_INT(SELF,vrentity_offset_cpointer);
+    // set the string
+    RETURN->v_int = e->eval( command );
+}
+
+CK_DLL_MFUN( vrentity_eval_vec3 )
+{
+    std::string command = GET_NEXT_STRING(ARGS)->str;
+    t_CKVEC3 v = GET_NEXT_VEC3(ARGS);
+    
+    // string stream
+    ostringstream cmd;
+    // add
+    cmd << command << " " << v.x << " " << v.y << " " << v.z;
+    
+    // get the c VREntity pointer
+    VREntity * e = (VREntity *)OBJ_MEMBER_INT(SELF,vrentity_offset_cpointer);
+    // set the string
+    RETURN->v_int = e->eval( cmd.str() );
+}
+
+CK_DLL_MFUN( vrentity_eval_vec3_vec3 )
+{
+    std::string command = GET_NEXT_STRING(ARGS)->str;
+    t_CKVEC3 v1 = GET_NEXT_VEC3(ARGS);
+    t_CKVEC3 v2 = GET_NEXT_VEC3(ARGS);
+    
+    // string stream
+    ostringstream cmd;
+    // add
+    cmd << command << " " << v1.x << " " << v1.y << " " << v1.z << " ";
+    cmd << v2.x << " " << v2.y << " " << v2.z;
+    
+    // get the c VREntity pointer
+    VREntity * e = (VREntity *)OBJ_MEMBER_INT(SELF,vrentity_offset_cpointer);
+    // set the string
+    RETURN->v_int = e->eval( cmd.str() );
+}
+
+
 
 
 //------------------------------------------------------------------------------
@@ -481,6 +562,18 @@ CK_DLL_SFUN( vr_root )
         // return the value
         RETURN->v_object = e->chuckObject();
     }
+}
+
+CK_DLL_SFUN( vr_allLightsOn )
+{
+    // turn all lights on
+    VR::instance()->allLightsOn();
+}
+
+CK_DLL_SFUN( vr_allLightsOff )
+{
+    // turn all lights off
+    VR::instance()->allLightsOff();
 }
 
 // float VR.fov( float )
@@ -867,6 +960,42 @@ ofCamera * OFCKDB::getCamera( const std::string & key )
     
     // return the value
     return string2camera[key];
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: setLight()
+// desc: set light
+//------------------------------------------------------------------------------
+ofLight * OFCKDB::setLight( const string & key, ofLight * light )
+{
+    // map
+    string2light[key] = light;
+    
+    // return
+    return light;
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: getLight()
+// desc: get light associated with a key
+//------------------------------------------------------------------------------
+ofLight * OFCKDB::getLight( const std::string & key )
+{
+    // look for the key in the DB
+    if( string2light.find(key) == string2light.end() )
+    {
+        // not found
+        return NULL;
+    }
+    
+    // return the value
+    return string2light[key];
 }
 
 
