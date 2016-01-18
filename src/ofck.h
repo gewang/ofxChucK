@@ -59,6 +59,8 @@ public:
 public:
     // late-binding commands
     virtual bool eval( const std::string & command ) { }
+    virtual bool eval( const std::string & op, const std::string & args )
+    { eval( op + " " + args ); }
 
 public:
     // update all, cascading to children

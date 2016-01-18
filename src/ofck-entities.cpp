@@ -61,7 +61,7 @@ VREntity * VREntityFactory::makeEntity( const std::string & type )
     else if( type == "triangles" ) { }
     else if( type == "trianglestrip" ) { }
     else if( type == "circle" ) { }
-    else if( type == "text" ) { }
+    else if( type == "text" ) { e = new VRTextEntity(); }
     else if( type == "ugen" ) { }
     else if( type == "dot" ) { e = new VRDotEntity(); }
     
@@ -146,6 +146,117 @@ bool VRMeshEntity::eval( const std::string & theLine )
             m_vertices.push_back( Vector3D(x,y,z) );
         }
     }
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// constructor
+//------------------------------------------------------------------------------
+VRTextEntity::VRTextEntity()
+{
+    // default
+    m_sizeToLoad = 64;
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// render
+//------------------------------------------------------------------------------
+void VRTextEntity::update( double dt )
+{
+    // check
+    if( m_fontToLoad != "" )
+    {
+        // load it
+        m_font.loadFont( m_fontToLoad, m_sizeToLoad );
+        // clear
+        m_fontToLoad = "";
+    }
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// render
+//------------------------------------------------------------------------------
+void VRTextEntity::render()
+{
+    // disable depth
+    ofDisableDepthTest();
+    // the size
+    int size = m_font.getSize();
+    // check
+    if( size > 0 )
+    {
+        // scale down
+        ofScale(1.0/size, 1.0/size, 1.0/size);
+        // draw it
+        m_font.drawString( m_text, 0, 0 );
+    }
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// command: add
+//------------------------------------------------------------------------------
+bool VRTextEntity::eval( const std::string & theLine )
+{
+    // line
+    string line = lowerCase( theLine );
+    
+    // token
+    string token;
+    // string stream
+    istringstream istr(line);
+    // the command
+    string command;
+    // get it
+    istr >> command;
+    
+    // sanity check
+    if( command == "" ) return false;
+    
+    // check
+    if( command == "load" )
+    {
+        // read
+        if( !(istr >> m_fontToLoad) )
+        {
+            // error
+            cerr << "[VRTextEntity]: LOAD not enough arguments..." << endl;
+            // done
+            return false;
+        }
+        // read
+        if( !(istr >> m_sizeToLoad) )
+        {
+            m_sizeToLoad = 64;
+        }
+    }
+    else if( command == "set" )
+    {
+        // argument
+        string text;
+        // read
+        if( !(istr >> text) )
+        {
+            // error
+            cerr << "[VRTextEntity]: SET not enough arguments..." << endl;
+            // done
+            return false;
+        }
+        // load it
+        m_text = text;
+    }
+    
+    return true;
 }
 
 

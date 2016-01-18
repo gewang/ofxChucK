@@ -368,7 +368,7 @@ bool Chuck_System::compileFile( const string & path, const string & argsTogether
     
     // parse, type-check, and emit (full_path added 1.3.0.0)
     if( !m_compilerRef->go( filename, NULL, NULL, full_path ) )
-        return true;
+        return false;
 
     // get the code
     code = m_compilerRef->output();

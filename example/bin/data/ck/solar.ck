@@ -30,17 +30,13 @@ sun.addChild( earth );
 // add earth as child of sun
 earth.addChild( moon );
 
-// rotation variables
-float sr;
-float er;
-
 // infinite time loop
 while( true )
 {
     // rotate teh sun (and its children)
-    1 +=> sr => sun.ori.z;
+    1 +=> sun.ori.z;
     // rotate teh sun (and its children)
-    3 +=> er => earth.ori.y;
+    3 +=> earth.ori.y;
     // when there is a new graphics draw
     VR.displaySync() => now;
 }

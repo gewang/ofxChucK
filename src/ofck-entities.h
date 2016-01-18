@@ -106,7 +106,7 @@ public:
 
 
 //------------------------------------------------------------------------------
-// name: classVRLinesEntity
+// name: class VRLinesEntity
 // desc: lines; EVAL: "add x1 y1 z1 x2 y2 z2" to add
 //------------------------------------------------------------------------------
 class VRLinesEntity : public VREntity
@@ -122,6 +122,39 @@ public:
 public:
     // pairs of vertices
     std::vector<Vector3D> m_vertices;
+};
+
+
+
+
+//------------------------------------------------------------------------------
+// name: class VRTextEntity
+// desc: text
+//
+// EVAL: "set text"
+// EVAL: "load TTF"
+//------------------------------------------------------------------------------
+class VRTextEntity : public VREntity
+{
+public:
+    // constructor
+    VRTextEntity();
+    // update
+    virtual void update( double dt );
+    // render
+    virtual void render();
+    // command: add
+    virtual bool eval( const std::string & command );
+    
+public:
+    // the true type font
+    ofTrueTypeFont m_font;
+    // load on next update
+    std::string m_fontToLoad;
+    // size to load
+    int m_sizeToLoad;
+    // text to draw
+    std::string m_text;
 };
 
 

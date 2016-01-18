@@ -48,6 +48,7 @@ CK_DLL_MFUN(vrentity_getString);
 CK_DLL_MFUN(vrentity_eval);
 CK_DLL_MFUN(vrentity_eval_vec3);
 CK_DLL_MFUN(vrentity_eval_vec3_vec3);
+CK_DLL_MFUN(vrentity_eval_2);
 
 // VR
 CK_DLL_SFUN(vr_getEntity);
@@ -147,6 +148,13 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
         QUERY->add_mfun(QUERY, vrentity_eval, "int", "eval");
         // command to evaluate
         QUERY->add_arg(QUERY, "string", "command");
+
+        // string VREntity.eval(command) // eval
+        QUERY->add_mfun(QUERY, vrentity_eval_2, "int", "eval");
+        // op to evaluate
+        QUERY->add_arg(QUERY, "string", "op");
+        // args to evaluate
+        QUERY->add_arg(QUERY, "string", "args");
 
         // string VREntity.eval(command, vec3) // eval
         QUERY->add_mfun(QUERY, vrentity_eval_vec3, "int", "eval");
@@ -357,6 +365,17 @@ CK_DLL_MFUN( vrentity_eval )
     VREntity * e = (VREntity *)OBJ_MEMBER_INT(SELF,vrentity_offset_cpointer);
     // set the string
     RETURN->v_int = e->eval( command );
+}
+
+CK_DLL_MFUN( vrentity_eval_2 )
+{
+    std::string op = GET_NEXT_STRING(ARGS)->str;
+    std::string args = GET_NEXT_STRING(ARGS)->str;
+    
+    // get the c VREntity pointer
+    VREntity * e = (VREntity *)OBJ_MEMBER_INT(SELF,vrentity_offset_cpointer);
+    // set the string
+    RETURN->v_int = e->eval( op, args );
 }
 
 CK_DLL_MFUN( vrentity_eval_vec3 )

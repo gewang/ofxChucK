@@ -4,7 +4,7 @@
 #include "ofxChucK.h"
 
 #define MY_SRATE         44100
-#define MY_CHANNELS_IN   2
+#define MY_CHANNELS_IN   0
 #define MY_CHANNELS_OUT  2
 #define MY_BUFFERSIZE    128
 #define MY_NUMBUFFERS    4
@@ -43,16 +43,18 @@ public:
 public:
     // sound stream
     ofSoundStream soundStream;
-
     // the ChucK
     TheChucK * chuck;
-    
     // the VR
     VR * vr;
+    // display string
+    std::string m_message;
 
 public:
     // the camera
     ofCamera m_camera;
     // a light
     ofLight * m_light;
+    // font
+    ofTrueTypeFont m_font;
 };

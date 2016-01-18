@@ -1,5 +1,5 @@
 // make a some lines
-VR.makeEntity("lines-1","lines") @=> VREntity lines;
+VR.makeEntity("lines-1","lines") @=> VRE ntity lines;
 
 // init
 repeat( 2000 )
@@ -28,13 +28,11 @@ VR.root().addChild( lines );
 // disable lights
 VR.allLightsOff();
 
-// rotate
-float lr;
-
+// time loop
 while( true )
 {
     // rotate
-    1 +=> lr => lines.ori.y;
+    1 +=> lines.ori.y;
     // synch with display
     VR.displaySync() => now;
 }

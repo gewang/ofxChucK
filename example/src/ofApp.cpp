@@ -22,6 +22,8 @@ void ofApp::setup()
 
     // load image
     OFCKDB::instance()->loadImage("texture:flare-1", "flare-tng-1.png");
+    // load font
+    m_font.loadFont( "font/Computerfont.ttf", 64 );
 
     // set pointer
     vr = VR::instance();
@@ -31,12 +33,21 @@ void ofApp::setup()
     m_light->setDiffuseColor( ofColor(100, 255, 100) );
     m_light->setGlobalPosition( 1000, 1000, 1000 );
 
-    // compile and run another file
-    // chuck->compileFile( "ck/solar.ck" );
-    chuck->compileFile( "ck/lines.ck" );
-    // chuck->compileFile( "ck/flares.ck" ); // need audio input
-    // chuck->compileFile( "ck/dot-circle.ck" );
-    // chuck->compileFile( "ck/points.ck" );
+    // success code
+    bool r = false;
+    // compile and run file
+    // r = chuck->compileFile( "ck/solar.ck" );
+    // r = chuck->compileFile( "ck/lines.ck" );
+    r = chuck->compileFile( "ck/text.ck" );
+    // r = chuck->compileFile( "ck/flares.ck" ); // need audio input
+    // r = chuck->compileFile( "ck/points.ck" );
+    
+    // check
+    if( !r )
+    {
+        // set error
+        m_message = "ERROR compiling ChucK code\n(check console for details...)";
+    }
 
     // setup the sound stream...
     soundStream.setup( this,
@@ -104,8 +115,16 @@ void ofApp::update()
 //------------------------------------------------------------------------------
 void ofApp::draw()
 {
+    // check
+    if( m_message != "" )
+    {
+        // draw it
+        ofDrawBitmapString( m_message, 30, 30, 0 );
+    }
+
     // enable depth test
     ofEnableDepthTest();
+    
     // set fov
     m_camera.setFov( 90 );
     // set near clipping plane
@@ -119,6 +138,13 @@ void ofApp::draw()
     m_camera.begin();
     // render light
     if( VR::instance()->lightSwitch() ) m_light->enable();
+    else m_light->disable();
+
+    ofPushMatrix();
+    ofScale(.1,.1,.1);
+    // font
+    m_font.drawString( m_message, 0, 0 );
+    ofPopMatrix();
     
     // update it
     vr->root()->renderAll();
