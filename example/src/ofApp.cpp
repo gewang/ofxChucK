@@ -22,8 +22,6 @@ void ofApp::setup()
 
     // load image
     OFCKDB::instance()->loadImage("texture:flare-1", "flare-tng-1.png");
-    // load font
-    m_font.loadFont( "font/Computerfont.ttf", 64 );
 
     // set pointer
     vr = VR::instance();
@@ -32,13 +30,14 @@ void ofApp::setup()
     m_light = new ofLight();
     m_light->setDiffuseColor( ofColor(100, 255, 100) );
     m_light->setGlobalPosition( 1000, 1000, 1000 );
+    m_light->enable();
 
     // success code
     bool r = false;
     // compile and run file
     // r = chuck->compileFile( "ck/solar.ck" );
-    // r = chuck->compileFile( "ck/lines.ck" );
-    r = chuck->compileFile( "ck/text.ck" );
+     r = chuck->compileFile( "ck/lines.ck" );
+    // r = chuck->compileFile( "ck/text.ck" );
     // r = chuck->compileFile( "ck/flares.ck" ); // need audio input
     // r = chuck->compileFile( "ck/points.ck" );
     
@@ -137,20 +136,14 @@ void ofApp::draw()
     // start camera
     m_camera.begin();
     // render light
-    if( VR::instance()->lightSwitch() ) m_light->enable();
-    else m_light->disable();
-
-    ofPushMatrix();
-    ofScale(.1,.1,.1);
-    // font
-    m_font.drawString( m_message, 0, 0 );
-    ofPopMatrix();
+    if( VR::instance()->lightSwitch() ) ofEnableLighting();
+    else ofDisableLighting();
     
     // update it
     vr->root()->renderAll();
 
     // stop rendering light
-    m_light->disable();
+    ofDisableLighting();
     
     // done with camera
     m_camera.end();

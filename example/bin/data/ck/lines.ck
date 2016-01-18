@@ -1,5 +1,5 @@
 // make a some lines
-VR.makeEntity("lines-1","lines") @=> VRE ntity lines;
+VR.makeEntity("lines-1","lines") @=> VREntity lines;
 
 // init
 repeat( 2000 )

@@ -1306,6 +1306,8 @@ VR::VR()
 {
     // allocate
     m_root = new VREntity();
+    // initialize
+    m_allLightsOn = true;
 }
 
 

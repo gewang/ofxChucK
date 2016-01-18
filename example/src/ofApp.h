@@ -55,6 +55,4 @@ public:
     ofCamera m_camera;
     // a light
     ofLight * m_light;
-    // font
-    ofTrueTypeFont m_font;
 };
