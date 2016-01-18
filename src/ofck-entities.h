@@ -67,6 +67,45 @@ protected:
 
 
 //------------------------------------------------------------------------------
+// name: classVRMeshEntity
+// desc: mesh
+//
+// EVAL commands:
+//   "vertex x y z"
+//   "color r g b a"
+//   "uv u v"
+//   "normal x y z"
+//   "texture name"
+//   "draw points|lines|linestrip|triangles|trianglestrips|quads|quadstrips"
+//   "mode wireframe|fill]"
+//   "generate [shape]"
+//        "box width height depth"
+//        "cone radius height"
+//        "cylinder radius height"
+//        "icosahedron radius"
+//        "
+//   "toggle color on|off"
+//   "axis on|off"
+//------------------------------------------------------------------------------
+class VRMeshEntity : public VREntity
+{
+public:
+    // constructor
+    VRMeshEntity();
+    // render
+    virtual void render();
+    // command: add
+    virtual bool eval( const std::string & command );
+    
+public:
+    // vertices
+    std::vector<Vector3D> m_vertices;
+};
+
+
+
+
+//------------------------------------------------------------------------------
 // name: classVRLinesEntity
 // desc: lines; EVAL: "add x1 y1 z1 x2 y2 z2" to add
 //------------------------------------------------------------------------------

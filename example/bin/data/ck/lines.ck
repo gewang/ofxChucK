@@ -1,11 +1,9 @@
-
 // make a some lines
 VR.makeEntity("lines-1","lines") @=> VREntity lines;
 
 // init
 repeat( 2000 )
 {
-    // lines.eval( "add 0 0 0 1 1 0" );
     vec3 v1;
     vec3 v2;
     
@@ -19,6 +17,8 @@ repeat( 2000 )
     //v2.normalize();
     2 *=> v1;
     2 *=> v2;
+
+    // lines.eval( "add x1 y1 z1 x2 y2 z2" );
     lines.eval( "add", v1, v2 );
 }
 

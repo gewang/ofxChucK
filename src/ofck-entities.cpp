@@ -55,7 +55,7 @@ VREntity * VREntityFactory::makeEntity( const std::string & type )
 
     // check type
     if( type == "flare" ) { e = new VRFlare(); }
-    else if( type == "points" ) { }
+    else if( type == "points" ) { e = new VRMeshEntity(); }
     else if( type == "lines" ) { e = new VRLinesEntity(); }
     else if( type == "linestrip" ) { }
     else if( type == "triangles" ) { }
@@ -74,6 +74,78 @@ VREntity * VREntityFactory::makeEntity( const std::string & type )
     
     // done
     return e;
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// constructor
+//------------------------------------------------------------------------------
+VRMeshEntity::VRMeshEntity()
+{
+    // do nothing
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// render
+//------------------------------------------------------------------------------
+void VRMeshEntity::render()
+{
+    // actual size
+    int N = m_vertices.size();
+    // loop over lines
+    for( int i = 0; i < N; i++ )
+    {
+        // render
+        // ofDrawPoint( m_vertices[i].x, m_vertices[i].y, m_vertices[i].z );
+    }
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// command: add
+//------------------------------------------------------------------------------
+bool VRMeshEntity::eval( const std::string & theLine )
+{
+    string line = lowerCase( theLine );
+    
+    // word
+    string token;
+    // string stream
+    istringstream istr( line );
+    // the command
+    string command;
+    // get it
+    istr >> command;
+    
+    // sanity check
+    if( command == "" )
+    {
+        // empty command
+        cerr << "[VRMeshEntity]: empty EVAL command!" << endl;
+        // done
+        return false;
+    };
+    
+    // check
+    if( command == "vertex" )
+    {
+        // the number
+        float x, y, z;
+        
+        // loop
+        if( istr >> x >> y >> z )
+        {
+            // push as float
+            m_vertices.push_back( Vector3D(x,y,z) );
+        }
+    }
 }
 
 
@@ -141,7 +213,7 @@ bool VRLinesEntity::eval( const std::string & theLine )
         float x1, y1, z1, x2, y2, z2;
         
         // loop
-        while( istr >> x1 >> y1 >> z1 >> x2 >> y2 >> z2 )
+        if( istr >> x1 >> y1 >> z1 >> x2 >> y2 >> z2 )
         {
             // push as float
             m_vertices.push_back( Vector3D(x1,y1,z1) );

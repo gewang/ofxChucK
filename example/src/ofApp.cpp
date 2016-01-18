@@ -36,6 +36,7 @@ void ofApp::setup()
     chuck->compileFile( "ck/lines.ck" );
     // chuck->compileFile( "ck/flares.ck" ); // need audio input
     // chuck->compileFile( "ck/dot-circle.ck" );
+    // chuck->compileFile( "ck/points.ck" );
 
     // setup the sound stream...
     soundStream.setup( this,

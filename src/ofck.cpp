@@ -155,7 +155,7 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
         // first vec3 argument
         QUERY->add_arg(QUERY, "vec3", "v");
 
-        // string VREntity.eval(command) // eval
+        // string VREntity.eval(command, vec3, vec3) // eval
         QUERY->add_mfun(QUERY, vrentity_eval_vec3_vec3, "int", "eval");
         // command to evaluate
         QUERY->add_arg(QUERY, "string", "command");
