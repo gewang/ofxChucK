@@ -1,6 +1,12 @@
 #include "ofApp.h"
 
-//--------------------------------------------------------------
+
+
+
+//------------------------------------------------------------------------------
+// name: setup()
+// desc: set up the app
+//------------------------------------------------------------------------------
 void ofApp::setup()
 {
     ofSetLogLevel( OF_LOG_VERBOSE );
@@ -17,22 +23,42 @@ void ofApp::setup()
     const char * argv[] = { "the", "-v0" };
     
     // initialize (SHOULD HAPPEN BEFORE AUDIO STREAM STARTS)
-    chuck->initialize( MY_SRATE, MY_BUFFERSIZE, MY_CHANNELS, 2, argv );
+    chuck->initialize( MY_SRATE, MY_BUFFERSIZE, MY_CHANNELS_IN, MY_CHANNELS_OUT, 2, argv );
     
-    // compile and run a file
-    chuck->compileFile( "ck/dot-circle.ck" );
+    // set pointer
+    vr = VR::instance();
+    
+    // set up light
+    m_light = new ofLight();
+    m_light->setDiffuseColor( ofColor(100, 255, 100) );
+    m_light->setGlobalPosition( 1000, 1000, 1000 );
+    m_light->enable();
+    
+    // success code
+    bool r = false;
+    // compile and run file
+    //r = chuck->compileFile( "ck/dot-circle.ck" );
+    //r = chuck->compileFile( "ck/solar.ck" );
+    //r = chuck->compileFile( "ck/lines.ck" );
+    r = chuck->compileFile( "ck/text.ck" );
+    //r = chuck->compileFile( "ck/flares.ck" ); // need audio input
+    //r = chuck->compileFile( "ck/points.ck" );
+    
+    // check
+    if( !r )
+    {
+        // set error
+        m_message = "ERROR compiling ChucK code\n(check console for details...)";
+    }
     
     // setup the sound stream...
     soundStream.setup( this,
-                      MY_CHANNELS,     // output
-                      0,               // input
+                      MY_CHANNELS_OUT, // output
+                      MY_CHANNELS_IN,  // input
                       MY_SRATE,        // sample rate
                       MY_BUFFERSIZE,   // buffer size
                       MY_NUMBUFFERS ); // num buffer
     
-    // set location
-    w = 250;
-    h = 200;
     
     // OCULUS STUFF ------------------------------------------------------------
     
@@ -40,8 +66,9 @@ void ofApp::setup()
     oculusRift.setup();
     oculusRift.fullscreenOnRift();
     
-    if (ofIsGLProgrammableRenderer())
-        bshader.load("Shaders_GL3/simple.vert", "Shaders_GL3/simple.frag");
+    //TODO: delete
+    //    if (ofIsGLProgrammableRenderer())
+    //        bshader.load("Shaders_GL3/simple.vert", "Shaders_GL3/simple.frag");
     
     // ofBox uses texture coordinates from 0-1, so you can load whatever
     // sized images you want and still use them to texture your box
@@ -58,54 +85,30 @@ void ofApp::setup()
     
 }
 
-//--------------------------------------------------------------
-void ofApp::audioIn(float * input, int bufferSize, int nChannels)
-{
-    assert( bufferSize == MY_BUFFERSIZE );
-    assert( nChannels == MY_CHANNELS );
-    chuck->onInput( input, bufferSize );
-    
-}
 
 
-//--------------------------------------------------------------
-void ofApp::audioOut(float * output, int bufferSize, int nChannels)
-{
-    assert( bufferSize == MY_BUFFERSIZE );
-    assert( nChannels == MY_CHANNELS );
-    // chuck
-    chuck->onOutput( output, bufferSize );
-}
 
-
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------
+// name: update()
+// desc: update the system
+//------------------------------------------------------------------------------
 void ofApp::update()
 {
     // set background
     ofBackground( 1, 1, 1 );
     
-    // entity pointer
-    VREntity * e = NULL;
-
-    // db
-    OFCKDB * db = OFCKDB::instance();
-    
-    // draw list
-    map<string,VREntity *>::iterator i;
-    for( i = db->string2entity.begin(); i != db->string2entity.end(); i++ )
-    {
-        // get entity
-        e = i->second;
-        // draw it
-        e->updateAll(1/60.0f);
-    }
+    // update it
+    vr->root()->updateAll(1/60.0f);
     
     // trigger displaySync to chuck
     chuck->displaySync();
     
 }
 
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------
+// name: draw()
+// desc: draw the scene for OculusDK2
+//------------------------------------------------------------------------------
 void ofApp::draw()
 {
     if(oculusRift.isSetup()){
@@ -150,9 +153,19 @@ void ofApp::draw()
 }
 
 
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------
+// name: drawScene()
+// desc: draw the scene, not taking into account anything OculusDK2-related
+//------------------------------------------------------------------------------
 void ofApp::drawScene()
 {
+    
+    // check
+    if( m_message != "" )
+    {
+        // draw it
+        ofDrawBitmapString( m_message, 30, 30, 0 );
+    }
     
     ofPushMatrix();
     ofRotate(90, 0, 0, -1);
@@ -163,19 +176,15 @@ void ofApp::drawScene()
     //--------------------------------------------------------------------------
     // Draw ChucK-controlled elements
     //--------------------------------------------------------------------------
-    // entity pointer
-    VREntity * e = NULL;
-    // db
-    OFCKDB * db = OFCKDB::instance();
-    // draw list
-    map<string,VREntity *>::iterator i;
-    for( i = db->string2entity.begin(); i != db->string2entity.end(); i++ )
-    {
-        // get entity
-        e = i->second;
-        // draw it
-        e->renderAll();
-    }
+    // render light
+    if( VR::instance()->lightSwitch() ) ofEnableLighting();
+    else ofDisableLighting();
+    
+    // update it
+    vr->root()->renderAll();
+    
+    // stop rendering light
+    ofDisableLighting();
     
     
     //--------------------------------------------------------------------------
@@ -192,6 +201,27 @@ void ofApp::drawScene()
     }
     
 }
+
+
+//--------------------------------------------------------------
+void ofApp::audioIn(float * input, int bufferSize, int nChannels)
+{
+    assert( bufferSize == MY_BUFFERSIZE );
+    assert( nChannels == MY_CHANNELS_IN );
+    chuck->onInput( input, bufferSize );
+    
+}
+
+
+//--------------------------------------------------------------
+void ofApp::audioOut(float * output, int bufferSize, int nChannels)
+{
+    assert( bufferSize == MY_BUFFERSIZE );
+    assert( nChannels == MY_CHANNELS_OUT );
+    // chuck
+    chuck->onOutput( output, bufferSize );
+}
+
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key)
@@ -288,13 +318,19 @@ void ofApp::mouseExited(int x, int y){
 
 }
 
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------
+// name: windowResized()
+// desc: on window resized
+//------------------------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
     // log
     cerr << "window resized w: " << w << " h: " << h << endl;
 }
 
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------
+// name: gotMessage()
+// desc: on receive of message
+//------------------------------------------------------------------------------
 void ofApp::gotMessage(ofMessage msg){
 
 }

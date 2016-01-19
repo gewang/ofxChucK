@@ -5,13 +5,16 @@
 #include "ofxOculusDK2.h"
 
 
-#define MY_SRATE      44100
-#define MY_CHANNELS   2
-#define MY_BUFFERSIZE 256
-#define MY_NUMBUFFERS 4
+#define MY_SRATE        44100
+#define MY_CHANNELS_IN  1
+#define MY_CHANNELS_OUT 2
+#define MY_BUFFERSIZE   256
+#define MY_NUMBUFFERS   4
 
 
 //------------------------------------------------------------------------------
+// name: class ofApp
+// desc: the app
 //------------------------------------------------------------------------------
 class ofApp : public ofBaseApp
 {
@@ -39,8 +42,9 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
 
-    
-    ofxOculusDK2		oculusRift;
+public:
+    // Oculus DK2 stuff
+    ofxOculusDK2 oculusRift;
     
     ofEasyCam cam;
     bool showOverlay;
@@ -59,17 +63,16 @@ public:
 public:
     // sound stream
     ofSoundStream soundStream;
-    
     // the ChucK
     TheChucK * chuck;
+    // the VR
+    VR * vr;
+    // display string
+    std::string m_message;
     
 public:
-    // color buffer
-    ofPixels m_colorPixels;
-    // the texture color
-    ofTexture m_texColor;
-    // width and height
-    int w, h;
-    
-    
+    // the camera
+    ofCamera m_camera;
+    // a light
+    ofLight * m_light;
 };
