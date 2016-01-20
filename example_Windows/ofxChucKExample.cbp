@@ -1,0 +1,597 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="ofxChucKExample" />
+		<Option makefile="makefile" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Option virtualFolders="addons\;src\;addons\ofxChucK\libs\chuck\;addons\ofxChucK\libs\regex\;addons\ofxChucK\src\;addons\ofxChucK\libs\RtAudio\;" />
+		<Build>
+			<Target title="release">
+				<Option output="bin/$(PROJECT_NAME)" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin" />
+				<Option object_output="obj/Release" />
+				<Option external_deps="../../../libs/openFrameworksCompiled/lib/win_cb/openFrameworks.lib;" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-D__WINDOWS_DS__" />
+					<Add option="-D__PLATFORM_WIN32__" />
+					<Add option="-DHAVE_CONFIG_H" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="../../../libs/openFrameworksCompiled/lib/win_cb/openFrameworks.lib" />
+					<Add library="dinput" />
+					<Add library="dsound" />
+				</Linker>
+			</Target>
+			<Target title="debug">
+				<Option output="bin/$(PROJECT_NAME)_DEBUG" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin" />
+				<Option object_output="obj/Debug/" />
+				<Option external_deps="../../../libs/openFrameworksCompiled/lib/win_cb/openFrameworksDebug.lib;" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="../../../libs/openFrameworksCompiled/lib/win_cb/openFrameworksDebug.lib" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wno-multichar" />
+			<Add directory="../../../libs/glu/include" />
+			<Add directory="../../../libs/freetype/include" />
+			<Add directory="../../../libs/freetype/include/freetype2" />
+			<Add directory="../../../libs/FreeImage/include" />
+			<Add directory="../../../libs/quicktime/include" />
+			<Add directory="../../../libs/rtAudio/include" />
+			<Add directory="../../../libs/fmodex/include" />
+			<Add directory="../../../libs/videoInput/include" />
+			<Add directory="../../../libs/glew/include" />
+			<Add directory="../../../libs/glut/include" />
+			<Add directory="../../../libs/glfw/include" />
+			<Add directory="../../../libs/openFrameworks" />
+			<Add directory="../../../libs/openFrameworks/3d" />
+			<Add directory="../../../libs/openFrameworks/app" />
+			<Add directory="../../../libs/openFrameworks/communication" />
+			<Add directory="../../../libs/openFrameworks/events" />
+			<Add directory="../../../libs/openFrameworks/gl" />
+			<Add directory="../../../libs/openFrameworks/graphics" />
+			<Add directory="../../../libs/openFrameworks/math" />
+			<Add directory="../../../libs/openFrameworks/sound" />
+			<Add directory="../../../libs/openFrameworks/types" />
+			<Add directory="../../../libs/openFrameworks/utils" />
+			<Add directory="../../../libs/openFrameworks/video" />
+			<Add directory="../../../libs/poco/include" />
+			<Add directory="../../../libs/tess2/include" />
+			<Add directory="../../../libs/cairo/include/cairo" />
+			<Add directory="../../../addons/ofxChucK/libs" />
+			<Add directory="../../../addons/ofxChucK/src" />
+			<Add directory="../../../addons/ofxChucK/libs/RtAudio" />
+			<Add directory="../../../addons/ofxChucK/libs/chuck" />
+			<Add directory="../../../addons/ofxChucK/libs/regex" />
+		</Compiler>
+		<Linker>
+			<Add library="..\..\..\libs\FreeImage\lib\win_cb\FreeImage.lib" />
+			<Add library="..\..\..\libs\rtAudio\lib\win_cb\librtaudio.a" />
+			<Add library="..\..\..\libs\quicktime\lib\win_cb\qtmlClient.lib" />
+			<Add library="..\..\..\libs\cairo\lib\win_cb\libcairo.a" />
+			<Add library="..\..\..\libs\cairo\lib\win_cb\libpixman-1.a" />
+			<Add library="..\..\..\libs\freetype\lib\win_cb\libfreetype.a" />
+			<Add library="..\..\..\libs\glut\lib\win_cb\libglut.a" />
+			<Add library="..\..\..\libs\glfw\lib\win_cb\libglfw3.a" />
+			<Add library="..\..\..\libs\videoInput\lib\win_cb\videoInputLib.a" />
+			<Add library="..\..\..\libs\fmodex\lib\win_cb\libfmodex.a" />
+			<Add library="..\..\..\libs\glew\lib\win_cb\glew32s.lib" />
+			<Add library="..\..\..\libs\glu\lib\win_cb\glu32.lib" />
+			<Add library="..\..\..\libs\poco\lib\win_cb\libPocoNetSSL.a" />
+			<Add library="..\..\..\libs\poco\lib\win_cb\libPocoCrypto.a" />
+			<Add library="..\..\..\libs\poco\lib\win_cb\libPocoNet.a" />
+			<Add library="..\..\..\libs\poco\lib\win_cb\libPocoUtil.a" />
+			<Add library="..\..\..\libs\poco\lib\win_cb\libPocoXML.a" />
+			<Add library="..\..\..\libs\poco\lib\win_cb\libPocoFoundation.a" />
+			<Add library="..\..\..\libs\openssl\lib\win_cb\libssl.a" />
+			<Add library="..\..\..\libs\openssl\lib\win_cb\libcrypto.a" />
+			<Add library="..\..\..\libs\tess2\lib\win_cb\libtess2.a" />
+			<Add library="opengl32" />
+			<Add library="gdi32" />
+			<Add library="msimg32" />
+			<Add library="glu32" />
+			<Add library="dsound" />
+			<Add library="winmm" />
+			<Add library="dxguid" />
+			<Add library="strmbase" />
+			<Add library="strmiids" />
+			<Add library="z" />
+			<Add library="uuid" />
+			<Add library="ole32" />
+			<Add library="oleaut32" />
+			<Add library="setupapi" />
+			<Add library="wsock32" />
+			<Add library="ws2_32" />
+			<Add library="Iphlpapi" />
+			<Add library="Comdlg32" />
+		</Linker>
+		<ExtraCommands>
+			<Add after='xcopy /e /i /y &quot;$(PROJECT_DIR)..\..\..\export\win_cb\*.dll&quot;  &quot;$(PROJECT_DIR)bin&quot;' />
+			<Add after='cmd /c if not exist &quot;$(PROJECT_DIR)bin/data&quot; mkdir &quot;$(PROJECT_DIR)bin/data&quot;' />
+			<Mode after="always" />
+		</ExtraCommands>
+		<Unit filename="../libs/RtAudio/RtAudio.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/RtAudio" />
+		</Unit>
+		<Unit filename="../libs/RtAudio/RtAudio.h">
+			<Option virtualFolder="addons/ofxChucK/libs/RtAudio" />
+		</Unit>
+		<Unit filename="../libs/RtAudio/RtError.h">
+			<Option virtualFolder="addons/ofxChucK/libs/RtAudio" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_absyn.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_absyn.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_bbq.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_bbq.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_compile.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_compile.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_console.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_console.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_def.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_dl.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_dl.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_emit.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_emit.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_errmsg.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_errmsg.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_frame.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_frame.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_globals.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_globals.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_instr.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_instr.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_io.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_io.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_lang.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_lang.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_oo.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_oo.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_otf.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_otf.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_parse.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_parse.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_scan.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_scan.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_shell.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_shell.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_stats.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_stats.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_symbol.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_symbol.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_system.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_system.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_table.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_table.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_type.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_type.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_ugen.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_ugen.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_utils.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_utils.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_vm.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_vm.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_win32.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/chuck_win32.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/digiio_rtaudio.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/digiio_rtaudio.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/dirent_win32.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/hidio_sdl.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/hidio_sdl.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/midiio_rtmidi.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/midiio_rtmidi.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/rtmidi.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/rtmidi.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/uana_extract.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/uana_extract.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/uana_xform.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/uana_xform.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/ugen_filter.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/ugen_filter.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/ugen_osc.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/ugen_osc.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/ugen_stk.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/ugen_stk.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/ugen_xxx.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/ugen_xxx.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/ulib_machine.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/ulib_machine.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/ulib_math.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/ulib_math.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/ulib_opsc.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/ulib_regex.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/ulib_regex.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/ulib_std.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/ulib_std.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/util_buffers.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/util_buffers.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/util_console.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/util_console.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/util_hid.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/util_hid.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/util_math.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/util_math.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/util_network.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/util_network.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/util_opsc.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/util_opsc.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/util_raw.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/util_raw.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/util_serial.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/util_serial.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/util_sndfile.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/util_sndfile.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/util_string.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/util_string.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/util_thread.cpp">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/util_thread.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/util_xforms.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/chuck/util_xforms.h">
+			<Option virtualFolder="addons/ofxChucK/libs/chuck" />
+		</Unit>
+		<Unit filename="../libs/regex/config.h">
+			<Option virtualFolder="addons/ofxChucK/libs/regex" />
+		</Unit>
+		<Unit filename="../libs/regex/regcomp.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="addons/ofxChucK/libs/regex" />
+		</Unit>
+		<Unit filename="../libs/regex/regerror.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="addons/ofxChucK/libs/regex" />
+		</Unit>
+		<Unit filename="../libs/regex/regex.h">
+			<Option virtualFolder="addons/ofxChucK/libs/regex" />
+		</Unit>
+		<Unit filename="../libs/regex/regexec.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="addons/ofxChucK/libs/regex" />
+		</Unit>
+		<Unit filename="../libs/regex/tre-ast.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="addons/ofxChucK/libs/regex" />
+		</Unit>
+		<Unit filename="../libs/regex/tre-ast.h">
+			<Option virtualFolder="addons/ofxChucK/libs/regex" />
+		</Unit>
+		<Unit filename="../libs/regex/tre-compile.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="addons/ofxChucK/libs/regex" />
+		</Unit>
+		<Unit filename="../libs/regex/tre-compile.h">
+			<Option virtualFolder="addons/ofxChucK/libs/regex" />
+		</Unit>
+		<Unit filename="../libs/regex/tre-config.h">
+			<Option virtualFolder="addons/ofxChucK/libs/regex" />
+		</Unit>
+		<Unit filename="../libs/regex/tre-filter.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="addons/ofxChucK/libs/regex" />
+		</Unit>
+		<Unit filename="../libs/regex/tre-filter.h">
+			<Option virtualFolder="addons/ofxChucK/libs/regex" />
+		</Unit>
+		<Unit filename="../libs/regex/tre-internal.h">
+			<Option virtualFolder="addons/ofxChucK/libs/regex" />
+		</Unit>
+		<Unit filename="../libs/regex/tre-match-approx.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="addons/ofxChucK/libs/regex" />
+		</Unit>
+		<Unit filename="../libs/regex/tre-match-backtrack.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="addons/ofxChucK/libs/regex" />
+		</Unit>
+		<Unit filename="../libs/regex/tre-match-parallel.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="addons/ofxChucK/libs/regex" />
+		</Unit>
+		<Unit filename="../libs/regex/tre-match-utils.h">
+			<Option virtualFolder="addons/ofxChucK/libs/regex" />
+		</Unit>
+		<Unit filename="../libs/regex/tre-mem.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="addons/ofxChucK/libs/regex" />
+		</Unit>
+		<Unit filename="../libs/regex/tre-mem.h">
+			<Option virtualFolder="addons/ofxChucK/libs/regex" />
+		</Unit>
+		<Unit filename="../libs/regex/tre-parse.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="addons/ofxChucK/libs/regex" />
+		</Unit>
+		<Unit filename="../libs/regex/tre-parse.h">
+			<Option virtualFolder="addons/ofxChucK/libs/regex" />
+		</Unit>
+		<Unit filename="../libs/regex/tre-stack.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="addons/ofxChucK/libs/regex" />
+		</Unit>
+		<Unit filename="../libs/regex/tre-stack.h">
+			<Option virtualFolder="addons/ofxChucK/libs/regex" />
+		</Unit>
+		<Unit filename="../libs/regex/tre.h">
+			<Option virtualFolder="addons/ofxChucK/libs/regex" />
+		</Unit>
+		<Unit filename="../libs/regex/xmalloc.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="addons/ofxChucK/libs/regex" />
+		</Unit>
+		<Unit filename="../libs/regex/xmalloc.h">
+			<Option virtualFolder="addons/ofxChucK/libs/regex" />
+		</Unit>
+		<Unit filename="../src/.DS_Store">
+			<Option virtualFolder="addons/ofxChucK/src" />
+		</Unit>
+		<Unit filename="../src/ofck-entities.cpp">
+			<Option virtualFolder="addons/ofxChucK/src" />
+		</Unit>
+		<Unit filename="../src/ofck-entities.h">
+			<Option virtualFolder="addons/ofxChucK/src" />
+		</Unit>
+		<Unit filename="../src/ofck.cpp">
+			<Option virtualFolder="addons/ofxChucK/src" />
+		</Unit>
+		<Unit filename="../src/ofck.h">
+			<Option virtualFolder="addons/ofxChucK/src" />
+		</Unit>
+		<Unit filename="../src/ofxChucK.cpp">
+			<Option virtualFolder="addons/ofxChucK/src" />
+		</Unit>
+		<Unit filename="../src/ofxChucK.h">
+			<Option virtualFolder="addons/ofxChucK/src" />
+		</Unit>
+		<Unit filename="../src/x-vector3d.h">
+			<Option virtualFolder="addons/ofxChucK/src" />
+		</Unit>
+		<Unit filename="icon.rc">
+			<Option compilerVar="WINDRES" />
+		</Unit>
+		<Unit filename="src/main.cpp">
+			<Option virtualFolder="src" />
+		</Unit>
+		<Unit filename="src/ofApp.cpp">
+			<Option virtualFolder="src" />
+		</Unit>
+		<Unit filename="src/ofApp.h">
+			<Option virtualFolder="src" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<debugger />
+			<envvars />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

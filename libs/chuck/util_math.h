@@ -35,15 +35,15 @@
 
 #include <math.h>
 
-#if defined (__cplusplus) || defined(_cplusplus)  
+#if defined (__cplusplus) || defined(_cplusplus)
 extern "C" {
-#endif 
+#endif
 
 #ifdef __PLATFORM_WIN32__
 
     double round( double a );
     double trunc( double a );
-    double remainder( long a, long b );
+    //double remainder( long a, long b );
 
 #endif
 
@@ -64,10 +64,10 @@ unsigned long nextpow2( unsigned long i );
 // ensurepow2
 unsigned long ensurepow2( unsigned long i );
 
-#if defined (__cplusplus) || defined(_cplusplus)  
+#if defined (__cplusplus) || defined(_cplusplus)
 }
 #endif
 
 
 
-#endif 
+#endif
