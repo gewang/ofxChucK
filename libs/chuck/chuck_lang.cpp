@@ -47,6 +47,7 @@
 #include "midiio_rtmidi.h"
 #endif
 
+#include <math.h>
 #include <iostream>
 #include <iomanip>
 #include <sstream>
