@@ -14,6 +14,7 @@
 
 
 #include "chuck_dl.h"
+#include "util_thread.h"
 #include "x-vector3d.h"
 #include "ofMain.h"
 
@@ -228,6 +229,12 @@ public:
     bool lightSwitch() const { return m_allLightsOn; }
 
 public:
+    // acquire chuck lock
+    void lock() { m_lock.acquire(); }
+    // release chuck lock
+    void release() { m_lock.release(); }
+    
+public:
     // singleton
     static VR * instance() {
         // allocate if needed
@@ -250,6 +257,10 @@ public:
 public:
     // all lights on or off
     bool m_allLightsOn;
+    
+protected:
+    // chuck mutex
+    XMutex m_lock;
 };
 
 

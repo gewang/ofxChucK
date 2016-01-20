@@ -36,7 +36,7 @@ void ofApp::setup()
     bool r = false;
     // compile and run file
     // r = chuck->compileFile( "ck/solar.ck" );
-     r = chuck->compileFile( "ck/lines.ck" );
+    r = chuck->compileFile( "ck/lines.ck" );
     // r = chuck->compileFile( "ck/text.ck" );
     // r = chuck->compileFile( "ck/flares.ck" ); // need audio input
     // r = chuck->compileFile( "ck/points.ck" );
@@ -121,6 +121,8 @@ void ofApp::draw()
         ofDrawBitmapString( m_message, 30, 30, 0 );
     }
 
+    // lock
+    VR::instance()->lock();
     // enable depth test
     ofEnableDepthTest();
     
@@ -147,6 +149,8 @@ void ofApp::draw()
     
     // done with camera
     m_camera.end();
+    // release lock
+    VR::instance()->release();
 }
 
 

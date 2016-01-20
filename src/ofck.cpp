@@ -1053,7 +1053,9 @@ VREntity::~VREntity()
 //------------------------------------------------------------------------------
 void VREntity::addChild( VREntity * entity )
 {
+    VR::instance()->lock();
     children.push_back( entity );
+    VR::instance()->release();
 }
 
 
