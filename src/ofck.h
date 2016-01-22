@@ -46,6 +46,8 @@ public:
 public:
     // sync data with chuck
     void syncFromChucK();
+    // sync data to chuck
+    void syncToChucK();
     // get chuck-side object
     Chuck_Object * chuckObject() { return m_chuckObject; }
     // allocate the chuck object
@@ -98,11 +100,21 @@ public:
     std::string setString( const std::string & key, const std::string & value );
     // get a vec3 value associated with a key
     std::string getString( const std::string & key );
+    
+public:
+    // data sync (0 == from chuck; 1 == to chuck)
+    void setSyncMode( bool which );
+    
+protected:
+    // which way to sync
+    bool m_shouldISyncFromChucK;
+    bool m_shouldISyncToChucK;
 
 protected:
     // how chuck sees this entity (chuck type: VREntity)
     Chuck_Object * m_chuckObject;
 };
+
 
 
 
@@ -213,6 +225,8 @@ public:
 public:
     // get the scene root
     VREntity * root();
+    // get head
+    VREntity * head();
 
 public:
     // set field of view
@@ -253,6 +267,8 @@ public:
 public:
     // scene graph root
     VREntity * m_root;
+    // head as entity
+    VREntity * m_head;
 
 public:
     // all lights on or off

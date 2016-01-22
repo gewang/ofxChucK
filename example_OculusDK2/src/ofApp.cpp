@@ -1,7 +1,8 @@
 #include "ofApp.h"
 
-
-
+#include <stdio.h>
+#include <math.h>
+#include <cmath>
 
 //------------------------------------------------------------------------------
 // name: setup()
@@ -40,9 +41,10 @@ void ofApp::setup()
     //r = chuck->compileFile( "ck/dot-circle.ck" );
     //r = chuck->compileFile( "ck/solar.ck" );
     //r = chuck->compileFile( "ck/lines.ck" );
-    r = chuck->compileFile( "ck/text.ck" );
+    // r = chuck->compileFile( "ck/text.ck" );
     //r = chuck->compileFile( "ck/flares.ck" ); // need audio input
     //r = chuck->compileFile( "ck/points.ck" );
+    r = chuck->compileFile( "ck/head.ck" );
     
     // check
     if( !r )
@@ -83,6 +85,11 @@ void ofApp::setup()
     // set camera y to user eye height
     cam.setGlobalPosition(0, oculusRift.getUserEyeHeight(), 3);
     
+    
+    //------------
+    arial.loadFont(ofToDataPath("font/Arial.ttf"), 14, true, true);
+    arial.setLineHeight(18.0f);
+    arial.setLetterSpacing(1.037);
 }
 
 
@@ -97,12 +104,29 @@ void ofApp::update()
     // set background
     ofBackground( 1, 1, 1 );
     
+    ofQuaternion headtrack;
+    ofVec3f euler, headpos;
+    headtrack = oculusRift.getOrientationQuat();
+    // headpos = oculusRift.getTranslation();
+    euler = headtrack.getEuler();
+    
+    // printf("Euler angles : %f,  %f,  %f\n",
+    //       euler[0], euler[1], euler[2]);
+    
+    // get head
+    VREntity * head = vr->head();
+    // set orientation
+    head->ori.x = euler[0];
+    head->ori.y = euler[1];
+    head->ori.z = euler[2];
+    
     // update it
     vr->root()->updateAll(1/60.0f);
+    // update it
+    vr->head()->updateAll(1/60.0f);
     
     // trigger displaySync to chuck
     chuck->displaySync();
-    
 }
 
 //------------------------------------------------------------------------------
@@ -172,6 +196,24 @@ void ofApp::drawScene()
     ofSetColor(30);
     ofDrawGridPlane(12.0f, 8.0f, false );
     ofPopMatrix();
+    
+    
+    // Draw HMD ori
+//    ofPushMatrix();
+//    oculusRift.beginOverlay();
+//    ofRotateX(180);
+//    ofColor(255, 140, 100);
+//    char tmp_str[255];
+//    sprintf(tmp_str,
+//            "Ori x: %f y: %f z: %f w: %f",
+//            oculusRift.headPose[0].Orientation.x,
+//            oculusRift.headPose[0].Orientation.y,
+//            oculusRift.headPose[0].Orientation.z,
+//            oculusRift.headPose[0].Orientation.w);
+//    arial.drawString(tmp_str, 0, 0);
+//    oculusRift.endOverlay();
+//    ofPopMatrix();
+    
     
     //--------------------------------------------------------------------------
     // Draw ChucK-controlled elements

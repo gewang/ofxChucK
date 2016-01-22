@@ -68,6 +68,7 @@ CK_DLL_SFUN(vr_displaySync);
 CK_DLL_SFUN(vr_loadImage);
 CK_DLL_SFUN(vr_makeEntity);
 CK_DLL_SFUN(vr_root);
+CK_DLL_SFUN(vr_head);
 CK_DLL_SFUN(vr_allLightsOn);
 CK_DLL_SFUN(vr_allLightsOff);
 
@@ -270,6 +271,9 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
         
         // VREntity VR.root() // get scene graph root
         QUERY->add_sfun(QUERY, vr_root, "VREntity", "root");
+
+        // VREntity VR.head() // get head as entity
+        QUERY->add_sfun(QUERY, vr_head, "VREntity", "head");
 
         // VREntity VR.allLightsOn()
         QUERY->add_sfun(QUERY, vr_allLightsOn, "void", "allLightsOn");
@@ -583,6 +587,20 @@ CK_DLL_SFUN( vr_root )
     }
 }
 
+CK_DLL_SFUN( vr_head )
+{
+    // make the entity
+    VREntity * e = VR::instance()->head();
+    // check it
+    if( !e ) { RETURN->v_object = 0; } else
+    {
+        // if necessary, instantiate chuck-side object
+        if( e->chuckObject() == NULL ) { e->initChucKSideObject(); }
+        // return the value
+        RETURN->v_object = e->chuckObject();
+    }
+}
+
 CK_DLL_SFUN( vr_allLightsOn )
 {
     // turn all lights on
@@ -803,7 +821,6 @@ t_CKVEC4 OFCKDB::getVec4( const std::string & key )
 
 
 
-
 //------------------------------------------------------------------------------
 // name: setString()
 // desc: associate a string value with a key
@@ -1019,7 +1036,6 @@ ofLight * OFCKDB::getLight( const std::string & key )
 
 
 
-
 //------------------------------------------------------------------------------
 // name: VREntity()
 // desc: constructor
@@ -1030,6 +1046,8 @@ VREntity::VREntity()
     col.setAll(255);
     sca.setAll(1);
     m_chuckObject = NULL;
+    m_shouldISyncFromChucK = true;
+    m_shouldISyncToChucK = false;
 }
 
 
@@ -1118,6 +1136,46 @@ void VREntity::syncFromChucK()
 
 
 //------------------------------------------------------------------------------
+// name: syncToChucK()
+// desc: sync OF to chuck
+//------------------------------------------------------------------------------
+void VREntity::syncToChucK()
+{
+    // check
+    if( !m_chuckObject )
+        return;
+    
+    cerr << this->ori.y << endl;
+    
+    // get them from check
+    OBJ_MEMBER_VEC3(m_chuckObject, vrentity_offset_location).x = this->loc.x;
+    OBJ_MEMBER_VEC3(m_chuckObject, vrentity_offset_location).y = this->loc.y;
+    OBJ_MEMBER_VEC3(m_chuckObject, vrentity_offset_location).z = this->loc.z;
+    OBJ_MEMBER_VEC3(m_chuckObject, vrentity_offset_rotation).x = this->ori.x;
+    OBJ_MEMBER_VEC3(m_chuckObject, vrentity_offset_rotation).y = this->ori.y;
+    OBJ_MEMBER_VEC3(m_chuckObject, vrentity_offset_rotation).z = this->ori.z;
+    OBJ_MEMBER_VEC3(m_chuckObject, vrentity_offset_scaling).x = this->sca.x;
+    OBJ_MEMBER_VEC3(m_chuckObject, vrentity_offset_scaling).y = this->sca.y;
+    OBJ_MEMBER_VEC3(m_chuckObject, vrentity_offset_scaling).z = this->sca.z;
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: setSyncMode()
+// desc: set sync mode
+//------------------------------------------------------------------------------
+void VREntity::setSyncMode( bool which )
+{
+    m_shouldISyncFromChucK = !which;
+    m_shouldISyncToChucK = !m_shouldISyncFromChucK;
+}
+
+
+
+
+//------------------------------------------------------------------------------
 // name: initChucKSideObject()
 // desc: init chuck side object
 //------------------------------------------------------------------------------
@@ -1188,7 +1246,9 @@ void VREntity::render()
 void VREntity::updateAll( double delta )
 {
     // synch from chuck
-    this->syncFromChucK();
+    if( m_shouldISyncFromChucK ) this->syncFromChucK();
+    // syncg to chuck
+    if( m_shouldISyncToChucK ) this->syncToChucK();
     
     // update self
     this->update( delta );
@@ -1308,6 +1368,10 @@ VR::VR()
 {
     // allocate
     m_root = new VREntity();
+    // head
+    m_head = new VREntity();
+    // head has special sync
+    m_head->setSyncMode( true );
     // initialize
     m_allLightsOn = true;
 }
@@ -1336,4 +1400,16 @@ VR::~VR()
 VREntity * VR::root()
 {
     return m_root;
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: head()
+// desc: get the head
+//------------------------------------------------------------------------------
+VREntity * VR::head()
+{
+    return m_head;
 }

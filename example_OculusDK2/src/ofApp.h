@@ -6,7 +6,7 @@
 
 
 #define MY_SRATE        44100
-#define MY_CHANNELS_IN  1
+#define MY_CHANNELS_IN  0
 #define MY_CHANNELS_OUT 2
 #define MY_BUFFERSIZE   256
 #define MY_NUMBUFFERS   4
@@ -75,4 +75,8 @@ public:
     ofCamera m_camera;
     // a light
     ofLight * m_light;
+    
+    
+    
+    ofTrueTypeFont	arial;
 };
