@@ -36,11 +36,12 @@ void ofApp::setup()
     bool r = false;
     // compile and run file
     // r = chuck->compileFile( "ck/solar.ck" );
-    r = chuck->compileFile( "ck/lines.ck" );
+    // r = chuck->compileFile( "ck/lines.ck" );
     // r = chuck->compileFile( "ck/text.ck" );
     // r = chuck->compileFile( "ck/flares.ck" ); // need audio input
     // r = chuck->compileFile( "ck/points.ck" );
-    
+    r = chuck->compileFile( "ck/mesh.ck" );
+
     // check
     if( !r )
     {

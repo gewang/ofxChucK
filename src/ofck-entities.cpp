@@ -55,6 +55,7 @@ VREntity * VREntityFactory::makeEntity( const std::string & type )
 
     // check type
     if( type == "flare" ) { e = new VRFlare(); }
+    else if( type == "mesh" ) { e = new VRMeshEntity(); }
     else if( type == "points" ) { e = new VRMeshEntity(); }
     else if( type == "lines" ) { e = new VRLinesEntity(); }
     else if( type == "linestrip" ) { }
@@ -84,7 +85,8 @@ VREntity * VREntityFactory::makeEntity( const std::string & type )
 //------------------------------------------------------------------------------
 VRMeshEntity::VRMeshEntity()
 {
-    // do nothing
+    // set draw
+    eval( "draw lines" );
 }
 
 
@@ -95,14 +97,7 @@ VRMeshEntity::VRMeshEntity()
 //------------------------------------------------------------------------------
 void VRMeshEntity::render()
 {
-    // actual size
-    int N = m_vertices.size();
-    // loop over lines
-    for( int i = 0; i < N; i++ )
-    {
-        // render
-        // ofDrawPoint( m_vertices[i].x, m_vertices[i].y, m_vertices[i].z );
-    }
+    m_mesh.draw();
 }
 
 
@@ -132,18 +127,85 @@ bool VRMeshEntity::eval( const std::string & theLine )
         // done
         return false;
     };
-    
+
+    // the number
+    float x, y, z;
+    // string
+    string str;
+
     // check
     if( command == "vertex" )
     {
-        // the number
-        float x, y, z;
-        
         // loop
         if( istr >> x >> y >> z )
         {
             // push as float
-            m_vertices.push_back( Vector3D(x,y,z) );
+            m_mesh.addVertex( ofVec3f(x,y,z) );
+        }
+    }
+    if( command == "clear" )
+    {
+        // clear
+        m_mesh.clear();
+    }
+    else if( command == "color" )
+    {
+        // loop
+        if( istr >> x >> y >> z )
+        {
+            // push as float
+            m_mesh.addColor( ofFloatColor(x,y,z) );
+        }
+    }
+    else if( command == "normal" )
+    {
+        // loop
+        if( istr >> x >> y >> z )
+        {
+            // push as float
+            m_mesh.addNormal( ofVec3f(x,y,z) );
+        }
+    }
+    else if( command == "uv" )
+    {
+        // loop
+        if( istr >> x >> y )
+        {
+            // push as float
+            m_mesh.addTexCoord( ofVec2f(x,y) );
+        }
+    }
+    else if( command == "texture" )
+    {
+        // loop
+        if( istr >> str )
+        {
+            // get instance
+            OFCKDB * db = OFCKDB::instance();
+            // get the image
+            m_texture = db->getImage( str );
+        }
+    }
+    else if( command == "draw" )
+    {
+        // loop
+        if( istr >> str )
+        {
+            // check
+            if( str == "points" )
+                m_mesh.setMode( OF_PRIMITIVE_POINTS );
+            else if( str == "lines" )
+                m_mesh.setMode( OF_PRIMITIVE_LINES );
+            else if( str == "linestrip" )
+                m_mesh.setMode( OF_PRIMITIVE_LINE_STRIP );
+            else if( str == "lineloop" )
+                m_mesh.setMode( OF_PRIMITIVE_LINE_LOOP );
+            else if( str == "triangles" )
+                m_mesh.setMode( OF_PRIMITIVE_TRIANGLES );
+            else if( str == "trianglestrip" )
+                m_mesh.setMode( OF_PRIMITIVE_TRIANGLE_STRIP );
+            else if( str == "trianglefan" )
+                m_mesh.setMode( OF_PRIMITIVE_TRIANGLE_FAN );
         }
     }
 }

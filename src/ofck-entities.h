@@ -71,21 +71,24 @@ protected:
 // desc: mesh
 //
 // EVAL commands:
+//   "clear"
 //   "vertex x y z"
 //   "color r g b a"
 //   "uv u v"
 //   "normal x y z"
 //   "texture name"
-//   "draw points|lines|linestrip|triangles|trianglestrips|quads|quadstrips"
+//   "draw points|lines|linestrip|triangles|trianglestrips"
 //   "mode wireframe|fill]"
 //   "generate [shape]"
 //        "box width height depth"
 //        "cone radius height"
 //        "cylinder radius height"
 //        "icosahedron radius"
-//        "
+//        "icosphere radius iterations"
+//        "plane width height"
+//        "sphere radius resolution"
 //   "toggle color on|off"
-//   "axis on|off"
+//   "toggle axis on|off"
 //------------------------------------------------------------------------------
 class VRMeshEntity : public VREntity
 {
@@ -98,8 +101,10 @@ public:
     virtual bool eval( const std::string & command );
     
 public:
-    // vertices
-    std::vector<Vector3D> m_vertices;
+    // the mesh
+    ofMesh m_mesh;
+    // the texture
+    ofImage * m_texture;
 };
 
 
