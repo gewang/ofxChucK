@@ -1,8 +1,10 @@
-// make a some lines
+// make a some points
 VR.makeEntity("mesh-1","mesh") @=> VREntity mesh;
+// make a sphere
+VR.makeEntity("mesh-2","mesh") @=> VREntity sphere;
 
 // init
-repeat( 300000 )
+repeat( 100000 )
 {
     vec3 v1;
     
@@ -14,14 +16,18 @@ repeat( 300000 )
     mesh.eval( "vertex", v1 );
     mesh.eval( "color 1 1 1" );
 }
+// draw points
+mesh.eval( "draw points" );
+
+// init
+sphere.eval( "generate sphere 2 12" );
 
 // add to world
 VR.root().addChild( mesh );
+VR.root().addChild( sphere );
 
 // disable lights
-VR.allLightsOff();
-// draw points
-mesh.eval( "draw points" );
+VR.allLightsOn();
 
 // loop
 while( true )

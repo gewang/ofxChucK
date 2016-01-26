@@ -36,6 +36,20 @@ string lowerCase( const string & s )
 
 
 //------------------------------------------------------------------------------
+// name: trimStr()
+// desc: trim whitespace from beginning and end of string
+//------------------------------------------------------------------------------
+string trimStr( const string & str )
+{
+    size_t first = str.find_first_not_of(' ');
+    size_t last = str.find_last_not_of(' ');
+    return str.substr(first, (last-first+1));
+}
+
+
+
+
+//------------------------------------------------------------------------------
 // name: makeEntity()
 // desc: instantiate entity of certain type
 //------------------------------------------------------------------------------
@@ -206,6 +220,42 @@ bool VRMeshEntity::eval( const std::string & theLine )
                 m_mesh.setMode( OF_PRIMITIVE_TRIANGLE_STRIP );
             else if( str == "trianglefan" )
                 m_mesh.setMode( OF_PRIMITIVE_TRIANGLE_FAN );
+            else
+            {
+                // error
+                cerr << "[VRMeshEntity]: invalid DRAW type: '" << str << "'" << endl;
+                // done
+                return false;
+            }
+        }
+    }
+    else if( command == "generate" )
+    {
+        // get from stream
+        if( istr >> str )
+        {
+            // check
+            if( str == "sphere" )
+            {
+                float radius = 0;
+                int res = 12;
+                // get them
+                if( !(istr >> radius) )
+                {
+                    // error
+                    cerr << "[VRMeshEntity]: GENERATE SPHERE missing radius..." << endl;
+                    // done
+                    return false;
+                }
+                // get them
+                if( !(istr >> res) )
+                {
+                    // set default
+                    res = 12;
+                }
+                // set it
+                m_mesh = ofMesh::sphere( radius, res );
+            }
         }
     }
 }
@@ -306,8 +356,12 @@ bool VRTextEntity::eval( const std::string & theLine )
     {
         // argument
         string text;
+        // get rest of string
+        getline( istr, text );
+        // trim it
+        trimStr( text );
         // read
-        if( !(istr >> text) )
+        if( text == "" )
         {
             // error
             cerr << "[VRTextEntity]: SET not enough arguments..." << endl;
