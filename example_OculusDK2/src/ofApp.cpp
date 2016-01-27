@@ -40,11 +40,13 @@ void ofApp::setup()
     // compile and run file
     //r = chuck->compileFile( "ck/dot-circle.ck" );
     //r = chuck->compileFile( "ck/solar.ck" );
-    //r = chuck->compileFile( "ck/lines.ck" );
+    // r = chuck->compileFile( "ck/lines.ck" );
     // r = chuck->compileFile( "ck/text.ck" );
     //r = chuck->compileFile( "ck/flares.ck" ); // need audio input
     //r = chuck->compileFile( "ck/points.ck" );
-    r = chuck->compileFile( "ck/head.ck" );
+    // r = chuck->compileFile( "ck/head.ck" );
+    r = chuck->compileFile( "ck/mesh.ck" );
+    // r = chuck->compileFile( "ck/turenas.ck" );
     
     // check
     if( !r )
@@ -104,14 +106,18 @@ void ofApp::update()
     // set background
     ofBackground( 1, 1, 1 );
     
+    // head quaternion
     ofQuaternion headtrack;
+    // some vectors
     ofVec3f euler, headpos;
+    // head tracking as quaternion
     headtrack = oculusRift.getOrientationQuat();
     // headpos = oculusRift.getTranslation();
+    // get euler angles
     euler = headtrack.getEuler();
-    
-    // printf("Euler angles : %f,  %f,  %f\n",
-    //       euler[0], euler[1], euler[2]);
+
+    // synchronize
+    VR::instance()->lock();
     
     // get head
     VREntity * head = vr->head();
@@ -127,6 +133,9 @@ void ofApp::update()
     
     // trigger displaySync to chuck
     chuck->displaySync();
+    
+    // sychronize
+    VR::instance()->release();
 }
 
 //------------------------------------------------------------------------------
@@ -135,9 +144,12 @@ void ofApp::update()
 //------------------------------------------------------------------------------
 void ofApp::draw()
 {
-    if(oculusRift.isSetup()){
-        if(showOverlay){
-            
+    // rift
+    if(oculusRift.isSetup())
+    {
+        // overlay
+        if(showOverlay)
+        {
             oculusRift.beginOverlay(-230, 320,240);
             ofRectangle overlayRect = oculusRift.getOverlayRectangle();
             
@@ -159,17 +171,21 @@ void ofApp::draw()
             oculusRift.endOverlay();
         }
         
+        // render scene for left eye
         oculusRift.beginLeftEye();
         drawScene();
         oculusRift.endLeftEye();
-        
+
+        // render scene for right eye
         oculusRift.beginRightEye();
         drawScene();
         oculusRift.endRightEye();
-        
+
+        // draw
         oculusRift.draw();
     }
-    else{
+    else // normal
+    {
         cam.begin();
         drawScene();
         cam.end();
@@ -215,8 +231,10 @@ void ofApp::drawScene()
 //    ofPopMatrix();
     
     
+    // synchronize
+    VR::instance()->lock();
     //--------------------------------------------------------------------------
-    // Draw ChucK-controlled elements
+    // draw ChucK-controlled elements
     //--------------------------------------------------------------------------
     // render light
     if( VR::instance()->lightSwitch() ) ofEnableLighting();
@@ -228,20 +246,20 @@ void ofApp::drawScene()
     // stop rendering light
     ofDisableLighting();
     
-    
+    // sychronize
+    VR::instance()->release();
+
     //--------------------------------------------------------------------------
-    //billboard and draw the mouse
+    // billboard and draw the mouse
     //--------------------------------------------------------------------------
-    if(oculusRift.isSetup()){
-        
+    if(oculusRift.isSetup())
+    {
         ofPushMatrix();
         oculusRift.multBillboardMatrix();
         ofSetColor(255, 0, 0);
         ofCircle(0,0,.5);
         ofPopMatrix();
-        
     }
-    
 }
 
 

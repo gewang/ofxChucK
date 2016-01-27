@@ -2,7 +2,7 @@
 VR.makeEntity("lines-1","lines") @=> VREntity lines;
 
 // init
-repeat( 200 )
+repeat( 2000 )
 {
     vec3 v1;
     vec3 v2;
