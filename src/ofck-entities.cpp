@@ -101,6 +101,8 @@ VRMeshEntity::VRMeshEntity()
 {
     // set draw
     eval( "draw lines" );
+    // default
+    m_fill = true;
 }
 
 
@@ -111,7 +113,14 @@ VRMeshEntity::VRMeshEntity()
 //------------------------------------------------------------------------------
 void VRMeshEntity::render()
 {
-    m_mesh.draw();
+    if( m_fill )
+    {
+        m_mesh.draw();
+    }
+    else
+    {
+        m_mesh.drawWireframe();
+    }
 }
 
 
@@ -257,6 +266,19 @@ bool VRMeshEntity::eval( const std::string & theLine )
                 m_mesh = ofMesh::sphere( radius, res );
             }
         }
+    }
+    else if( command == "mode" )
+    {
+        // get from stream
+        if( !(istr >> str) )
+        {
+            // error
+            cerr << "[VRMeshEntity]: MODE missing parameter..." << endl;
+            // done
+            return false;
+        }
+        
+        m_fill = (str != "wireframe");
     }
 }
 

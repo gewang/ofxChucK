@@ -105,6 +105,8 @@ public:
     ofMesh m_mesh;
     // the texture
     ofImage * m_texture;
+    // how to draw
+    bool m_fill;
 };
 
 

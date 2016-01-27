@@ -41,6 +41,7 @@ void ofApp::setup()
     // r = chuck->compileFile( "ck/flares.ck" ); // need audio input
     // r = chuck->compileFile( "ck/points.ck" );
     r = chuck->compileFile( "ck/mesh.ck" );
+    // r = chuck->compileFile( "ck/wire.ck" );
 
     // check
     if( !r )
