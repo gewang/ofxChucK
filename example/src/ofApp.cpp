@@ -99,12 +99,16 @@ void ofApp::update()
 {
     // set background
     ofBackground( 1, 1, 1 );
-    
+
+    // lock
+    VR::instance()->lock();
     // update it
     vr->root()->updateAll(1/60.0f);
 
     // trigger displaySync to chuck
     chuck->displaySync();
+    // release lock
+    VR::instance()->release();
 }
 
 
