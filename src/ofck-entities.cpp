@@ -687,6 +687,38 @@ VRFlare::VRFlare()
     m_imageRef = NULL;
     // default is additive
     m_blendMode = OF_BLENDMODE_ADD;
+    
+    // add the four corners to our mesh
+    m_mesh.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
+    
+    // prepare to set color
+    ofColor color;
+    color.set(col.x, col.y, col.z);
+
+    // rect width / 2
+    float rw = 0.5;
+    // rect height / 2: use aspect ratio of 1:1 until we get an image
+    float rh = rw;
+
+    // point 0 (tex coords are normalized for use with OculusDK2)
+    m_mesh.addVertex(ofPoint(-rw, -rh));
+    m_mesh.addTexCoord(ofPoint(0, 1));
+    m_mesh.addColor(color);
+    
+    // point 1
+    m_mesh.addVertex(ofPoint(rw, -rh));
+    m_mesh.addTexCoord(ofPoint(0, 0));
+    m_mesh.addColor(color);
+    
+    // point 2
+    m_mesh.addVertex(ofPoint(-rw, rh));
+    m_mesh.addTexCoord(ofPoint(1, 1));
+    m_mesh.addColor(color);
+    
+    // point 3
+    m_mesh.addVertex(ofPoint(rw, rh));
+    m_mesh.addTexCoord(ofPoint(1, 0));
+    m_mesh.addColor(color);
 }
 
 
@@ -712,6 +744,8 @@ void VRFlare::setImage( ofImage * imageRef )
 {
     // set the image
     m_imageRef = imageRef;
+    
+    updateMeshPoints();
 }
 
 
@@ -727,6 +761,28 @@ void VRFlare::setImage( const string & key )
     OFCKDB * db = OFCKDB::instance();
     // get the image
     m_imageRef = db->getImage( key );
+    
+    updateMeshPoints();
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: updateMeshPoints()
+// desc: update the mesh points with the new aspect ratio
+//------------------------------------------------------------------------------
+void VRFlare::updateMeshPoints()
+{
+    // rect width / 2
+    float rw = 0.5;
+    // rect height / 2: use aspect ratio of image
+    float rh = rw * m_imageRef->getHeight() / m_imageRef->getWidth();
+    
+    m_mesh.setVertex(0, ofPoint( -rw, -rh ));
+    m_mesh.setVertex(1, ofPoint( -rw,  rh ));
+    m_mesh.setVertex(2, ofPoint(  rw, -rh ));
+    m_mesh.setVertex(3, ofPoint(  rw,  rh ));
 }
 
 
@@ -740,6 +796,15 @@ void VRFlare::update( double dt )
 {
     // look up and set image ref
     setImage( getString("texture") );
+
+    // reset color
+    ofColor color;
+    color.set(col.x, col.y, col.z);
+    // UPDATE TODO: in OF 0.9.0, this can be updated to setColorForIndices()
+    for( int i = 0; i < 4; i++ )
+    {
+        m_mesh.setColor(i, color);
+    }
 }
 
 
@@ -753,19 +818,17 @@ void VRFlare::render()
 {
     // check
     if( !m_imageRef ) return;
-    // width of image
-    float width = m_imageRef->getWidth();
 
     // disable depth
     ofDisableDepthTest();
     // blending
     ofEnableBlendMode( m_blendMode );
-    // center
-    ofSetRectMode( OF_RECTMODE_CENTER );
-    // normalize
-    ofScale( 1.0f/width, 1.0/width );
-    // draw the image
-    m_imageRef->draw( 0, 0 );
+
+    // bind texture and draw
+    m_imageRef->getTextureReference().bind();
+    m_mesh.draw();
+    m_imageRef->getTextureReference().unbind();
+    
     // disable
     ofDisableBlendMode();
 }

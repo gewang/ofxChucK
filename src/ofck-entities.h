@@ -61,6 +61,11 @@ protected:
     ofImage * m_imageRef;
     // blend mode
     ofBlendMode m_blendMode;
+    // mesh to bind to
+    ofMesh m_mesh;
+    // helper function for updating points in mesh on image change
+    void updateMeshPoints();
+    
 };
 
 
