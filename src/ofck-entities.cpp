@@ -70,13 +70,9 @@ VREntity * VREntityFactory::makeEntity( const std::string & type )
     // check type
     if( type == "flare" ) { e = new VRFlare(); }
     else if( type == "mesh" ) { e = new VRMeshEntity(); }
-    else if( type == "points" ) { e = new VRMeshEntity(); }
-    else if( type == "lines" ) { e = new VRLinesEntity(); }
-    else if( type == "linestrip" ) { }
-    else if( type == "triangles" ) { }
-    else if( type == "trianglestrip" ) { }
-    else if( type == "circle" ) { }
     else if( type == "text" ) { e = new VRTextEntity(); }
+    else if( type == "lines" ) { e = new VRLinesEntity(); }
+    else if( type == "circle" ) { }
     else if( type == "ugen" ) { }
     else if( type == "dot" ) { e = new VRDotEntity(); }
     
@@ -280,6 +276,213 @@ bool VRMeshEntity::eval( const std::string & theLine )
         
         m_fill = (str != "wireframe");
     }
+    else if( command == "load" )
+    {
+        // get from stream
+        if( !(istr >> str) )
+        {
+            // error
+            cerr << "[VRMeshEntity]: LOAD missing parameter..." << endl;
+            // done
+            return false;
+        }
+
+        // load this
+        loadOBJ( str );
+    }
+}
+
+
+
+
+//-----------------------------------------------------------------------------
+// name: loadOBJ()
+// desc: load OBJ file
+//-----------------------------------------------------------------------------
+bool VRMeshEntity::loadOBJ( const std::string & path )
+{
+    // out vectors
+    vector<ofVec3f> verts;
+    vector<ofVec3f> normals;
+    vector<ofVec2f> uvs;
+    
+    // load it
+    bool r = loadOBJFile( path, verts, normals, uvs );
+    // check it
+    if( !r ) return false;
+    
+    // clear
+    m_mesh.clear();
+    
+    // iterate
+    for( int i = 0; i < verts.size(); i++ )
+    {
+        // add vertex
+        m_mesh.addVertex( verts[i] );
+        // set normal state
+        m_mesh.addNormal( normals[i] );
+        // set uv
+        m_mesh.addTexCoord( uvs[i] );
+    }
+    
+    // done
+    return true;
+}
+
+
+
+
+//-----------------------------------------------------------------------------
+// name: loadOBJ()
+// desc: obj loader
+// http://www.opengl-tutorial.org/beginners-tutorials/tutorial-7-model-loading/
+//-----------------------------------------------------------------------------
+// (from tutorial)
+// Very, VERY simple OBJ loader.
+// Here is a short list of features a real function would provide :
+// - Binary files. Reading a model should be just a few memcpy's away, not parsing a file at runtime. In short : OBJ is not very great.
+// - Animations & bones (includes bones weights)
+// - Multiple UVs
+// - All attributes should be optional, not "forced"
+// - More stable. Change a line in the OBJ file and it crashes.
+// - More secure. Change another line and you can inject code.
+// - Loading from memory, stream, etc
+//-----------------------------------------------------------------------------
+bool VRMeshEntity::loadOBJFile(
+    const string & path,
+    vector<ofVec3f> & out_vertices,
+    vector<ofVec3f> & out_normals,
+    vector<ofVec2f> & out_uvs )
+{
+    // log
+    cerr << "[ofxChucK]: loading OBJ file: " << path << endl;
+    
+    // some vectors
+    std::vector<unsigned int> vertexIndices, uvIndices, normalIndices;
+    std::vector<ofVec3f> temp_vertices;
+    std::vector<ofVec3f> temp_normals;
+    std::vector<ofVec2f> temp_uvs;
+    
+    // clear
+    out_vertices.clear();
+    out_normals.clear();
+    out_uvs.clear();
+    
+    // open file
+    FILE * file = fopen( ofToDataPath(path).c_str(), "r" );
+    // check
+    if( file == NULL )
+    {
+        // log
+        cerr << "[ofxChucK]: cannot open OBJ file..." << endl;
+        // done
+        return false;
+    }
+    
+    // start reading
+    while( true )
+    {
+        // c string
+        char lineHeader[128];
+        // read the first word of the line
+        int res = fscanf( file, "%s", lineHeader );
+        // end of file, break
+        if( res == EOF ) break;
+        
+        // parse header
+        if( strcmp( lineHeader, "v" ) == 0 )
+        {
+            // vertex
+            ofVec3f vertex;
+            // read x, y, z
+            fscanf( file, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z );
+            // append
+            temp_vertices.push_back( vertex );
+        }
+        else if( strcmp( lineHeader, "vt" ) == 0 )
+        {
+            // texture coordinate
+            ofVec2f uv;
+            // read u, v
+            fscanf( file, "%f %f\n", &uv.x, &uv.y );
+            // invert (DDS); remove for TGA/BMP loaders
+            uv.y = -uv.y;
+            // append
+            temp_uvs.push_back(uv);
+        }
+        else if( strcmp( lineHeader, "vn" ) == 0 )
+        {
+            // normal
+            ofVec3f normal;
+            // read x, y, z
+            fscanf( file, "%f %f %f\n", &normal.x, &normal.y, &normal.z );
+            // append
+            temp_normals.push_back(normal);
+        }
+        else if( strcmp( lineHeader, "f" ) == 0 )
+        {
+            // vertices
+            std::string vertex1, vertex2, vertex3;
+            unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
+            // read it
+            int matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n",
+                                 &vertexIndex[0], &uvIndex[0], &normalIndex[0],
+                                 &vertexIndex[1], &uvIndex[1], &normalIndex[1],
+                                 &vertexIndex[2], &uvIndex[2], &normalIndex[2] );
+            // check matches
+            if( matches != 9 )
+            {
+                // log
+                cerr << "[ofxChucK]: cannot parse on 'f'" << endl;
+                // done
+                return false;
+            }
+            
+            // push it
+            vertexIndices.push_back( vertexIndex[0] );
+            vertexIndices.push_back( vertexIndex[1] );
+            vertexIndices.push_back( vertexIndex[2] );
+            uvIndices    .push_back( uvIndex[0] );
+            uvIndices    .push_back( uvIndex[1] );
+            uvIndices    .push_back( uvIndex[2] );
+            normalIndices.push_back( normalIndex[0] );
+            normalIndices.push_back( normalIndex[1] );
+            normalIndices.push_back( normalIndex[2] );
+        }
+        else if( lineHeader[0] == '#' )
+        {
+            // read rest of line
+            char buffer[1024];
+            fgets( buffer, 1024, file);
+        }
+        else
+        {
+            // log
+            cerr << "[ofxChucK]: unrecognized line header: " << lineHeader << endl;
+            return false;
+        }
+    }
+    
+    // for each vertex of each triangle
+    for( unsigned int i = 0; i < vertexIndices.size(); i++ )
+    {
+        // get the indices of its attributes
+        unsigned int vertexIndex = vertexIndices[i];
+        unsigned int normalIndex = normalIndices[i];
+        unsigned int uvIndex = uvIndices[i];
+        
+        // get the attributes thanks to the index
+        ofVec3f vertex = temp_vertices[ vertexIndex-1 ];
+        ofVec3f normal = temp_normals[ normalIndex-1 ];
+        ofVec2f uv = temp_uvs[ uvIndex-1 ];
+        
+        // put the attributes in buffers
+        out_vertices.push_back(vertex);
+        out_normals.push_back(normal);
+        out_uvs.push_back(uv);
+    }
+    
+    return true;
 }
 
 

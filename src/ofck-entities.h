@@ -77,8 +77,8 @@ protected:
 //   "uv u v"
 //   "normal x y z"
 //   "texture name"
-//   "draw points|lines|linestrip|triangles|trianglestrips"
 //   "mode wireframe|fill]"
+//   "draw points|lines|linestrip|triangles|trianglestrips"
 //   "generate [shape]"
 //        "box width height depth"
 //        "cone radius height"
@@ -87,6 +87,7 @@ protected:
 //        "icosphere radius iterations"
 //        "plane width height"
 //        "sphere radius resolution"
+//   "load [OBJ file]"
 //   "toggle color on|off"
 //   "toggle axis on|off"
 //------------------------------------------------------------------------------
@@ -99,7 +100,19 @@ public:
     virtual void render();
     // command: add
     virtual bool eval( const std::string & command );
+
+public:
+    // load OBJ file
+    bool loadOBJ( const std::string & path );
     
+public:
+    // load OBJ file
+    static bool loadOBJFile(
+        const std::string & path,
+        std::vector<ofVec3f> & outVertices,
+        std::vector<ofVec3f> & outNormals,
+        std::vector<ofVec2f> & outUVs );
+
 public:
     // the mesh
     ofMesh m_mesh;
