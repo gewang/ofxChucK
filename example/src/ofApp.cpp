@@ -50,6 +50,9 @@ void ofApp::setup()
         // set error
         m_message = "ERROR compiling ChucK code\n(check console for details...)";
     }
+    
+    // use normalized tex coords to match up with VR setup
+    ofEnableNormalizedTexCoords();
 
     // setup the sound stream...
     soundStream.setup( this,
