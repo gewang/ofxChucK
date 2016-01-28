@@ -109,6 +109,11 @@ VRMeshEntity::VRMeshEntity()
 //------------------------------------------------------------------------------
 void VRMeshEntity::render()
 {
+    bool drawTexture = (m_texture != NULL);
+    if (drawTexture) {
+        m_texture->getTextureReference().bind();
+    }
+    
     if( m_fill )
     {
         m_mesh.draw();
@@ -116,6 +121,10 @@ void VRMeshEntity::render()
     else
     {
         m_mesh.drawWireframe();
+    }
+    
+    if (drawTexture) {
+        m_texture->getTextureReference().unbind();
     }
 }
 
@@ -166,6 +175,8 @@ bool VRMeshEntity::eval( const std::string & theLine )
     {
         // clear
         m_mesh.clear();
+        // TODO: should clearing also clear the texture? then:
+        // m_texture = NULL;
     }
     else if( command == "color" )
     {
