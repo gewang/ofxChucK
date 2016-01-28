@@ -45,6 +45,8 @@ CK_DLL_MFUN(vrentity_addChild);
 CK_DLL_MFUN(vrentity_removeChild);
 CK_DLL_MFUN(vrentity_setString);
 CK_DLL_MFUN(vrentity_getString);
+CK_DLL_MFUN(vrentity_setFloat);
+CK_DLL_MFUN(vrentity_getFloat);
 CK_DLL_MFUN(vrentity_eval);
 CK_DLL_MFUN(vrentity_eval_vec3);
 CK_DLL_MFUN(vrentity_eval_vec3_vec3);
@@ -142,6 +144,18 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
 
         // string VREntity.getString(key,value) // getString
         QUERY->add_mfun(QUERY, vrentity_getString, "string", "getString");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "string", "key");
+        
+        // string VREntity.setString(key,value) // setString
+        QUERY->add_mfun(QUERY, vrentity_setFloat, "float", "setFloat");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "string", "key");
+        // name of object to retrieve
+        QUERY->add_arg(QUERY, "float", "value");
+        
+        // string VREntity.getString(key,value) // getString
+        QUERY->add_mfun(QUERY, vrentity_getFloat, "float", "getFloat");
         // name of object to retrieve
         QUERY->add_arg(QUERY, "string", "key");
         
@@ -359,6 +373,29 @@ CK_DLL_MFUN( vrentity_getString )
     str->str = e->getString(key);
     // return the value
     RETURN->v_string = str;
+}
+
+CK_DLL_MFUN( vrentity_setFloat )
+{
+    std::string key = GET_NEXT_STRING(ARGS)->str;
+    float value = GET_NEXT_FLOAT(ARGS);
+    
+    // get the c VREntity pointer
+    VREntity * e = (VREntity *)OBJ_MEMBER_INT(SELF,vrentity_offset_cpointer);
+    // set the string
+    e->setFloat( key, value );
+    // return the value
+    RETURN->v_float = value;
+}
+
+CK_DLL_MFUN( vrentity_getFloat )
+{
+    // get the argument
+    std::string key = GET_NEXT_STRING(ARGS)->str;
+    // get the c VREntity pointer
+    VREntity * e = (VREntity *)OBJ_MEMBER_INT(SELF,vrentity_offset_cpointer);
+    // return the value
+    RETURN->v_float = e->getFloat(key);
 }
 
 CK_DLL_MFUN( vrentity_eval )
@@ -1342,7 +1379,7 @@ std::string VREntity::setString( const std::string & key, const std::string & va
 
 //------------------------------------------------------------------------------
 // name: getString()
-// desc: get a vec3 value associated with a key
+// desc: get a string value associated with a key
 //------------------------------------------------------------------------------
 std::string VREntity::getString( const std::string & key )
 {
@@ -1361,6 +1398,41 @@ std::string VREntity::getString( const std::string & key )
 
 
 //------------------------------------------------------------------------------
+// name: setFloat()
+// desc: associate a float value with a key
+//------------------------------------------------------------------------------
+float VREntity::setFloat( const std::string & key, float value )
+{
+    // associate
+    settingf[key] = value;
+    // return
+    return value;
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: getFloat()
+// desc: get a float value associated with a key
+//------------------------------------------------------------------------------
+float VREntity::getFloat( const std::string & key )
+{
+    // look for the key in the DB
+    if( settingf.find(key) == settingf.end() )
+    {
+        // not found
+        return 0.0;
+    }
+    
+    // return the value
+    return settingf[key];
+}
+
+
+
+
+//------------------------------------------------------------------------------
 // name: VR()
 // desc: constructor
 //------------------------------------------------------------------------------
@@ -1368,6 +1440,8 @@ VR::VR()
 {
     // allocate
     m_root = new VREntity();
+    // initialize root
+    m_root->col.setAll(0);
     // head
     m_head = new VREntity();
     // head has special sync

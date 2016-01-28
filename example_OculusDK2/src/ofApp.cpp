@@ -4,13 +4,16 @@
 #include <math.h>
 #include <cmath>
 
+
+
+
 //------------------------------------------------------------------------------
 // name: setup()
 // desc: set up the app
 //------------------------------------------------------------------------------
 void ofApp::setup()
 {
-    ofSetLogLevel( OF_LOG_VERBOSE );
+    ofSetLogLevel( OF_LOG_FATAL_ERROR );
     ofEnableDepthTest();
     ofSetVerticalSync( false );
     
@@ -32,7 +35,7 @@ void ofApp::setup()
     // set up light
     m_light = new ofLight();
     m_light->setDiffuseColor( ofColor(100, 255, 100) );
-    m_light->setGlobalPosition( 1000, 1000, 1000 );
+    m_light->setGlobalPosition( 100, 100, 100 );
     m_light->enable();
     
     // success code
@@ -45,8 +48,8 @@ void ofApp::setup()
     //r = chuck->compileFile( "ck/flares.ck" ); // need audio input
     //r = chuck->compileFile( "ck/points.ck" );
     // r = chuck->compileFile( "ck/head.ck" );
-    r = chuck->compileFile( "ck/mesh.ck" );
-    // r = chuck->compileFile( "ck/turenas.ck" );
+    // r = chuck->compileFile( "ck/mesh.ck" );
+    r = chuck->compileFile( "ck/turenas.ck" );
     
     // check
     if( !r )
@@ -63,10 +66,9 @@ void ofApp::setup()
                       MY_BUFFERSIZE,   // buffer size
                       MY_NUMBUFFERS ); // num buffer
     
-    
     // OCULUS STUFF ------------------------------------------------------------
     
-    oculusRift.baseCamera = &cam;
+    oculusRift.baseCamera = &m_camera;
     oculusRift.setup();
     oculusRift.fullscreenOnRift();
     
@@ -78,22 +80,30 @@ void ofApp::setup()
     // sized images you want and still use them to texture your box
     // but we have to explicitly normalize our tex coords here
     ofEnableNormalizedTexCoords();
-    
+
+    // load image
+    OFCKDB::instance()->loadImage("texture:flare-1", "flare-tng-1.png");
+    OFCKDB::instance()->loadImage("texture:flare-2", "flare-tng-2.png");
+    OFCKDB::instance()->loadImage("texture:flare-3", "flare-tng-3.png");
+    OFCKDB::instance()->loadImage("texture:flare-4", "flare-tng-4.png");
+    OFCKDB::instance()->loadImage("texture:flare-5", "flare-tng-5.png");
+
     //enable mouse;
-    cam.setAutoDistance(false);
-    cam.begin();
-    cam.end();
+    // cam.setAutoDistance(false);
+    // cam.begin();
+    // cam.end();
     
     // set camera y to user eye height
-    cam.setGlobalPosition(0, oculusRift.getUserEyeHeight(), 3);
-    
-    
+    // cam.setGlobalPosition(0, oculusRift.getUserEyeHeight(), 3);
+
     //------------
     arial.loadFont(ofToDataPath("font/Arial.ttf"), 14, true, true);
     arial.setLineHeight(18.0f);
     arial.setLetterSpacing(1.037);
 }
 
+
+iSlew3D bg;
 
 
 
@@ -103,9 +113,11 @@ void ofApp::setup()
 //------------------------------------------------------------------------------
 void ofApp::update()
 {
-    // set background
-    ofBackground( 1, 1, 1 );
-    
+    // get root
+    VREntity * r = VR::instance()->root();
+    bg.update(Vector3D(r->col.x, r->col.y, r->col.z), 10);
+    bg.interp(1/60.0f);
+
     // head quaternion
     ofQuaternion headtrack;
     // some vectors
@@ -118,7 +130,7 @@ void ofApp::update()
 
     // synchronize
     VR::instance()->lock();
-    
+
     // get head
     VREntity * head = vr->head();
     // set orientation
@@ -144,35 +156,42 @@ void ofApp::update()
 //------------------------------------------------------------------------------
 void ofApp::draw()
 {
+    
     // rift
     if(oculusRift.isSetup())
     {
-        // overlay
-        if(showOverlay)
-        {
-            oculusRift.beginOverlay(-230, 320,240);
-            ofRectangle overlayRect = oculusRift.getOverlayRectangle();
-            
-            ofPushStyle();
-            ofEnableAlphaBlending();
-            ofFill();
-            ofSetColor(255, 40, 10, 200);
-            
-            ofRect(overlayRect);
-            
-            ofSetColor(255,255);
-            ofFill();
-            
-            ofSetColor(0, 255, 0);
-            ofNoFill();
-            ofCircle(overlayRect.getCenter(), 20);
-            
-            ofPopStyle();
-            oculusRift.endOverlay();
-        }
+//        // overlay
+//        if(showOverlay)
+//        {
+//            oculusRift.beginOverlay(-230, 320,240);
+//            ofRectangle overlayRect = oculusRift.getOverlayRectangle();
+//            
+//            ofPushStyle();
+//            ofEnableAlphaBlending();
+//            ofFill();
+//            ofSetColor(255, 40, 10, 200);
+//            
+//            ofRect(overlayRect);
+//            
+//            ofSetColor(255,255);
+//            ofFill();
+//            
+//            ofSetColor(0, 255, 0);
+//            ofNoFill();
+//            ofCircle(overlayRect.getCenter(), 20);
+//            
+//            ofPopStyle();
+//            oculusRift.endOverlay();
+//        }
         
         // render scene for left eye
         oculusRift.beginLeftEye();
+        Vector3D a = bg.actual(); a *= 16;
+        if( a.x > 255 ) a.x = 255;
+        if( a.y > 255 ) a.y = 255;
+        if( a.z > 255 ) a.z = 255;
+        // use root as background color
+        // ofBackground( a.x, a.y, a.z, 255 );
         drawScene();
         oculusRift.endLeftEye();
 
@@ -186,9 +205,9 @@ void ofApp::draw()
     }
     else // normal
     {
-        cam.begin();
+        // cam.begin();
         drawScene();
-        cam.end();
+        // cam.end();
     }
 }
 
@@ -199,7 +218,6 @@ void ofApp::draw()
 //------------------------------------------------------------------------------
 void ofApp::drawScene()
 {
-    
     // check
     if( m_message != "" )
     {
@@ -207,11 +225,22 @@ void ofApp::drawScene()
         ofDrawBitmapString( m_message, 30, 30, 0 );
     }
     
-    ofPushMatrix();
-    ofRotate(90, 0, 0, -1);
-    ofSetColor(30);
-    ofDrawGridPlane(12.0f, 8.0f, false );
-    ofPopMatrix();
+    // set fov
+    m_camera.setFov( 90 );
+    // set near clipping plane
+    m_camera.setNearClip( .01 );
+    // set far clipping plane
+    m_camera.setFarClip( 100 );
+    // set position
+    m_camera.setPosition( ofVec3f(0,oculusRift.getUserEyeHeight(),5) );
+    // look at
+    m_camera.lookAt( ofVec3f(0,oculusRift.getUserEyeHeight(),0), ofVec3f(0,1,0) );
+    
+//    ofPushMatrix();
+//    ofRotate(90, 0, 0, -1);
+//    ofSetColor(30);
+//    ofDrawGridPlane(20.0f, 20.0f, false );
+//    ofPopMatrix();
     
     
     // Draw HMD ori
@@ -239,7 +268,7 @@ void ofApp::drawScene()
     // render light
     if( VR::instance()->lightSwitch() ) ofEnableLighting();
     else ofDisableLighting();
-    
+
     // update it
     vr->root()->renderAll();
     
@@ -252,14 +281,14 @@ void ofApp::drawScene()
     //--------------------------------------------------------------------------
     // billboard and draw the mouse
     //--------------------------------------------------------------------------
-    if(oculusRift.isSetup())
-    {
-        ofPushMatrix();
-        oculusRift.multBillboardMatrix();
-        ofSetColor(255, 0, 0);
-        ofCircle(0,0,.5);
-        ofPopMatrix();
-    }
+//    if(oculusRift.isSetup())
+//    {
+//        ofPushMatrix();
+//        oculusRift.multBillboardMatrix();
+//        ofSetColor(255, 0, 0);
+//        ofCircle(0,0,.5);
+//        ofPopMatrix();
+//    }
 }
 
 
@@ -300,27 +329,21 @@ void ofApp::keyPressed(int key)
     
     if( key == 'f' )
     {
-        //gotta toggle full screen for it to be right
+        // gotta toggle full screen for it to be right
         ofToggleFullscreen();
     }
-    
-    
     if(key == 'a'){
         cout << "FPS " << ofGetFrameRate() << " TARGET " << ofGetTargetFrameRate() << endl;
     }
-    
-    
     if(key == 's'){
         oculusRift.reloadShader();
     }
     if(key == 'v'){
         oculusRift.setVignette( !oculusRift.getVignette() );
     }
-    
     if(key == 'l'){
         oculusRift.lockView = !oculusRift.lockView;
     }
-    
     if(key == 'o'){
         showOverlay = !showOverlay;
     }
@@ -336,14 +359,12 @@ void ofApp::keyPressed(int key)
     if(key == 'H'){
         ofShowCursor();
     }
-    
     if(key == 'd'){
         oculusRift.setPixelDensity( oculusRift.getPixelDensity()-0.1 );
     }
     if(key == 'D'){
         oculusRift.setPixelDensity( oculusRift.getPixelDensity()+0.1 );
     }
-    
     if(key == 'p'){
         oculusRift.setPositionTracking( !oculusRift.getPositionTracking() );
     }

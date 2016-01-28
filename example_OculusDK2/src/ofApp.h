@@ -8,7 +8,7 @@
 #define MY_SRATE        44100
 #define MY_CHANNELS_IN  0
 #define MY_CHANNELS_OUT 2
-#define MY_BUFFERSIZE   256
+#define MY_BUFFERSIZE   1024
 #define MY_NUMBUFFERS   4
 
 
@@ -46,19 +46,13 @@ public:
     // Oculus DK2 stuff
     ofxOculusDK2 oculusRift;
     
-    ofEasyCam cam;
     bool showOverlay;
-    
     ofShader bshader;
-    
     ofVec3f cursor2D;
     ofVec3f cursor3D;
-    
     ofVec3f cursorRift;
     ofVec3f demoRift;
-    
     ofVec3f cursorGaze;
-    
     
 public:
     // sound stream
@@ -75,8 +69,6 @@ public:
     ofCamera m_camera;
     // a light
     ofLight * m_light;
-    
-    
-    
+    // font
     ofTrueTypeFont	arial;
 };

@@ -96,10 +96,16 @@ protected:
 public:
     // key-value map
     std::map<std::string, std::string> settings;
+    // key-value map
+    std::map<std::string, float> settingf;
     // associate a string value with a key
     std::string setString( const std::string & key, const std::string & value );
     // get a vec3 value associated with a key
     std::string getString( const std::string & key );
+    // associate a float value with a key
+    float setFloat( const std::string & key, float value );
+    // get a vec3 value associated with a key
+    float getFloat( const std::string & key );
     
 public:
     // data sync (0 == from chuck; 1 == to chuck)

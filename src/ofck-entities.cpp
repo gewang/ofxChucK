@@ -799,7 +799,7 @@ void VRFlare::update( double dt )
 
     // reset color
     ofColor color;
-    color.set(col.x, col.y, col.z);
+    color.set(col.x, col.y, col.z, alpha);
     // UPDATE TODO: in OF 0.9.0, this can be updated to setColorForIndices()
     for( int i = 0; i < 4; i++ )
     {
@@ -823,14 +823,14 @@ void VRFlare::render()
     ofDisableDepthTest();
     // blending
     ofEnableBlendMode( m_blendMode );
-
+    
     // bind texture and draw
     m_imageRef->getTextureReference().bind();
     m_mesh.draw();
     m_imageRef->getTextureReference().unbind();
-    
-    // disable
-    ofDisableBlendMode();
+
+    // blending
+    ofEnableBlendMode( OF_BLENDMODE_ALPHA );
 }
 
 
