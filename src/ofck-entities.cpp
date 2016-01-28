@@ -762,7 +762,9 @@ void VRFlare::setImage( const string & key )
     // get the image
     m_imageRef = db->getImage( key );
     
-    updateMeshPoints();
+    if (m_imageRef) {
+        updateMeshPoints();
+    }
 }
 
 
