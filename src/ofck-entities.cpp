@@ -99,6 +99,8 @@ VRMeshEntity::VRMeshEntity()
     eval( "draw lines" );
     // default
     m_fill = true;
+    // default
+    m_texture = NULL;
 }
 
 
