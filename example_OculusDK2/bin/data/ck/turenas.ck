@@ -5,7 +5,7 @@ Hid kb;
 HidMsg msg;
 
 // open
-if( !kb.openKeyboard(2) ) me.exit();
+if( !kb.openKeyboard(0) ) me.exit();
 <<< "KB open:", kb.name() >>>;
 spork ~ kbf();
 
@@ -21,6 +21,9 @@ R => OnePole envR => blackhole; R => envR; 3 => envR.op;
 // load
 me.dir() + "../audio/turenas-L.aiff" => L.read;
 me.dir() + "../audio/turenas-R.aiff" => R.read;
+L.samples() => L.pos;
+R.samples() => R.pos;
+0 => L.gain => R.gain;
 
 -100 => float FRONT;
 FRONT * .5 => float FRONT_FENCE;
@@ -110,7 +113,7 @@ FRONT3 * .5 => float FRONT_FENCE3;
 300 => float BACK3;
 BACK3 * .5 => float BACK_FENCE3;
 
-fun void makeThree( float inner, float outer )
+fun void makeThree( float inner, float outer, float whereY, float varyY )
 {
     // make a some points
     VR.makeEntity("three"+es.size(),"mesh") @=> VREntity f;
@@ -132,7 +135,7 @@ fun void makeThree( float inner, float outer )
     
     0 => f.loc.x;
     0 => f.loc.z;
-    Math.random2f(FRONT3,FRONT_FENCE3) => f.loc.y;
+    Math.random2f(whereY,whereY*varyY) => f.loc.y;
     
     Math.random2f(1,1) => f.rgba.r;
     Math.random2f(1,1) => f.rgba.g;
@@ -142,11 +145,24 @@ fun void makeThree( float inner, float outer )
     // add
     es3 << f;
     es3t << .0000002 / Math.pow((inner+outer)/6.0/outer,10);
-    <<< "spin:", es3t[es3t.size()-1] >>>;
+    // <<< "spin:", es3t[es3t.size()-1] >>>;
 
     // add to world
     VR.root().addChild( f );
 }
+
+
+//repeat(4)
+//    for(int i; i < 10; i++ )
+//        makeThree( 2*(20+i*15), 4*(20+i*15+5), FRONT3*3, .6 );
+
+//repeat(4)
+//    for(int i; i < 10; i++ )
+//        makeThree( 2*(20+i*15), 4*(20+i*15+5), FRONT3*6, .6 );
+
+//repeat(4)
+//    for(int i; i < 10; i++ )
+//        makeThree( 2*(20+i*15), 4*(20+i*15+5), FRONT3*12, .6 );
 
 
 // disable lights
@@ -182,6 +198,10 @@ while( true )
             1-Math.fabs((e.loc.y-BACK_FENCE)/(BACK-BACK_FENCE)) => e.rgba.a;
         else
             1 => e.rgba.a;
+        
+        if( e.rgba.a < 0 ) 0 => e.rgba.a;
+        else if( e.rgba.a > 1 ) 1 => e.rgba.a;
+        
         5 +=> e.ori.y;
         .5 +=> e.loc.y;
         if( e.loc.y > BACK ) FRONT => e.loc.y;
@@ -197,6 +217,9 @@ while( true )
         else
             1 => e.rgba.a;
 
+        if( e.rgba.a < 0 ) 0 => e.rgba.a;
+        else if( e.rgba.a > 1 ) 1 => e.rgba.a;
+        
         Math.pow(envL.last(),1)*100 *=> e.rgba.a;
 
         5 * (1 + .2*Math.sin(es2t[i])) => e.sca.setAll; .1 +=> es2t[i];
@@ -213,6 +236,9 @@ while( true )
             1-Math.fabs((e.loc.y-BACK_FENCE3)/(BACK3-BACK_FENCE3)) => e.rgba.a;
         else
             1 => e.rgba.a;
+        
+        if( e.rgba.a < 0 ) 0 => e.rgba.a;
+        else if( e.rgba.a > 1 ) 1 => e.rgba.a;
         
         es3t[i] +=> e.ori.y;
         .5 +=> e.loc.y;
@@ -237,6 +263,11 @@ fun void kbf()
             if( !msg.isButtonDown() )
                 continue;
 
+            if( msg.ascii == 48 ) // 1
+            {
+                0 => L.pos => R.pos;
+                1 => L.gain => R.gain;
+            }
             // <<< "kb:", msg.ascii >>>;
             if( msg.ascii == 49 ) // 1
             {
@@ -249,7 +280,7 @@ fun void kbf()
             else if( msg.ascii == 51 ) // 3
             {
                 for(int i; i < 10; i++ )
-                    makeThree( 2*(20+i*15), 4*(20+i*15+5) );
+                    makeThree( 2*(20+i*15), 4*(20+i*15+5), FRONT3*2.5, .75 );
             }
         }
     }
