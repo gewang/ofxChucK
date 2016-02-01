@@ -104,7 +104,7 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
         QUERY->add_ctor(QUERY, vrentity_ctor);
         // destructor
         QUERY->add_dtor(QUERY, vrentity_dtor);
-        
+
         // add .cpointer
         vrentity_offset_cpointer = QUERY->add_mvar( QUERY, "int", "@cpointer", FALSE );
         if( vrentity_offset_cpointer == CK_INVALID_OFFSET ) goto error;
@@ -129,7 +129,7 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
         QUERY->add_mfun(QUERY, vrentity_addChild, "void", "addChild" );
         // VREntity
         QUERY->add_arg(QUERY, "VREntity", "e" );
-        
+
         // add .removeChild
         QUERY->add_mfun(QUERY, vrentity_removeChild, "void", "removeChild" );
         // VREntity
@@ -146,19 +146,19 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
         QUERY->add_mfun(QUERY, vrentity_getString, "string", "getString");
         // name of object to retrieve
         QUERY->add_arg(QUERY, "string", "key");
-        
+
         // string VREntity.setString(key,value) // setString
         QUERY->add_mfun(QUERY, vrentity_setFloat, "float", "setFloat");
         // name of object to retrieve
         QUERY->add_arg(QUERY, "string", "key");
         // name of object to retrieve
         QUERY->add_arg(QUERY, "float", "value");
-        
+
         // string VREntity.getString(key,value) // getString
         QUERY->add_mfun(QUERY, vrentity_getFloat, "float", "getFloat");
         // name of object to retrieve
         QUERY->add_arg(QUERY, "string", "key");
-        
+
         // string VREntity.eval(command) // eval
         QUERY->add_mfun(QUERY, vrentity_eval, "int", "eval");
         // command to evaluate
@@ -189,7 +189,7 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
     }
     // end the class definition
     QUERY->end_class(QUERY);
-    
+
     // begin the class definition
     QUERY->begin_class(QUERY, "VR", "Object");
     {
@@ -221,14 +221,14 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
         QUERY->add_sfun(QUERY, vr_getFloat, "float", "getFloat");
         // name of object to retrieve
         QUERY->add_arg(QUERY, "string", "key");
-        
+
         // string VR.setString(key,value) // set
         QUERY->add_sfun(QUERY, vr_setString, "string", "setString");
         // name of object to retrieve
         QUERY->add_arg(QUERY, "string", "key");
         // name of object to retrieve
         QUERY->add_arg(QUERY, "string", "value");
-        
+
         // string VR.getString(key,value) // set
         QUERY->add_sfun(QUERY, vr_getString, "string", "getString");
         // name of object to retrieve
@@ -240,7 +240,7 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
         QUERY->add_arg(QUERY, "string", "key");
         // name of object to retrieve
         QUERY->add_arg(QUERY, "vec3", "value");
-        
+
         // vec3 VR.getVec3(key,value) // set
         QUERY->add_sfun(QUERY, vr_getString, "vec3", "getVec3");
         // name of object to retrieve
@@ -252,12 +252,12 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
         QUERY->add_arg(QUERY, "string", "key");
         // name of object to retrieve
         QUERY->add_arg(QUERY, "vec4", "value");
-        
+
         // vec4 VR.getVec4(key,value) // set
         QUERY->add_sfun(QUERY, vr_getVec4, "vec4", "getVec4");
         // name of object to retrieve
         QUERY->add_arg(QUERY, "string", "key");
-        
+
         // int VR.loadImage(key,filename) // load
         QUERY->add_sfun(QUERY, vr_loadImage, "int", "loadImage");
         // key of image to map
@@ -276,13 +276,13 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
         QUERY->add_sfun(QUERY, vr_setFOV, "float", "fov");
         // name of object to retrieve
         QUERY->add_arg(QUERY, "float", "value");
-        
+
         // float VR.fov()
         QUERY->add_sfun(QUERY, vr_getFOV, "float", "fov");
 
         // Event VR.displaySync // event for display
         QUERY->add_sfun(QUERY, vr_displaySync, "Event", "displaySync");
-        
+
         // VREntity VR.root() // get scene graph root
         QUERY->add_sfun(QUERY, vr_root, "VREntity", "root");
 
@@ -300,10 +300,10 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
 
     // wasn't that a breeze?
     return TRUE;
-    
+
 error:
     QUERY->end_class(QUERY);
-    
+
     // done
     return FALSE;
 }
@@ -352,7 +352,7 @@ CK_DLL_MFUN( vrentity_setString )
 {
     std::string key = GET_NEXT_STRING(ARGS)->str;
     Chuck_String * value = GET_NEXT_STRING(ARGS);
-    
+
     // get the c VREntity pointer
     VREntity * e = (VREntity *)OBJ_MEMBER_INT(SELF,vrentity_offset_cpointer);
     // set the string
@@ -379,7 +379,7 @@ CK_DLL_MFUN( vrentity_setFloat )
 {
     std::string key = GET_NEXT_STRING(ARGS)->str;
     float value = GET_NEXT_FLOAT(ARGS);
-    
+
     // get the c VREntity pointer
     VREntity * e = (VREntity *)OBJ_MEMBER_INT(SELF,vrentity_offset_cpointer);
     // set the string
@@ -401,7 +401,7 @@ CK_DLL_MFUN( vrentity_getFloat )
 CK_DLL_MFUN( vrentity_eval )
 {
     std::string command = GET_NEXT_STRING(ARGS)->str;
-    
+
     // get the c VREntity pointer
     VREntity * e = (VREntity *)OBJ_MEMBER_INT(SELF,vrentity_offset_cpointer);
     // set the string
@@ -412,7 +412,7 @@ CK_DLL_MFUN( vrentity_eval_2 )
 {
     std::string op = GET_NEXT_STRING(ARGS)->str;
     std::string args = GET_NEXT_STRING(ARGS)->str;
-    
+
     // get the c VREntity pointer
     VREntity * e = (VREntity *)OBJ_MEMBER_INT(SELF,vrentity_offset_cpointer);
     // set the string
@@ -423,12 +423,12 @@ CK_DLL_MFUN( vrentity_eval_vec3 )
 {
     std::string command = GET_NEXT_STRING(ARGS)->str;
     t_CKVEC3 v = GET_NEXT_VEC3(ARGS);
-    
+
     // string stream
     ostringstream cmd;
     // add
     cmd << command << " " << v.x << " " << v.y << " " << v.z;
-    
+
     // get the c VREntity pointer
     VREntity * e = (VREntity *)OBJ_MEMBER_INT(SELF,vrentity_offset_cpointer);
     // set the string
@@ -440,13 +440,13 @@ CK_DLL_MFUN( vrentity_eval_vec3_vec3 )
     std::string command = GET_NEXT_STRING(ARGS)->str;
     t_CKVEC3 v1 = GET_NEXT_VEC3(ARGS);
     t_CKVEC3 v2 = GET_NEXT_VEC3(ARGS);
-    
+
     // string stream
     ostringstream cmd;
     // add
     cmd << command << " " << v1.x << " " << v1.y << " " << v1.z << " ";
     cmd << v2.x << " " << v2.y << " " << v2.z;
-    
+
     // get the c VREntity pointer
     VREntity * e = (VREntity *)OBJ_MEMBER_INT(SELF,vrentity_offset_cpointer);
     // set the string
@@ -664,7 +664,7 @@ CK_DLL_SFUN( vr_setString )
 {
     std::string key = GET_NEXT_STRING(ARGS)->str;
     Chuck_String * value = GET_NEXT_STRING(ARGS);
-    
+
     // get the DB
     OFCKDB * db = OFCKDB::instance();
     // insert the key value pair, possibly overwriting
@@ -773,7 +773,7 @@ t_CKFLOAT OFCKDB::getFloat( const std::string & key )
         // not found
         return 0;
     }
-    
+
     // return the value
     return string2float[key];
 }
@@ -812,7 +812,7 @@ t_CKVEC3 OFCKDB::getVec3( const std::string & key )
         // not found
         return r;
     }
-    
+
     // return the value
     return string2vec3[key];
 }
@@ -851,7 +851,7 @@ t_CKVEC4 OFCKDB::getVec4( const std::string & key )
         // not found
         return r;
     }
-    
+
     // return the value
     return string2vec4[key];
 }
@@ -885,7 +885,7 @@ std::string OFCKDB::getString( const std::string & key )
         // not found
         return "";
     }
-    
+
     // return the value
     return string2string[key];
 }
@@ -920,7 +920,7 @@ VREntity * OFCKDB::getObject( const std::string & key )
         // not found
         return NULL;
     }
-    
+
     // return the value
     return string2entity[key];
 }
@@ -957,7 +957,7 @@ ofImage * OFCKDB::loadImage( const string & key, const string & name, bool repla
         // not found
         return string2image[key];
     }
-    
+
     // instantiate image
     ofImage * image = new ofImage();
     // load image
@@ -994,7 +994,7 @@ ofImage * OFCKDB::getImage( const std::string & key )
         // not found
         return NULL;
     }
-    
+
     // return the value
     return string2image[key];
 }
@@ -1010,7 +1010,7 @@ ofCamera * OFCKDB::setCamera( const string & key, ofCamera * cam )
 {
     // map
     string2camera[key] = cam;
-    
+
     // return
     return cam;
 }
@@ -1030,7 +1030,7 @@ ofCamera * OFCKDB::getCamera( const std::string & key )
         // not found
         return NULL;
     }
-    
+
     // return the value
     return string2camera[key];
 }
@@ -1046,7 +1046,7 @@ ofLight * OFCKDB::setLight( const string & key, ofLight * light )
 {
     // map
     string2light[key] = light;
-    
+
     // return
     return light;
 }
@@ -1066,7 +1066,7 @@ ofLight * OFCKDB::getLight( const std::string & key )
         // not found
         return NULL;
     }
-    
+
     // return the value
     return string2light[key];
 }
@@ -1133,7 +1133,7 @@ void VREntity::removeChild( VREntity * entity )
             break;
         }
     }
-    
+
     // check
     if( index >= 0 )
     {
@@ -1181,9 +1181,7 @@ void VREntity::syncToChucK()
     // check
     if( !m_chuckObject )
         return;
-    
-    cerr << this->ori.y << endl;
-    
+
     // get them from check
     OBJ_MEMBER_VEC3(m_chuckObject, vrentity_offset_location).x = this->loc.x;
     OBJ_MEMBER_VEC3(m_chuckObject, vrentity_offset_location).y = this->loc.y;
@@ -1219,7 +1217,7 @@ void VREntity::setSyncMode( bool which )
 bool VREntity::initChucKSideObject()
 {
     assert( m_chuckObject == NULL );
-    
+
     // chuck-side object
     m_chuckObject = new Chuck_Object;
     // HACK:
@@ -1286,10 +1284,10 @@ void VREntity::updateAll( double delta )
     if( m_shouldISyncFromChucK ) this->syncFromChucK();
     // syncg to chuck
     if( m_shouldISyncToChucK ) this->syncToChucK();
-    
+
     // update self
     this->update( delta );
-    
+
     // update children
     for( vector<VREntity *>::iterator itr = children.begin();
         itr != children.end(); itr++ )
@@ -1309,17 +1307,17 @@ void VREntity::renderAll()
 {
     // apply transforms
     applyTransforms();
-    
+
     // render self
     this->render();
-    
+
     // draw children
     for( vector<VREntity *>::iterator itr = children.begin();
         itr != children.end(); itr++ )
     {
         (*itr)->renderAll();
     }
-    
+
     // pop
     popTransforms();
 }
@@ -1389,7 +1387,7 @@ std::string VREntity::getString( const std::string & key )
         // not found
         return "";
     }
-    
+
     // return the value
     return settings[key];
 }
@@ -1424,7 +1422,7 @@ float VREntity::getFloat( const std::string & key )
         // not found
         return 0.0;
     }
-    
+
     // return the value
     return settingf[key];
 }
