@@ -87,6 +87,10 @@ while( true )
     mesh2.eval( "update color 0 1 0 " + Std.rand2f(0, 1) );
     mesh2.eval( "update color 1 1 0 " + Std.rand2f(0, 1) );
     
+    // go for it again (make it transparent!)
+    mesh2.eval( "update color 4 1 0.8 0 " + Std.rand2f(0, 1) );
+    mesh2.eval( "update color 5 1 0.8 0 " + Std.rand2f(0, 1) );
+    
     // go for it one more time
     // (notice how texture coordinates can go "outside the image")
     mesh1.eval( "update uv 4 0 " + Std.rand2f(1, 1.1) );

@@ -185,8 +185,18 @@ bool VRMeshEntity::eval( const std::string & theLine )
         // loop
         if( istr >> x >> y >> z )
         {
-            // push as float
-            m_mesh.addColor( ofFloatColor(x,y,z) );
+            // check for alpha value
+            float a;
+            if( istr >> a )
+            {
+                // push as float with alpha
+                m_mesh.addColor( ofFloatColor(x,y,z,a) );
+            }
+            else
+            {
+                // push as float
+                m_mesh.addColor( ofFloatColor(x,y,z) );
+            }
         }
     }
     else if( command == "normal" )
@@ -332,7 +342,7 @@ bool VRMeshEntity::eval( const std::string & theLine )
                 // done
                 return false;
             }
-            m_mesh.setVertex( index, ofVec3f(x, y, z) );
+            m_mesh.setVertex( index, ofVec3f(x,y,z) );
         }
         // color
         else if( str == "color" )
@@ -344,7 +354,16 @@ bool VRMeshEntity::eval( const std::string & theLine )
                 // done
                 return false;
             }
-            m_mesh.setColor( index, ofFloatColor(x, y, z) );
+            // check for alpha
+            float a;
+            if( istr >> a )
+            {
+                m_mesh.setColor( index, ofFloatColor(x,y,z,a) );
+            }
+            else
+            {
+                m_mesh.setColor( index, ofFloatColor(x,y,z) );
+            }
         }
         // texture
         else if( str == "uv" )

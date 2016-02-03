@@ -78,6 +78,7 @@ protected:
 // EVAL commands:
 //   "clear"
 //   "vertex x y z"
+//   "color r g b"
 //   "color r g b a"
 //   "uv u v"
 //   "normal x y z"
