@@ -95,6 +95,7 @@ protected:
 //   "load [OBJ file]"
 //   "toggle color on|off"
 //   "toggle axis on|off"
+//   "update vertex|color|uv|normal index [data]"
 //------------------------------------------------------------------------------
 class VRMeshEntity : public VREntity
 {

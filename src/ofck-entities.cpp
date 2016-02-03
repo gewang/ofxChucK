@@ -303,6 +303,82 @@ bool VRMeshEntity::eval( const std::string & theLine )
         // load this
         loadOBJ( str );
     }
+    else if( command == "update" )
+    {
+        // get from stream
+        if( !(istr >> str) )
+        {
+            // error
+            cerr << "[VRMeshEntity]: UPDATE missing parameter..." << endl;
+            // done
+            return false;
+        }
+        int index;
+        if( !(istr >> index) )
+        {
+            // error
+            cerr << "[VRMeshEntity]: UPDATE missing index..." << endl;
+            // done
+            return false;
+        }
+        
+        // vertex
+        if( str == "vertex" )
+        {
+            if( !(istr >> x >> y >> z) )
+            {
+                // error
+                cerr << "[VRMeshEntity]: UPDATE vertex not enough values..." << endl;
+                // done
+                return false;
+            }
+            m_mesh.setVertex( index, ofVec3f(x, y, z) );
+        }
+        // color
+        else if( str == "color" )
+        {
+            if( !(istr >> x >> y >> z) )
+            {
+                // error
+                cerr << "[VRMeshEntity]: UPDATE color not enough values..." << endl;
+                // done
+                return false;
+            }
+            m_mesh.setColor( index, ofFloatColor(x, y, z) );
+        }
+        // texture
+        else if( str == "uv" )
+        {
+            if( !(istr >> x >> y) )
+            {
+                // error
+                cerr << "[VRMeshEntity]: UPDATE uv not enough values..." << endl;
+                // done
+                return false;
+            }
+            m_mesh.setTexCoord( index, ofVec2f(x,y) );
+        }
+        // normal
+        else if( str == "normal" )
+        {
+            if( !(istr >> x >> y >> z) )
+            {
+                // error
+                cerr << "[VRMeshEntity]: UPDATE normal not enough values..." << endl;
+                // done
+                return false;
+            }
+            m_mesh.setNormal( index, ofVec3f(x,y,z) );
+        }
+        // error
+        else
+        {
+            // error
+            cerr << "[VRMeshEntity]: UPDATE unrecognized type..." << endl;
+            // done
+            return false;
+        }
+    }
 }
 
 
