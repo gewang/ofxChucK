@@ -51,6 +51,8 @@ public:
     void setImage( const std::string & key );
 
 public:
+    // eval
+    bool eval( const std::string & line );
     // update
     void update( double dt );
     // render
@@ -196,7 +198,7 @@ public:
 //   "rotate [speed]"
 //   "texture [texture]"
 //------------------------------------------------------------------------------
-class VRLightEntity : public VREntity
+class VRLightEntity : public VRFlare
 {
 public:
     // constructor
@@ -210,13 +212,15 @@ public:
 
 public:
     // the lights
-    vector< VRFlare > lights;
+    // vector<VRFlare> lights;
     // how many
     int numSources;
+    // intrinsic orientation
+    Vector3D intrinsicOri;
     // rotational speed
-    float rotateSpeed;
+    Vector3D intrinsicRotation;
     // texture key
-    string textureKey;
+    // string textureKey;
 };
 
 

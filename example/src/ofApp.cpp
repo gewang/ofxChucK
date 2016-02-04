@@ -49,7 +49,8 @@ void ofApp::setup()
     // r = chuck->compileFile( "ck/obj.ck" );
     // r = chuck->compileFile( "ck/textured_mesh.ck" );
     // r = chuck->compileFile( "ck/update_mesh.ck" );
-    r = chuck->compileFile( "ck/lights.ck" );
+    // r = chuck->compileFile( "ck/lights-1.ck" );
+    r = chuck->compileFile( "ck/lights-3.ck" );
 
     // check
     if( !r )

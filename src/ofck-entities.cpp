@@ -854,7 +854,12 @@ void VRFlare::setImage( ofImage * imageRef )
     // set the image
     m_imageRef = imageRef;
     
-    updateMeshPoints();
+    // check reference
+    if( m_imageRef )
+    {
+        // update mesh
+        updateMeshPoints();
+    }
 }
 
 
@@ -868,12 +873,8 @@ void VRFlare::setImage( const string & key )
 {
     // get instance
     OFCKDB * db = OFCKDB::instance();
-    // get the image
-    m_imageRef = db->getImage( key );
-    
-    if (m_imageRef) {
-        updateMeshPoints();
-    }
+    // get and set the image
+    setImage( db->getImage( key ) );
 }
 
 
@@ -894,6 +895,54 @@ void VRFlare::updateMeshPoints()
     m_mesh.setVertex(1, ofPoint( -rw,  rh ));
     m_mesh.setVertex(2, ofPoint(  rw, -rh ));
     m_mesh.setVertex(3, ofPoint(  rw,  rh ));
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: eval()
+// desc: set parameters
+//------------------------------------------------------------------------------
+bool VRFlare::eval( const std::string & theLine )
+{
+    string line = lowerCase( theLine );
+    
+    // string stream
+    istringstream istr( line );
+    // the command
+    string command;
+    // get it
+    istr >> command;
+    
+    // set num sources
+    if( command == "texture" )
+    {
+        // the key
+        string key;
+
+        // loop
+        if( !(istr >> key) )
+        {
+            // empty command
+            cerr << "[VRFlare]: TEXTURE missing key!" << endl;
+            // done
+            return false;
+        }
+        else
+        {
+            // set
+            setString( "texture", key );
+        }
+    }
+    else
+    {
+        // done
+        return VREntity::eval( theLine );
+    }
+    
+    // handled
+    return true;
 }
 
 
@@ -953,11 +1002,10 @@ void VRFlare::render()
 //------------------------------------------------------------------------------
 VRLightEntity::VRLightEntity()
 {
-    numSources = 1;
-    rotateSpeed = 1;
-    textureKey = "";
+    numSources = 3;
+    // textureKey = "";
     // initialize vector
-    update(0);
+    // update(0);
 }
 
 
@@ -1015,37 +1063,20 @@ bool VRLightEntity::eval( const std::string & theLine )
         else
         {
             // set
-            rotateSpeed = rotate;
-        }
-    }
-    // set texture key
-    else if( command == "texture" )
-    {
-        // the key
-        string key;
-        
-        // loop
-        if( !(istr >> key) )
-        {
-            // empty command
-            cerr << "[VRLightEntity]: TEXTURE missing key!" << endl;
-            // done
-            return false;
-        }
-        else
-        {
-            // set
-            textureKey = key;
+            intrinsicRotation.y = rotate;
         }
     }
     else
     {
-        // empty command
-        cerr << "[VRLightEntity]: unrecognized EVAL command!" << endl;
         // done
-        return false;
+        return VRFlare::eval( theLine );
     }
+    
+    // handled
+    return true;
 }
+
+
 
 
 //------------------------------------------------------------------------------
@@ -1055,28 +1086,20 @@ bool VRLightEntity::eval( const std::string & theLine )
 void VRLightEntity::update( double dt )
 {
     // rotate
-    ori.y += rotateSpeed * 5;
-    // resize
-    lights.resize(numSources);
-    // for each flare
-    for( int i = 0; i < lights.size(); i++ )
+    intrinsicOri.x += intrinsicRotation.x;
+    intrinsicOri.y += intrinsicRotation.y;
+    intrinsicOri.z += intrinsicRotation.z;
+    
+    // look up and set image ref
+    setImage( getString("texture") );
+    
+    // reset color
+    ofColor color;
+    color.set(col.x, col.y, col.z, alpha);
+    // UPDATE TODO: in OF 0.9.0, this can be updated to setColorForIndices()
+    for( int i = 0; i < 4; i++ )
     {
-        // set location
-        lights[i].loc = this->loc;
-        // set orientation
-        lights[i].ori = this->ori;
-        // y orientation: rotate into column
-        lights[i].ori.y += i * 180.0 / numSources;
-        // set scaling
-        lights[i].sca = this->sca;
-        // set color
-        lights[i].col = this->col;
-        // set alpha
-        lights[i].alpha = this->alpha;
-        // set texture
-        lights[i].setString( "texture", textureKey );
-        // update
-        lights[i].update( dt );
+        m_mesh.setColor(i, color);
     }
 }
 
@@ -1089,12 +1112,36 @@ void VRLightEntity::update( double dt )
 //------------------------------------------------------------------------------
 void VRLightEntity::render()
 {
-    // for each flare
-    for( int i = 0; i < lights.size(); i++ )
+    // check
+    if( !m_imageRef ) return;
+    
+    // disable depth
+    ofDisableDepthTest();
+    // blending
+    ofEnableBlendMode( m_blendMode );
+
+    // rotation
+    ofRotate( intrinsicOri.y, 0, 1, 0 );
+
+    // bind texture and draw
+    m_imageRef->getTextureReference().bind();
     {
-        // render it
-        lights[i].render();
+        // angle between each
+        float angleInc = 180.0f / numSources;
+        // for each flare
+        for( int i = 0; i < numSources; i++ )
+        {
+            // draw
+            m_mesh.draw();
+            // rotate
+            ofRotate( angleInc, 0, 1, 0 );
+        }
     }
+    // unbind texture
+    m_imageRef->getTextureReference().unbind();
+    
+    // blending
+    ofEnableBlendMode( OF_BLENDMODE_ALPHA );
 }
 
 
