@@ -1057,7 +1057,7 @@ bool VRLightEntity::eval( const std::string & theLine )
         }
     }
     // set rotation speed
-    else if( command == "rotate" )
+    else if( command == "rotate" || command == "rotatey" )
     {
         // the number
         float rotate;
@@ -1074,6 +1074,44 @@ bool VRLightEntity::eval( const std::string & theLine )
         {
             // set
             intrinsicRotation.y = rotate;
+        }
+    }
+    else if( command == "rotatex" )
+    {
+        // the number
+        float rotate;
+        
+        // loop
+        if( !(istr >> rotate) )
+        {
+            // empty command
+            cerr << "[VRLightEntity]: ROTATEX missing rotation speed!" << endl;
+            // done
+            return false;
+        }
+        else
+        {
+            // set
+            intrinsicRotation.x = rotate;
+        }
+    }
+    else if( command == "rotatez" )
+    {
+        // the number
+        float rotate;
+        
+        // loop
+        if( !(istr >> rotate) )
+        {
+            // empty command
+            cerr << "[VRLightEntity]: ROTATEZ missing rotation speed!" << endl;
+            // done
+            return false;
+        }
+        else
+        {
+            // set
+            intrinsicRotation.z = rotate;
         }
     }
     else
@@ -1122,7 +1160,9 @@ void VRLightEntity::render()
     ofEnableBlendMode( m_blendMode );
 
     // rotation
+    ofRotate( intrinsicOri.x, 1, 0, 0 );
     ofRotate( intrinsicOri.y, 0, 1, 0 );
+    ofRotate( intrinsicOri.z, 0, 0, 1 );
 
     // bind texture and draw
     m_imageRef->getTextureReference().bind();
