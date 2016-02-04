@@ -69,6 +69,7 @@ VREntity * VREntityFactory::makeEntity( const std::string & type )
 
     // check type
     if( type == "flare" ) { e = new VRFlare(); }
+    else if( type == "node" || type == "entity" ) { e = new VREntity(); }
     else if( type == "mesh" ) { e = new VRMeshEntity(); }
     else if( type == "text" ) { e = new VRTextEntity(); }
     else if( type == "lines" ) { e = new VRLinesEntity(); }

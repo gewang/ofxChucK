@@ -51,7 +51,9 @@ void ofApp::setup()
     // r = chuck->compileFile( "ck/update_mesh.ck" );
     // r = chuck->compileFile( "ck/lights-1.ck" );
     // r = chuck->compileFile( "ck/lights-3.ck" );
-    r = chuck->compileFile( "ck/lights-trail.ck" );
+    // r = chuck->compileFile( "ck/lights-trail.ck" );
+    // r = chuck->compileFile( "ck/vortex.ck" );
+    r = chuck->compileFile( "ck/turenas-2.ck" );
 
     // check
     if( !r )
