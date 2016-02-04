@@ -227,6 +227,38 @@ public:
 
 
 //------------------------------------------------------------------------------
+// name: class VRTrailEntity
+// desc: trail entity
+//
+// EVAL commands:
+//   "length [number of vertices in trail]"
+//   "draw points|linestrip|trianglestrips"
+//------------------------------------------------------------------------------
+class VRTrailEntity : public VREntity
+{
+public:
+    // constructor
+    VRTrailEntity();
+
+public:
+    // update
+    virtual void update( double dt );
+    // render
+    virtual void render();
+    // command: set parameters
+    virtual bool eval( const std::string & command );
+    
+public:
+    // the mesh
+    ofMesh m_mesh;
+    // trail length
+    int m_length;
+};
+
+
+
+
+//------------------------------------------------------------------------------
 // name: class VRDotEntity
 // desc: dot entity
 //------------------------------------------------------------------------------

@@ -92,7 +92,8 @@ VREntity * VREntityFactory::makeEntity( const std::string & type )
 
 
 //------------------------------------------------------------------------------
-// constructor
+// name: VRMeshEntity()
+// desc: constructor
 //------------------------------------------------------------------------------
 VRMeshEntity::VRMeshEntity()
 {
@@ -108,15 +109,17 @@ VRMeshEntity::VRMeshEntity()
 
 
 //------------------------------------------------------------------------------
-// render
+// name: render()
+// desc: render
 //------------------------------------------------------------------------------
 void VRMeshEntity::render()
 {
+    // check if draw texture
     bool drawTexture = (m_texture != NULL);
-    if (drawTexture) {
-        m_texture->getTextureReference().bind();
-    }
-    
+    // bind texture
+    if( drawTexture ) m_texture->getTextureReference().bind();
+
+    // mesh draw
     if( m_fill )
     {
         m_mesh.draw();
@@ -125,17 +128,17 @@ void VRMeshEntity::render()
     {
         m_mesh.drawWireframe();
     }
-    
-    if (drawTexture) {
-        m_texture->getTextureReference().unbind();
-    }
+
+    // unbind texture
+    if( drawTexture ) m_texture->getTextureReference().unbind();
 }
 
 
 
 
 //------------------------------------------------------------------------------
-// command: add
+// name: eval()
+// desc: eval command
 //------------------------------------------------------------------------------
 bool VRMeshEntity::eval( const std::string & theLine )
 {
@@ -598,7 +601,8 @@ bool VRMeshEntity::loadOBJFile(
 
 
 //------------------------------------------------------------------------------
-// constructor
+// name: VRTextEntity()
+// desc: constructor
 //------------------------------------------------------------------------------
 VRTextEntity::VRTextEntity()
 {
@@ -610,7 +614,8 @@ VRTextEntity::VRTextEntity()
 
 
 //------------------------------------------------------------------------------
-// render
+// name: update()
+// desc: update state
 //------------------------------------------------------------------------------
 void VRTextEntity::update( double dt )
 {
@@ -628,7 +633,8 @@ void VRTextEntity::update( double dt )
 
 
 //------------------------------------------------------------------------------
-// render
+// name: render()
+// desc: render
 //------------------------------------------------------------------------------
 void VRTextEntity::render()
 {
@@ -650,7 +656,8 @@ void VRTextEntity::render()
 
 
 //------------------------------------------------------------------------------
-// command: add
+// name: eval()
+// desc: eval command
 //------------------------------------------------------------------------------
 bool VRTextEntity::eval( const std::string & theLine )
 {
@@ -713,7 +720,8 @@ bool VRTextEntity::eval( const std::string & theLine )
 
 
 //------------------------------------------------------------------------------
-// constructor
+// name: VRLineEntity()
+// desc: constructor
 //------------------------------------------------------------------------------
 VRLinesEntity::VRLinesEntity()
 {
@@ -724,7 +732,8 @@ VRLinesEntity::VRLinesEntity()
 
 
 //------------------------------------------------------------------------------
-// render
+// name: render()
+// desc: render
 //------------------------------------------------------------------------------
 void VRLinesEntity::render()
 {
@@ -743,7 +752,8 @@ void VRLinesEntity::render()
 
 
 //------------------------------------------------------------------------------
-// command: add
+// name: eval()
+// desc: eval command
 //------------------------------------------------------------------------------
 bool VRLinesEntity::eval( const std::string & theLine )
 {
@@ -1142,6 +1152,53 @@ void VRLightEntity::render()
     
     // blending
     ofEnableBlendMode( OF_BLENDMODE_ALPHA );
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: VRTrailEntity()
+// desc: constructor
+//------------------------------------------------------------------------------
+VRTrailEntity::VRTrailEntity()
+{
+    // set default
+    m_length = 64;
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: update()
+// desc: update
+//------------------------------------------------------------------------------
+void VRTrailEntity::update( double dt )
+{
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: render()
+// desc: render
+//------------------------------------------------------------------------------
+void VRTrailEntity::render()
+{
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: eval()
+// desc: command: set parameters
+//------------------------------------------------------------------------------
+bool VRTrailEntity::eval( const std::string & command )
+{
+    return true;
 }
 
 
