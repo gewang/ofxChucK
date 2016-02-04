@@ -1100,17 +1100,8 @@ void VRLightEntity::update( double dt )
     intrinsicOri.y += intrinsicRotation.y;
     intrinsicOri.z += intrinsicRotation.z;
     
-    // look up and set image ref
-    setImage( getString("texture") );
-    
-    // reset color
-    ofColor color;
-    color.set(col.x, col.y, col.z, alpha);
-    // UPDATE TODO: in OF 0.9.0, this can be updated to setColorForIndices()
-    for( int i = 0; i < 4; i++ )
-    {
-        m_mesh.setColor(i, color);
-    }
+    // call parent class
+    VRFlare::update( dt );
 }
 
 
