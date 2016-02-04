@@ -77,6 +77,7 @@ VREntity * VREntityFactory::makeEntity( const std::string & type )
     else if( type == "circle" ) { }
     else if( type == "ugen" ) { }
     else if( type == "dot" ) { e = new VRDotEntity(); }
+    else if( type == "blowstring" ) { e = new VRBlowStringEntity(); }
     
     // log
     if( !e )
@@ -1425,4 +1426,242 @@ void VRDotEntity::render()
 {
     // ofSetColor( 255 );
     sphere.draw();
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: VRBlowStringEntity()
+// desc: constructor
+//------------------------------------------------------------------------------
+VRBlowStringEntity::VRBlowStringEntity()
+{
+    // zero out
+    m_imageRef = NULL;
+    // default is additive
+    m_blendMode = OF_BLENDMODE_ADD;
+    
+    // form mesh
+    formMesh();
+    
+    time = 0;
+    animationAmount = 0;
+    animationSpeed = 0;
+    animationPhase = 0;
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: setImage()
+// desc: set image for drawing
+//------------------------------------------------------------------------------
+void VRBlowStringEntity::setImage( ofImage * imageRef )
+{
+    // set the image
+    m_imageRef = & imageRef->getTextureReference();
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: setImage()
+// desc: set image for drawing
+//------------------------------------------------------------------------------
+void VRBlowStringEntity::setImage( const string & key )
+{
+    setImage(OFCKDB::instance()->getImage(key));
+}
+
+//------------------------------------------------------------------------------
+// name: formMesh()
+// desc: construct the mesh after the image is set
+//------------------------------------------------------------------------------
+void VRBlowStringEntity::formMesh()
+{
+    glowMesh.clear();
+    glowMesh.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
+    
+    ofColor color;
+    color.set(col.x, col.y, col.z);
+
+    // Bottom left
+    glowMesh.addVertex(ofPoint(-defaultWidth/2, 0));
+    glowMesh.addTexCoord(ofPoint(0, 0));
+    glowMesh.addColor(color);
+    
+    // Bottom right
+    glowMesh.addVertex(ofPoint(defaultWidth/2, 0));
+    glowMesh.addTexCoord(ofPoint(1.0, 0));
+    glowMesh.addColor(color);
+    
+    // Middle left
+    glowMesh.addVertex(ofPoint(-defaultWidth/2, defaultHeight / 2));
+    glowMesh.addTexCoord(ofPoint(0, 0.5));
+    glowMesh.addColor(color);
+    
+    // Middle right
+    glowMesh.addVertex(ofPoint(defaultWidth/2, defaultHeight / 2));
+    glowMesh.addTexCoord(ofPoint(1.0, 0.5));
+    glowMesh.addColor(color);
+
+    // Top left
+    glowMesh.addVertex(ofPoint(-defaultWidth/2, defaultHeight));
+    glowMesh.addTexCoord(ofPoint(0, 1.0));
+    glowMesh.addColor(color);
+
+    // Top right
+    glowMesh.addVertex(ofPoint(defaultWidth/2, defaultHeight));
+    glowMesh.addTexCoord(ofPoint(1.0, 1.0));
+    glowMesh.addColor(color);
+}
+
+void VRBlowStringEntity::updateMesh()
+{
+    // Compute new midpoint positions
+    vector<ofVec3f> & vertices = glowMesh.getVertices();
+    vertices[2].x = - defaultWidth/2 + animationAmount/20 * sin(animationSpeed * time + animationPhase);
+    vertices[3].x = defaultWidth/2 + animationAmount/20 * sin(animationSpeed * time + animationPhase);
+    
+    time += 0.4;
+    
+    // Update color in case that has changed
+    for (int i = 0; i < glowMesh.getVertices().size(); i++) {
+        glowMesh.setColor(i, ofColor(col.x, col.y, col.z));
+    }
+}
+
+
+
+//------------------------------------------------------------------------------
+// name: update()
+// desc: update the blowstring state
+//------------------------------------------------------------------------------
+void VRBlowStringEntity::update( double dt )
+{
+    // look up and set image ref
+    setImage( getString("texture") );
+    // animate the mesh
+    updateMesh();
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: render()
+// desc: render the blowstring
+//------------------------------------------------------------------------------
+void VRBlowStringEntity::render()
+{
+    // check
+    if( !m_imageRef ) return;
+
+    // blending
+    ofEnableBlendMode( m_blendMode );
+    
+    // bind texture and draw
+    m_imageRef->bind();
+    glowMesh.draw();
+    m_imageRef->unbind();
+    
+    // alpha is default
+    ofEnableBlendMode( OF_BLENDMODE_ALPHA );
+}
+
+//------------------------------------------------------------------------------
+// name: eval()
+// desc: set the animation amount
+//------------------------------------------------------------------------------
+bool VRBlowStringEntity::eval( const std::string & theLine )
+{
+    // line
+    string line = lowerCase( theLine );
+    
+    // string stream
+    istringstream istr(line);
+    // the command
+    string command;
+    // get it
+    istr >> command;
+    
+    float readVal;
+    
+    // sanity check
+    if( command == "" ) return false;
+    
+    // check
+    if( command == "speed" )
+    {
+        // read
+        if( !(istr >> readVal) )
+        {
+            // error
+            cerr << "[VRBlowStringEntity]: SPEED not enough arguments..." << endl;
+            // done
+            return false;
+        }
+        else
+        {
+            animationSpeed = readVal;
+        }
+    }
+    else if( command == "amount" )
+    {
+        // read
+        if( !(istr >> readVal) )
+        {
+            // error
+            cerr << "[VRBlowStringEntity]: AMOUNT not enough arguments..." << endl;
+            // done
+            return false;
+        }
+        else
+        {
+            animationAmount = readVal;
+        }
+    }
+    else if( command == "phase" )
+    {
+        // read
+        if( !(istr >> readVal) )
+        {
+            // error
+            cerr << "[VRBlowStringEntity]: PHASE not enough arguments..." << endl;
+            // done
+            return false;
+        }
+        else
+        {
+            animationPhase = readVal;
+        }
+    }
+    else if( command == "texture" )
+    {
+        string textureKey;
+        // read
+        if( !(istr >> textureKey) )
+        {
+            // error
+            cerr << "[VRBlowStringEntity]: TEXTURE not enough arguments..." << endl;
+            // done
+            return false;
+        }
+        else
+        {
+            setString( "texture", textureKey );
+        }
+    }
+    else
+    {
+        // error
+        cerr << "[VRBlowStringEntity]: unrecognized command..." << endl;
+        // done
+        return false;
+    }
+    
+    return true;
 }

@@ -288,6 +288,55 @@ public:
     ofSpherePrimitive sphere;
 };
 
+//------------------------------------------------------------------------------
+// name: class VRBlowStringEntity
+// desc: a single additive blended vibrating string
+//
+// EVAL commands:
+//   "speed   [oscillation frequency]"
+//   "amount  [oscillation amplitude]"
+//   "phase   [oscillation phase]"
+//   "texture [texture database handle]"
+//------------------------------------------------------------------------------
+class VRBlowStringEntity : public VREntity {
+public:
+    // constructor
+    VRBlowStringEntity();
+    
+public:
+    // set image for drawing
+    void setImage( ofImage * imageRef );
+    // set image for drawing by name (via OFCKDB)
+    void setImage( const std::string & key );
+
+public:
+    // update
+    void update( double dt );
+    // render
+    void render();
+    // eval: change animation amount
+    virtual bool eval( const std::string & command );
+
+protected:
+    // helper to constructor
+    void formMesh();
+    // helper to update()
+    void updateMesh();
+    // reference to image
+    ofTexture * m_imageRef;
+    // blend mode
+    ofBlendMode m_blendMode;
+    // mesh to draw
+    ofMesh glowMesh;
+    // constants
+    const float defaultHeight = 0.5;
+    const float defaultWidth = 0.5;
+    // animation parameters
+    float time;
+    float animationAmount;
+    float animationSpeed;
+    float animationPhase;
+};
 
 
 
