@@ -75,6 +75,7 @@ VREntity * VREntityFactory::makeEntity( const std::string & type )
     else if( type == "circle" ) { }
     else if( type == "ugen" ) { }
     else if( type == "dot" ) { e = new VRDotEntity(); }
+    else if( type == "light" ) { e = new VRLightEntity(); }
     
     // log
     if( !e )
@@ -941,6 +942,159 @@ void VRFlare::render()
 
     // blending
     ofEnableBlendMode( OF_BLENDMODE_ALPHA );
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: VRLightEntity()
+// desc: constructor
+//------------------------------------------------------------------------------
+VRLightEntity::VRLightEntity()
+{
+    numSources = 1;
+    rotateSpeed = 1;
+    textureKey = "";
+    // initialize vector
+    update(0);
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: eval()
+// desc: set parameters
+//------------------------------------------------------------------------------
+bool VRLightEntity::eval( const std::string & theLine )
+{
+    string line = lowerCase( theLine );
+
+    // string stream
+    istringstream istr( line );
+    // the command
+    string command;
+    // get it
+    istr >> command;
+
+    // set num sources
+    if( command == "num" )
+    {
+        // the number
+        int num;
+        
+        // loop
+        if( !(istr >> num) )
+        {
+            // empty command
+            cerr << "[VRLightEntity]: NUM missing number!" << endl;
+            // done
+            return false;
+        }
+        else
+        {
+            // set
+            numSources = num;
+        }
+    }
+    // set rotation speed
+    else if( command == "rotate" )
+    {
+        // the number
+        float rotate;
+        
+        // loop
+        if( !(istr >> rotate) )
+        {
+            // empty command
+            cerr << "[VRLightEntity]: ROTATE missing rotation speed!" << endl;
+            // done
+            return false;
+        }
+        else
+        {
+            // set
+            rotateSpeed = rotate;
+        }
+    }
+    // set texture key
+    else if( command == "texture" )
+    {
+        // the key
+        string key;
+        
+        // loop
+        if( !(istr >> key) )
+        {
+            // empty command
+            cerr << "[VRLightEntity]: TEXTURE missing key!" << endl;
+            // done
+            return false;
+        }
+        else
+        {
+            // set
+            textureKey = key;
+        }
+    }
+    else
+    {
+        // empty command
+        cerr << "[VRLightEntity]: unrecognized EVAL command!" << endl;
+        // done
+        return false;
+    }
+}
+
+
+//------------------------------------------------------------------------------
+// name: update()
+// desc: update the light state
+//------------------------------------------------------------------------------
+void VRLightEntity::update( double dt )
+{
+    // rotate
+    ori.y += rotateSpeed * 5;
+    // resize
+    lights.resize(numSources);
+    // for each flare
+    for( int i = 0; i < lights.size(); i++ )
+    {
+        // set location
+        lights[i].loc = this->loc;
+        // set orientation
+        lights[i].ori = this->ori;
+        // y orientation: rotate into column
+        lights[i].ori.y += i * 180.0 / numSources;
+        // set scaling
+        lights[i].sca = this->sca;
+        // set color
+        lights[i].col = this->col;
+        // set alpha
+        lights[i].alpha = this->alpha;
+        // set texture
+        lights[i].setString( "texture", textureKey );
+        // update
+        lights[i].update( dt );
+    }
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: render()
+// desc: render the light
+//------------------------------------------------------------------------------
+void VRLightEntity::render()
+{
+    // for each flare
+    for( int i = 0; i < lights.size(); i++ )
+    {
+        // render it
+        lights[i].render();
+    }
 }
 
 

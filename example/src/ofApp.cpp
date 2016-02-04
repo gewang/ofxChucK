@@ -22,6 +22,10 @@ void ofApp::setup()
 
     // load image
     OFCKDB::instance()->loadImage("texture:flare-1", "flare-tng-1.png");
+    OFCKDB::instance()->loadImage("texture:flare-2", "flare-tng-2.png");
+    OFCKDB::instance()->loadImage("texture:flare-3", "flare-tng-3.png");
+    OFCKDB::instance()->loadImage("texture:flare-4", "flare-tng-4.png");
+    OFCKDB::instance()->loadImage("texture:flare-5", "flare-tng-5.png");
 
     // set pointer
     vr = VR::instance();
@@ -44,7 +48,8 @@ void ofApp::setup()
     // r = chuck->compileFile( "ck/wire.ck" );
     // r = chuck->compileFile( "ck/obj.ck" );
     // r = chuck->compileFile( "ck/textured_mesh.ck" );
-    r = chuck->compileFile( "ck/update_mesh.ck" );
+    // r = chuck->compileFile( "ck/update_mesh.ck" );
+    r = chuck->compileFile( "ck/lights.ck" );
 
     // check
     if( !r )

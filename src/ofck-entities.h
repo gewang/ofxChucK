@@ -188,6 +188,41 @@ public:
 
 
 //------------------------------------------------------------------------------
+// name: class VRLightEntity
+// desc: rotating light source composed of flares
+//
+// EVAL commands:
+//   "num [number of sources]"
+//   "rotate [speed]"
+//   "texture [texture]"
+//------------------------------------------------------------------------------
+class VRLightEntity : public VREntity
+{
+public:
+    // constructor
+    VRLightEntity();
+    // render
+    virtual void render();
+    // command: set parameters
+    virtual bool eval( const std::string & command );
+    // update
+    virtual void update( double dt );
+
+public:
+    // the lights
+    vector< VRFlare > lights;
+    // how many
+    int numSources;
+    // rotational speed
+    float rotateSpeed;
+    // texture key
+    string textureKey;
+};
+
+
+
+
+//------------------------------------------------------------------------------
 // name: class VRDotEntity
 // desc: dot entity
 //------------------------------------------------------------------------------
