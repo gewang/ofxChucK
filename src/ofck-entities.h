@@ -14,6 +14,7 @@
 
 #include "ofck.h"
 #include "ofMain.h"
+#include <deque>
 
 
 
@@ -129,6 +130,8 @@ public:
     ofImage * m_texture;
     // how to draw
     bool m_fill;
+    // line width
+    float m_lineWidth;
 };
 
 
@@ -211,16 +214,12 @@ public:
     virtual void update( double dt );
 
 public:
-    // the lights
-    // vector<VRFlare> lights;
     // how many
     int numSources;
     // intrinsic orientation
     Vector3D intrinsicOri;
     // rotational speed
     Vector3D intrinsicRotation;
-    // texture key
-    // string textureKey;
 };
 
 
@@ -231,6 +230,7 @@ public:
 // desc: trail entity
 //
 // EVAL commands:
+//   "add [latest vertex]
 //   "length [number of vertices in trail]"
 //   "draw points|linestrip|trianglestrips"
 //------------------------------------------------------------------------------
@@ -247,12 +247,26 @@ public:
     virtual void render();
     // command: set parameters
     virtual bool eval( const std::string & command );
-    
+
 public:
+    // clear tail points
+    void clear();
+    // add a new point
+    void addVertex( const Vector3D & v3 );
+    // resize length of trail
+    void setLength( int N );
+
+public:
+    // tail points
+    std::deque<Vector3D> m_vertices;
     // the mesh
     ofMesh m_mesh;
     // trail length
     int m_length;
+    // fill or wireframe
+    bool m_fill;
+    // line width
+    float m_lineWidth;
 };
 
 

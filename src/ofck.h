@@ -17,6 +17,7 @@
 #include "util_thread.h"
 #include "x-vector3d.h"
 #include "ofMain.h"
+#include <deque>
 
 
 // the query function for ofck
@@ -124,6 +125,24 @@ protected:
 
 
 
+//------------------------------------------------------------------------------
+// name: struct EvalCommand
+// desc: information to execute/defer an entity eval command
+//------------------------------------------------------------------------------
+struct EvalCommand
+{
+    // the entity doing the eval
+    VREntity * entity;
+    // the command
+    std::string command;
+    
+    // constructor
+    EvalCommand( VREntity * e = NULL, const std::string & str = "" )
+    { entity = e; command = str; }
+};
+
+
+
 
 //------------------------------------------------------------------------------
 // name: class ofckdb
@@ -174,6 +193,12 @@ public:
     ofLight * setLight( const std::string & key, ofLight * light );
     // get a light associated with a key
     ofLight * getLight( const std::string & key );
+    
+public:
+    // enqueue eval command to be executed later
+    void deferEval( VREntity * e, const std::string & line );
+    // flush eval queue
+    void flushEval();
 
 public:
     // instance
@@ -211,6 +236,10 @@ public:
     Chuck_Event displaySync;
     // event buffer for queue broadcat
     CBufferSimple * m_eventBuffer;
+
+public:
+    // command queue
+    std::deque<EvalCommand> m_evalQueue;
 };
 
 

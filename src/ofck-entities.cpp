@@ -72,10 +72,11 @@ VREntity * VREntityFactory::makeEntity( const std::string & type )
     else if( type == "mesh" ) { e = new VRMeshEntity(); }
     else if( type == "text" ) { e = new VRTextEntity(); }
     else if( type == "lines" ) { e = new VRLinesEntity(); }
+    else if( type == "light" ) { e = new VRLightEntity(); }
+    else if( type == "trail" ) { e = new VRTrailEntity(); }
     else if( type == "circle" ) { }
     else if( type == "ugen" ) { }
     else if( type == "dot" ) { e = new VRDotEntity(); }
-    else if( type == "light" ) { e = new VRLightEntity(); }
     
     // log
     if( !e )
@@ -103,6 +104,8 @@ VRMeshEntity::VRMeshEntity()
     m_fill = true;
     // default
     m_texture = NULL;
+    // line width
+    m_lineWidth = 1;
 }
 
 
@@ -118,6 +121,9 @@ void VRMeshEntity::render()
     bool drawTexture = (m_texture != NULL);
     // bind texture
     if( drawTexture ) m_texture->getTextureReference().bind();
+    
+    // line width
+    ofSetLineWidth( m_lineWidth );
 
     // mesh draw
     if( m_fill )
@@ -1194,8 +1200,14 @@ void VRLightEntity::render()
 //------------------------------------------------------------------------------
 VRTrailEntity::VRTrailEntity()
 {
+    // fill
+    m_fill = true;
+    // line width
+    m_lineWidth = 2;
     // set default
-    m_length = 64;
+    setLength( 64 );
+    // default mode
+    eval( "draw linestrip" );
 }
 
 
@@ -1207,6 +1219,25 @@ VRTrailEntity::VRTrailEntity()
 //------------------------------------------------------------------------------
 void VRTrailEntity::update( double dt )
 {
+    // clear mesh
+    m_mesh.clear();
+    // variables
+    float x, y, z; Vector3D v, c = col*(1/255.0f);
+    // alpha inc based on length of tail
+    float inc = 1.0f/m_vertices.size(), a = alpha/255, t = 1;
+    // iterate over vertices
+    deque<Vector3D>::iterator it = m_vertices.begin();
+    for( ; it != m_vertices.end(); it++ )
+    {
+        // get vertex
+        v = *it;
+        // add vertex
+        m_mesh.addVertex( ofVec3f(v.x, v.y, v.z) );
+        // add color
+        m_mesh.addColor( ofFloatColor(c.x, c.y, c.z, a*t*t*t) );
+        // update a
+        t-= inc;
+    }
 }
 
 
@@ -1218,6 +1249,28 @@ void VRTrailEntity::update( double dt )
 //------------------------------------------------------------------------------
 void VRTrailEntity::render()
 {
+    // check if draw texture
+    // bool drawTexture = (m_texture != NULL);
+    // bind texture
+    // if( drawTexture ) m_texture->getTextureReference().bind();
+    
+    // no lighting for now
+    ofDisableLighting();
+    // enable depth testing
+    ofEnableDepthTest();
+    // blending
+    ofEnableBlendMode( OF_BLENDMODE_ALPHA );
+    // point size
+    ofSetLineWidth( m_lineWidth );
+
+    // mesh draw
+    if( m_fill ) m_mesh.draw();
+    else m_mesh.drawWireframe();
+    // disable blending
+    ofDisableBlendMode();
+    
+    // unbind texture
+    // if( drawTexture ) m_texture->getTextureReference().unbind();
 }
 
 
@@ -1227,9 +1280,127 @@ void VRTrailEntity::render()
 // name: eval()
 // desc: command: set parameters
 //------------------------------------------------------------------------------
-bool VRTrailEntity::eval( const std::string & command )
+bool VRTrailEntity::eval( const std::string & theLine )
 {
+    string line = lowerCase( theLine );
+    
+    // word
+    string token;
+    // string stream
+    istringstream istr( line );
+    // the command
+    string command;
+    // get it
+    istr >> command;
+    
+    // sanity check
+    if( command == "" )
+    {
+        // empty command
+        cerr << "[VRTrailEntity]: empty EVAL command!" << endl;
+        // done
+        return false;
+    };
+    
+    // the number
+    float x, y, z;
+    // string
+    string str;
+    
+    // check
+    if( command == "add" )
+    {
+        // loop
+        if( istr >> x >> y >> z )
+        {
+            // add vertex
+            addVertex( Vector3D(x,y,z) );
+        }
+    }
+    else if( command == "length" )
+    {
+        // get
+        if( istr >> x )
+        {
+            setLength( x );
+        }
+    }
+    else if( command == "clear" )
+    {
+        // clear
+        this->clear();
+    }
+    else if( command == "draw" )
+    {
+        // loop
+        if( istr >> str )
+        {
+            // check
+            if( str == "points" )
+                m_mesh.setMode( OF_PRIMITIVE_POINTS );
+            else if( str == "linestrip" )
+                m_mesh.setMode( OF_PRIMITIVE_LINE_STRIP );
+            else if( str == "trianglestrip" )
+                m_mesh.setMode( OF_PRIMITIVE_TRIANGLE_STRIP );
+            else
+            {
+                // error
+                cerr << "[VRTrailEntity]: invalid DRAW type: '" << str << "'" << endl;
+                // done
+                return false;
+            }
+        }
+    }
+    else
+    {
+        // super class
+        VREntity::eval( theLine );
+    }
+    
     return true;
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: clear()
+// desc: clear tail points
+//------------------------------------------------------------------------------
+void VRTrailEntity::clear()
+{
+    // clear it
+    m_vertices.clear();
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: addVertex()
+// desc: add a new point
+//------------------------------------------------------------------------------
+void VRTrailEntity::addVertex( const Vector3D & v3 )
+{
+    // check size
+    if( m_vertices.size() >= m_length ) m_vertices.pop_back();
+    // add most recent point
+    m_vertices.push_front( v3 );
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: setLength()
+// desc: resize length of trail
+//------------------------------------------------------------------------------
+void VRTrailEntity::setLength( int N )
+{
+    // set the length
+    m_length = N;
+    // get rid of stuff
+    while( m_vertices.size() > m_length ) m_vertices.pop_back();
 }
 
 
