@@ -243,7 +243,7 @@ spork ~ bangDetect();
 while( true )
 {
     6 * x.last() => light.loc.x;
-    6 * y.last() => light.loc.y;
+    6 * y.last() => light.loc.z;
     // add vertex
     trail.eval( "add", light.loc );
     
