@@ -6,9 +6,9 @@
 2 => float RADIUS;
 
 // array
-VREntity vortex[0];
+VREntity lights[0];
 // parent
-VR.makeEntity("vortex", "node" ) @=> VREntity varent;
+VR.makeEntity("vortex", "node" ) @=> VREntity vortex;
 
 %(RADIUS, 0) => polar p;
 
@@ -33,44 +33,45 @@ for( int i; i < NUM_COLUMNS; i++ )
     e.loc.set( c.re, 0, c.im );
     
     // add
-    varent.addChild( e );
-    vortex << e;
+    vortex.addChild( e );
+    lights << e;
 }
 
 // set color
-vortex[0].rgba.set(1,.5,0,1);
-vortex[1].rgba.set(1,.3,0,1);
-vortex[2].rgba.set(1,0,0,1);
-vortex[3].rgba.set(1,0,.5,1);
-vortex[4].rgba.set(1,0,1,1);
-vortex[5].rgba.set(.5,0,1,1);
-vortex[6].rgba.set(0,0,1,1);
-vortex[7].rgba.set(0,1,.5,1);
-vortex[8].rgba.set(0,1,0,1);
-vortex[9].rgba.set(.5,1,0,1);
-vortex[10].rgba.set(1,1,0,1);
-vortex[11].rgba.set(1,.7,0,1);
+lights[0].rgba.set(1,.5,0,1);
+lights[1].rgba.set(1,.3,0,1);
+lights[2].rgba.set(1,0,0,1);
+lights[3].rgba.set(1,0,.5,1);
+lights[4].rgba.set(1,0,1,1);
+lights[5].rgba.set(.5,0,1,1);
+lights[6].rgba.set(0,0,1,1);
+lights[7].rgba.set(0,1,.5,1);
+lights[8].rgba.set(0,1,0,1);
+lights[9].rgba.set(.5,1,0,1);
+lights[10].rgba.set(1,1,0,1);
+lights[11].rgba.set(1,.7,0,1);
 
 for( int i; i < NUM_COLUMNS; i++ )
 {
-    .3 => vortex[i].rgba.a;
+    .3 => lights[i].rgba.a;
 }
 
 // add to scene
-VR.root().addChild( varent );
+VR.root().addChild( vortex );
 
 // disable lights
 VR.allLightsOff();
 
-8 => varent.loc.z;
+// move it closer
+8 => vortex.loc.z;
 // rotate
-90 => varent.ori.x;
+90 => vortex.ori.x;
 
 // loop
 while( true )
 {
     // rotate it
-    .2 +=> varent.ori.y;
+    .5 +=> vortex.ori.y;
     
     // synch with display
     VR.displaySync() => now;
