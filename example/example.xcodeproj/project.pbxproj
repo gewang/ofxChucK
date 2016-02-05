@@ -46,6 +46,7 @@
 		800D1ADB1B8704741C7AA9D9 /* ulib_regex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F096CE7DF33CAAD5351A8FD /* ulib_regex.cpp */; };
 		8377F3E5C3C552FD916604CB /* chuck_shell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51983706C5349144E1950765 /* chuck_shell.cpp */; };
 		83B4411ECB64634CB69A55E1 /* util_thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 965F9619D482443CA4145068 /* util_thread.cpp */; };
+		8637C4491C6436CB00F756F2 /* x-buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8637C4471C6436CB00F756F2 /* x-buffer.cpp */; };
 		8706643414F20DFFCC2952A6 /* hidio_sdl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF29484BDF08ACC024F08C8D /* hidio_sdl.cpp */; };
 		878B933A913CBC16E7FB0E0A /* chuck_frame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4314C5D672048DAAECEB3A13 /* chuck_frame.cpp */; };
 		884653EFB5C463A40EE36D60 /* chuck_symbol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17A3673BECB1C5863AD03D14 /* chuck_symbol.cpp */; };
@@ -226,6 +227,8 @@
 		82055F42CDB6AE64A113EB2E /* chuck_oo.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = chuck_oo.cpp; path = ../../../addons/ofxChucK/libs/chuck/chuck_oo.cpp; sourceTree = SOURCE_ROOT; };
 		83B845921E64A081DF8C875A /* lo_internal.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = lo_internal.h; path = ../../../addons/ofxChucK/libs/lo/lo_internal.h; sourceTree = SOURCE_ROOT; };
 		85A41404C61341ABF3DEDE04 /* chuck_utils.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = chuck_utils.h; path = ../../../addons/ofxChucK/libs/chuck/chuck_utils.h; sourceTree = SOURCE_ROOT; };
+		8637C4471C6436CB00F756F2 /* x-buffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "x-buffer.cpp"; path = "../src/x-buffer.cpp"; sourceTree = "<group>"; };
+		8637C4481C6436CB00F756F2 /* x-buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "x-buffer.h"; path = "../src/x-buffer.h"; sourceTree = "<group>"; };
 		864F2B0381FEE67FABB885B2 /* lo_endian.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = lo_endian.h; path = ../../../addons/ofxChucK/libs/lo/lo_endian.h; sourceTree = SOURCE_ROOT; };
 		87520FEB69998AA7A746C187 /* chuck_compile.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = chuck_compile.h; path = ../../../addons/ofxChucK/libs/chuck/chuck_compile.h; sourceTree = SOURCE_ROOT; };
 		8A5595B84D2E292DC7BEEA93 /* uana_xform.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = uana_xform.cpp; path = ../../../addons/ofxChucK/libs/chuck/uana_xform.cpp; sourceTree = SOURCE_ROOT; };
@@ -605,6 +608,8 @@
 				F656DDAC3CA16B998B19BBB0 /* ofck-entities.cpp */,
 				206545651015A6DA306A9A3B /* ofxChucK.h */,
 				F26BFC8326F2ECD83C5401B6 /* ofxChucK.cpp */,
+				8637C4481C6436CB00F756F2 /* x-buffer.h */,
+				8637C4471C6436CB00F756F2 /* x-buffer.cpp */,
 				C85970C1C3D7DA3192F70B59 /* x-vector3d.h */,
 			);
 			name = src;
@@ -750,6 +755,7 @@
 				718787AF8024BEC12EF1B499 /* ugen_osc.cpp in Sources */,
 				DDF925B433607C8089F10FEF /* ugen_stk.cpp in Sources */,
 				9065BD709F25CEE25D8A8E76 /* ugen_xxx.cpp in Sources */,
+				8637C4491C6436CB00F756F2 /* x-buffer.cpp in Sources */,
 				6F315B4D067D731568A1E8BF /* ulib_machine.cpp in Sources */,
 				93A184C0A670C27820EE6B3F /* ulib_math.cpp in Sources */,
 				AF5EB6ECBB325D1FB0BDCD29 /* ulib_opsc.cpp in Sources */,

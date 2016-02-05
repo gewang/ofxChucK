@@ -211,4 +211,6 @@ void TheChucK::displaySync()
     OFCKDB * db = OFCKDB::instance();
     // broadcast on the event
     db->displaySync.queue_broadcast( db->m_eventBuffer );
+    // flush eval queue (defered eval commands here to minimize locking)
+    db->flushEval();
 }

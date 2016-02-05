@@ -14,6 +14,7 @@
 
 #include "ofck.h"
 #include "ofMain.h"
+#include <deque>
 
 
 
@@ -51,6 +52,8 @@ public:
     void setImage( const std::string & key );
 
 public:
+    // eval
+    bool eval( const std::string & line );
     // update
     void update( double dt );
     // render
@@ -78,6 +81,7 @@ protected:
 // EVAL commands:
 //   "clear"
 //   "vertex x y z"
+//   "color r g b"
 //   "color r g b a"
 //   "uv u v"
 //   "normal x y z"
@@ -95,6 +99,7 @@ protected:
 //   "load [OBJ file]"
 //   "toggle color on|off"
 //   "toggle axis on|off"
+//   "update vertex|color|uv|normal index [data]"
 //------------------------------------------------------------------------------
 class VRMeshEntity : public VREntity
 {
@@ -125,6 +130,8 @@ public:
     ofImage * m_texture;
     // how to draw
     bool m_fill;
+    // line width
+    float m_lineWidth;
 };
 
 
@@ -186,6 +193,86 @@ public:
 
 
 //------------------------------------------------------------------------------
+// name: class VRLightEntity
+// desc: rotating light source composed of flares
+//
+// EVAL commands:
+//   "num [number of sources]"
+//   "rotate [speed]"
+//   "texture [texture]"
+//------------------------------------------------------------------------------
+class VRLightEntity : public VRFlare
+{
+public:
+    // constructor
+    VRLightEntity();
+    // render
+    virtual void render();
+    // command: set parameters
+    virtual bool eval( const std::string & command );
+    // update
+    virtual void update( double dt );
+
+public:
+    // how many
+    int numSources;
+    // intrinsic orientation
+    Vector3D intrinsicOri;
+    // rotational speed
+    Vector3D intrinsicRotation;
+};
+
+
+
+
+//------------------------------------------------------------------------------
+// name: class VRTrailEntity
+// desc: trail entity
+//
+// EVAL commands:
+//   "add [latest vertex]
+//   "length [number of vertices in trail]"
+//   "draw points|linestrip|trianglestrips"
+//------------------------------------------------------------------------------
+class VRTrailEntity : public VREntity
+{
+public:
+    // constructor
+    VRTrailEntity();
+
+public:
+    // update
+    virtual void update( double dt );
+    // render
+    virtual void render();
+    // command: set parameters
+    virtual bool eval( const std::string & command );
+
+public:
+    // clear tail points
+    void clear();
+    // add a new point
+    void addVertex( const Vector3D & v3 );
+    // resize length of trail
+    void setLength( int N );
+
+public:
+    // tail points
+    std::deque<Vector3D> m_vertices;
+    // the mesh
+    ofMesh m_mesh;
+    // trail length
+    int m_length;
+    // fill or wireframe
+    bool m_fill;
+    // line width
+    float m_lineWidth;
+};
+
+
+
+
+//------------------------------------------------------------------------------
 // name: class VRDotEntity
 // desc: dot entity
 //------------------------------------------------------------------------------
@@ -201,6 +288,55 @@ public:
     ofSpherePrimitive sphere;
 };
 
+//------------------------------------------------------------------------------
+// name: class VRBlowStringEntity
+// desc: a single additive blended vibrating string
+//
+// EVAL commands:
+//   "speed   [oscillation frequency]"
+//   "amount  [oscillation amplitude]"
+//   "phase   [oscillation phase]"
+//   "texture [texture database handle]"
+//------------------------------------------------------------------------------
+class VRBlowStringEntity : public VREntity {
+public:
+    // constructor
+    VRBlowStringEntity();
+    
+public:
+    // set image for drawing
+    void setImage( ofImage * imageRef );
+    // set image for drawing by name (via OFCKDB)
+    void setImage( const std::string & key );
+
+public:
+    // update
+    void update( double dt );
+    // render
+    void render();
+    // eval: change animation amount
+    virtual bool eval( const std::string & command );
+
+protected:
+    // helper to constructor
+    void formMesh();
+    // helper to update()
+    void updateMesh();
+    // reference to image
+    ofTexture * m_imageRef;
+    // blend mode
+    ofBlendMode m_blendMode;
+    // mesh to draw
+    ofMesh glowMesh;
+    // constants
+    const float defaultHeight = 0.5;
+    const float defaultWidth = 0.5;
+    // animation parameters
+    float time;
+    float animationAmount;
+    float animationSpeed;
+    float animationPhase;
+};
 
 
 

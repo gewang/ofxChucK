@@ -404,8 +404,12 @@ CK_DLL_MFUN( vrentity_eval )
 
     // get the c VREntity pointer
     VREntity * e = (VREntity *)OBJ_MEMBER_INT(SELF,vrentity_offset_cpointer);
+    // defer
+    OFCKDB::instance()->deferEval(e, command);
+    // true for now
+    RETURN->v_int = true;
     // set the string
-    RETURN->v_int = e->eval( command );
+    // RETURN->v_int = e->eval( command );
 }
 
 CK_DLL_MFUN( vrentity_eval_2 )
@@ -415,8 +419,13 @@ CK_DLL_MFUN( vrentity_eval_2 )
 
     // get the c VREntity pointer
     VREntity * e = (VREntity *)OBJ_MEMBER_INT(SELF,vrentity_offset_cpointer);
+    // defer
+    OFCKDB::instance()->deferEval(e, op + " " + args);
+    // true for now
+    RETURN->v_int = true;
+
     // set the string
-    RETURN->v_int = e->eval( op, args );
+    // RETURN->v_int = e->eval( op, args );
 }
 
 CK_DLL_MFUN( vrentity_eval_vec3 )
@@ -431,8 +440,12 @@ CK_DLL_MFUN( vrentity_eval_vec3 )
 
     // get the c VREntity pointer
     VREntity * e = (VREntity *)OBJ_MEMBER_INT(SELF,vrentity_offset_cpointer);
+    // defer
+    OFCKDB::instance()->deferEval(e, cmd.str());
+    // true for now
+    RETURN->v_int = true;
     // set the string
-    RETURN->v_int = e->eval( cmd.str() );
+    //RETURN->v_int = e->eval( cmd.str() );
 }
 
 CK_DLL_MFUN( vrentity_eval_vec3_vec3 )
@@ -449,8 +462,12 @@ CK_DLL_MFUN( vrentity_eval_vec3_vec3 )
 
     // get the c VREntity pointer
     VREntity * e = (VREntity *)OBJ_MEMBER_INT(SELF,vrentity_offset_cpointer);
+    // defer
+    OFCKDB::instance()->deferEval(e, cmd.str());
+    // true for now
+    RETURN->v_int = true;
     // set the string
-    RETURN->v_int = e->eval( cmd.str() );
+    // RETURN->v_int = e->eval( cmd.str() );
 }
 
 
@@ -706,6 +723,8 @@ OFCKDB::OFCKDB()
 {
     initialize_object( &displaySync, &t_event );
     m_eventBuffer = TheChucK::instance()->vm()->create_event_buffer();
+    // reset length of buffer (capacity)
+    m_evalQueue.init( 250000 );
 }
 
 
@@ -1070,6 +1089,41 @@ ofLight * OFCKDB::getLight( const std::string & key )
     // return the value
     return string2light[key];
 }
+
+
+
+
+//------------------------------------------------------------------------------
+// name: deferEval()
+// desc: enqueue eval command to be executed later
+//------------------------------------------------------------------------------
+void OFCKDB::deferEval( VREntity * e, const std::string & line )
+{
+    // instantiate
+    EvalCommand ec(e,line);
+    // enqueue
+    m_evalQueue.put( ec );
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: flushEval()
+// desc: flush eval queue
+//------------------------------------------------------------------------------
+void OFCKDB::flushEval()
+{
+    // the command
+    EvalCommand c;
+
+    // check if more
+    while( m_evalQueue.get( &c ) )
+    {
+        c.entity->eval(c.command);
+    }
+}
+
 
 
 

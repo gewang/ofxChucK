@@ -69,12 +69,16 @@ VREntity * VREntityFactory::makeEntity( const std::string & type )
 
     // check type
     if( type == "flare" ) { e = new VRFlare(); }
+    else if( type == "node" || type == "entity" ) { e = new VREntity(); }
     else if( type == "mesh" ) { e = new VRMeshEntity(); }
     else if( type == "text" ) { e = new VRTextEntity(); }
     else if( type == "lines" ) { e = new VRLinesEntity(); }
+    else if( type == "light" ) { e = new VRLightEntity(); }
+    else if( type == "trail" ) { e = new VRTrailEntity(); }
     else if( type == "circle" ) { }
     else if( type == "ugen" ) { }
     else if( type == "dot" ) { e = new VRDotEntity(); }
+    else if( type == "blowstring" ) { e = new VRBlowStringEntity(); }
     
     // log
     if( !e )
@@ -91,7 +95,8 @@ VREntity * VREntityFactory::makeEntity( const std::string & type )
 
 
 //------------------------------------------------------------------------------
-// constructor
+// name: VRMeshEntity()
+// desc: constructor
 //------------------------------------------------------------------------------
 VRMeshEntity::VRMeshEntity()
 {
@@ -101,21 +106,28 @@ VRMeshEntity::VRMeshEntity()
     m_fill = true;
     // default
     m_texture = NULL;
+    // line width
+    m_lineWidth = 1;
 }
 
 
 
 
 //------------------------------------------------------------------------------
-// render
+// name: render()
+// desc: render
 //------------------------------------------------------------------------------
 void VRMeshEntity::render()
 {
+    // check if draw texture
     bool drawTexture = (m_texture != NULL);
-    if (drawTexture) {
-        m_texture->getTextureReference().bind();
-    }
+    // bind texture
+    if( drawTexture ) m_texture->getTextureReference().bind();
     
+    // line width
+    ofSetLineWidth( m_lineWidth );
+
+    // mesh draw
     if( m_fill )
     {
         m_mesh.draw();
@@ -124,17 +136,17 @@ void VRMeshEntity::render()
     {
         m_mesh.drawWireframe();
     }
-    
-    if (drawTexture) {
-        m_texture->getTextureReference().unbind();
-    }
+
+    // unbind texture
+    if( drawTexture ) m_texture->getTextureReference().unbind();
 }
 
 
 
 
 //------------------------------------------------------------------------------
-// command: add
+// name: eval()
+// desc: eval command
 //------------------------------------------------------------------------------
 bool VRMeshEntity::eval( const std::string & theLine )
 {
@@ -185,8 +197,18 @@ bool VRMeshEntity::eval( const std::string & theLine )
         // loop
         if( istr >> x >> y >> z )
         {
-            // push as float
-            m_mesh.addColor( ofFloatColor(x,y,z) );
+            // check for alpha value
+            float a;
+            if( istr >> a )
+            {
+                // push as float with alpha
+                m_mesh.addColor( ofFloatColor(x,y,z,a) );
+            }
+            else
+            {
+                // push as float
+                m_mesh.addColor( ofFloatColor(x,y,z) );
+            }
         }
     }
     else if( command == "normal" )
@@ -302,6 +324,91 @@ bool VRMeshEntity::eval( const std::string & theLine )
 
         // load this
         loadOBJ( str );
+    }
+    else if( command == "update" )
+    {
+        // get from stream
+        if( !(istr >> str) )
+        {
+            // error
+            cerr << "[VRMeshEntity]: UPDATE missing parameter..." << endl;
+            // done
+            return false;
+        }
+        int index;
+        if( !(istr >> index) )
+        {
+            // error
+            cerr << "[VRMeshEntity]: UPDATE missing index..." << endl;
+            // done
+            return false;
+        }
+        
+        // vertex
+        if( str == "vertex" )
+        {
+            if( !(istr >> x >> y >> z) )
+            {
+                // error
+                cerr << "[VRMeshEntity]: UPDATE vertex not enough values..." << endl;
+                // done
+                return false;
+            }
+            m_mesh.setVertex( index, ofVec3f(x,y,z) );
+        }
+        // color
+        else if( str == "color" )
+        {
+            if( !(istr >> x >> y >> z) )
+            {
+                // error
+                cerr << "[VRMeshEntity]: UPDATE color not enough values..." << endl;
+                // done
+                return false;
+            }
+            // check for alpha
+            float a;
+            if( istr >> a )
+            {
+                m_mesh.setColor( index, ofFloatColor(x,y,z,a) );
+            }
+            else
+            {
+                m_mesh.setColor( index, ofFloatColor(x,y,z) );
+            }
+        }
+        // texture
+        else if( str == "uv" )
+        {
+            if( !(istr >> x >> y) )
+            {
+                // error
+                cerr << "[VRMeshEntity]: UPDATE uv not enough values..." << endl;
+                // done
+                return false;
+            }
+            m_mesh.setTexCoord( index, ofVec2f(x,y) );
+        }
+        // normal
+        else if( str == "normal" )
+        {
+            if( !(istr >> x >> y >> z) )
+            {
+                // error
+                cerr << "[VRMeshEntity]: UPDATE normal not enough values..." << endl;
+                // done
+                return false;
+            }
+            m_mesh.setNormal( index, ofVec3f(x,y,z) );
+        }
+        // error
+        else
+        {
+            // error
+            cerr << "[VRMeshEntity]: UPDATE unrecognized type..." << endl;
+            // done
+            return false;
+        }
     }
 }
 
@@ -502,7 +609,8 @@ bool VRMeshEntity::loadOBJFile(
 
 
 //------------------------------------------------------------------------------
-// constructor
+// name: VRTextEntity()
+// desc: constructor
 //------------------------------------------------------------------------------
 VRTextEntity::VRTextEntity()
 {
@@ -514,7 +622,8 @@ VRTextEntity::VRTextEntity()
 
 
 //------------------------------------------------------------------------------
-// render
+// name: update()
+// desc: update state
 //------------------------------------------------------------------------------
 void VRTextEntity::update( double dt )
 {
@@ -532,7 +641,8 @@ void VRTextEntity::update( double dt )
 
 
 //------------------------------------------------------------------------------
-// render
+// name: render()
+// desc: render
 //------------------------------------------------------------------------------
 void VRTextEntity::render()
 {
@@ -554,7 +664,8 @@ void VRTextEntity::render()
 
 
 //------------------------------------------------------------------------------
-// command: add
+// name: eval()
+// desc: eval command
 //------------------------------------------------------------------------------
 bool VRTextEntity::eval( const std::string & theLine )
 {
@@ -617,7 +728,8 @@ bool VRTextEntity::eval( const std::string & theLine )
 
 
 //------------------------------------------------------------------------------
-// constructor
+// name: VRLineEntity()
+// desc: constructor
 //------------------------------------------------------------------------------
 VRLinesEntity::VRLinesEntity()
 {
@@ -628,7 +740,8 @@ VRLinesEntity::VRLinesEntity()
 
 
 //------------------------------------------------------------------------------
-// render
+// name: render()
+// desc: render
 //------------------------------------------------------------------------------
 void VRLinesEntity::render()
 {
@@ -647,7 +760,8 @@ void VRLinesEntity::render()
 
 
 //------------------------------------------------------------------------------
-// command: add
+// name: eval()
+// desc: eval command
 //------------------------------------------------------------------------------
 bool VRLinesEntity::eval( const std::string & theLine )
 {
@@ -758,7 +872,12 @@ void VRFlare::setImage( ofImage * imageRef )
     // set the image
     m_imageRef = imageRef;
     
-    updateMeshPoints();
+    // check reference
+    if( m_imageRef )
+    {
+        // update mesh
+        updateMeshPoints();
+    }
 }
 
 
@@ -772,12 +891,8 @@ void VRFlare::setImage( const string & key )
 {
     // get instance
     OFCKDB * db = OFCKDB::instance();
-    // get the image
-    m_imageRef = db->getImage( key );
-    
-    if (m_imageRef) {
-        updateMeshPoints();
-    }
+    // get and set the image
+    setImage( db->getImage( key ) );
 }
 
 
@@ -798,6 +913,54 @@ void VRFlare::updateMeshPoints()
     m_mesh.setVertex(1, ofPoint( -rw,  rh ));
     m_mesh.setVertex(2, ofPoint(  rw, -rh ));
     m_mesh.setVertex(3, ofPoint(  rw,  rh ));
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: eval()
+// desc: set parameters
+//------------------------------------------------------------------------------
+bool VRFlare::eval( const std::string & theLine )
+{
+    string line = lowerCase( theLine );
+    
+    // string stream
+    istringstream istr( line );
+    // the command
+    string command;
+    // get it
+    istr >> command;
+    
+    // set num sources
+    if( command == "texture" )
+    {
+        // the key
+        string key;
+
+        // loop
+        if( !(istr >> key) )
+        {
+            // empty command
+            cerr << "[VRFlare]: TEXTURE missing key!" << endl;
+            // done
+            return false;
+        }
+        else
+        {
+            // set
+            setString( "texture", key );
+        }
+    }
+    else
+    {
+        // done
+        return VREntity::eval( theLine );
+    }
+    
+    // handled
+    return true;
 }
 
 
@@ -852,6 +1015,400 @@ void VRFlare::render()
 
 
 //------------------------------------------------------------------------------
+// name: VRLightEntity()
+// desc: constructor
+//------------------------------------------------------------------------------
+VRLightEntity::VRLightEntity()
+{
+    numSources = 3;
+    // textureKey = "";
+    // initialize vector
+    // update(0);
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: eval()
+// desc: set parameters
+//------------------------------------------------------------------------------
+bool VRLightEntity::eval( const std::string & theLine )
+{
+    string line = lowerCase( theLine );
+
+    // string stream
+    istringstream istr( line );
+    // the command
+    string command;
+    // get it
+    istr >> command;
+
+    // set num sources
+    if( command == "num" )
+    {
+        // the number
+        int num;
+        
+        // loop
+        if( !(istr >> num) )
+        {
+            // empty command
+            cerr << "[VRLightEntity]: NUM missing number!" << endl;
+            // done
+            return false;
+        }
+        else
+        {
+            // set
+            numSources = num;
+        }
+    }
+    // set rotation speed
+    else if( command == "rotate" || command == "rotatey" )
+    {
+        // the number
+        float rotate;
+        
+        // loop
+        if( !(istr >> rotate) )
+        {
+            // empty command
+            cerr << "[VRLightEntity]: ROTATE missing rotation speed!" << endl;
+            // done
+            return false;
+        }
+        else
+        {
+            // set
+            intrinsicRotation.y = rotate;
+        }
+    }
+    else if( command == "rotatex" )
+    {
+        // the number
+        float rotate;
+        
+        // loop
+        if( !(istr >> rotate) )
+        {
+            // empty command
+            cerr << "[VRLightEntity]: ROTATEX missing rotation speed!" << endl;
+            // done
+            return false;
+        }
+        else
+        {
+            // set
+            intrinsicRotation.x = rotate;
+        }
+    }
+    else if( command == "rotatez" )
+    {
+        // the number
+        float rotate;
+        
+        // loop
+        if( !(istr >> rotate) )
+        {
+            // empty command
+            cerr << "[VRLightEntity]: ROTATEZ missing rotation speed!" << endl;
+            // done
+            return false;
+        }
+        else
+        {
+            // set
+            intrinsicRotation.z = rotate;
+        }
+    }
+    else
+    {
+        // done
+        return VRFlare::eval( theLine );
+    }
+    
+    // handled
+    return true;
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: update()
+// desc: update the light state
+//------------------------------------------------------------------------------
+void VRLightEntity::update( double dt )
+{
+    // rotate
+    intrinsicOri.x += intrinsicRotation.x;
+    intrinsicOri.y += intrinsicRotation.y;
+    intrinsicOri.z += intrinsicRotation.z;
+    
+    // call parent class
+    VRFlare::update( dt );
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: render()
+// desc: render the light
+//------------------------------------------------------------------------------
+void VRLightEntity::render()
+{
+    // check
+    if( !m_imageRef ) return;
+    
+    // disable depth
+    ofDisableDepthTest();
+    // blending
+    ofEnableBlendMode( m_blendMode );
+
+    // rotation
+    ofRotate( intrinsicOri.x, 1, 0, 0 );
+    ofRotate( intrinsicOri.y, 0, 1, 0 );
+    ofRotate( intrinsicOri.z, 0, 0, 1 );
+
+    // bind texture and draw
+    m_imageRef->getTextureReference().bind();
+    {
+        // angle between each
+        float angleInc = 180.0f / numSources;
+        // for each flare
+        for( int i = 0; i < numSources; i++ )
+        {
+            // draw
+            m_mesh.draw();
+            // rotate
+            ofRotate( angleInc, 0, 1, 0 );
+        }
+    }
+    // unbind texture
+    m_imageRef->getTextureReference().unbind();
+    
+    // blending
+    ofEnableBlendMode( OF_BLENDMODE_ALPHA );
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: VRTrailEntity()
+// desc: constructor
+//------------------------------------------------------------------------------
+VRTrailEntity::VRTrailEntity()
+{
+    // fill
+    m_fill = true;
+    // line width
+    m_lineWidth = 2;
+    // set default
+    setLength( 64 );
+    // default mode
+    eval( "draw linestrip" );
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: update()
+// desc: update
+//------------------------------------------------------------------------------
+void VRTrailEntity::update( double dt )
+{
+    // clear mesh
+    m_mesh.clear();
+    // variables
+    float x, y, z; Vector3D v, c = col*(1/255.0f);
+    // alpha inc based on length of tail
+    float inc = 1.0f/m_vertices.size(), a = alpha/255, t = 1;
+    // iterate over vertices
+    deque<Vector3D>::iterator it = m_vertices.begin();
+    for( ; it != m_vertices.end(); it++ )
+    {
+        // get vertex
+        v = *it;
+        // add vertex
+        m_mesh.addVertex( ofVec3f(v.x, v.y, v.z) );
+        // add color
+        m_mesh.addColor( ofFloatColor(c.x, c.y, c.z, a*t*t*t) );
+        // update a
+        t-= inc;
+    }
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: render()
+// desc: render
+//------------------------------------------------------------------------------
+void VRTrailEntity::render()
+{
+    // check if draw texture
+    // bool drawTexture = (m_texture != NULL);
+    // bind texture
+    // if( drawTexture ) m_texture->getTextureReference().bind();
+    
+    // no lighting for now
+    ofDisableLighting();
+    // enable depth testing
+    ofEnableDepthTest();
+    // blending
+    ofEnableBlendMode( OF_BLENDMODE_ALPHA );
+    // point size
+    ofSetLineWidth( m_lineWidth );
+
+    // mesh draw
+    if( m_fill ) m_mesh.draw();
+    else m_mesh.drawWireframe();
+    // disable blending
+    ofDisableBlendMode();
+    
+    // unbind texture
+    // if( drawTexture ) m_texture->getTextureReference().unbind();
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: eval()
+// desc: command: set parameters
+//------------------------------------------------------------------------------
+bool VRTrailEntity::eval( const std::string & theLine )
+{
+    string line = lowerCase( theLine );
+    
+    // word
+    string token;
+    // string stream
+    istringstream istr( line );
+    // the command
+    string command;
+    // get it
+    istr >> command;
+    
+    // sanity check
+    if( command == "" )
+    {
+        // empty command
+        cerr << "[VRTrailEntity]: empty EVAL command!" << endl;
+        // done
+        return false;
+    };
+    
+    // the number
+    float x, y, z;
+    // string
+    string str;
+    
+    // check
+    if( command == "add" )
+    {
+        // loop
+        if( istr >> x >> y >> z )
+        {
+            // add vertex
+            addVertex( Vector3D(x,y,z) );
+        }
+    }
+    else if( command == "length" )
+    {
+        // get
+        if( istr >> x )
+        {
+            setLength( x );
+        }
+    }
+    else if( command == "clear" )
+    {
+        // clear
+        this->clear();
+    }
+    else if( command == "draw" )
+    {
+        // loop
+        if( istr >> str )
+        {
+            // check
+            if( str == "points" )
+                m_mesh.setMode( OF_PRIMITIVE_POINTS );
+            else if( str == "linestrip" )
+                m_mesh.setMode( OF_PRIMITIVE_LINE_STRIP );
+            else if( str == "trianglestrip" )
+                m_mesh.setMode( OF_PRIMITIVE_TRIANGLE_STRIP );
+            else
+            {
+                // error
+                cerr << "[VRTrailEntity]: invalid DRAW type: '" << str << "'" << endl;
+                // done
+                return false;
+            }
+        }
+    }
+    else
+    {
+        // super class
+        VREntity::eval( theLine );
+    }
+    
+    return true;
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: clear()
+// desc: clear tail points
+//------------------------------------------------------------------------------
+void VRTrailEntity::clear()
+{
+    // clear it
+    m_vertices.clear();
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: addVertex()
+// desc: add a new point
+//------------------------------------------------------------------------------
+void VRTrailEntity::addVertex( const Vector3D & v3 )
+{
+    // check size
+    if( m_vertices.size() >= m_length ) m_vertices.pop_back();
+    // add most recent point
+    m_vertices.push_front( v3 );
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: setLength()
+// desc: resize length of trail
+//------------------------------------------------------------------------------
+void VRTrailEntity::setLength( int N )
+{
+    // set the length
+    m_length = N;
+    // get rid of stuff
+    while( m_vertices.size() > m_length ) m_vertices.pop_back();
+}
+
+
+
+
+//------------------------------------------------------------------------------
 // name: VRDotEntity()
 // desc: constructor
 //------------------------------------------------------------------------------
@@ -870,4 +1427,242 @@ void VRDotEntity::render()
 {
     // ofSetColor( 255 );
     sphere.draw();
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: VRBlowStringEntity()
+// desc: constructor
+//------------------------------------------------------------------------------
+VRBlowStringEntity::VRBlowStringEntity()
+{
+    // zero out
+    m_imageRef = NULL;
+    // default is additive
+    m_blendMode = OF_BLENDMODE_ADD;
+    
+    // form mesh
+    formMesh();
+    
+    time = 0;
+    animationAmount = 0;
+    animationSpeed = 0;
+    animationPhase = 0;
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: setImage()
+// desc: set image for drawing
+//------------------------------------------------------------------------------
+void VRBlowStringEntity::setImage( ofImage * imageRef )
+{
+    // set the image
+    m_imageRef = & imageRef->getTextureReference();
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: setImage()
+// desc: set image for drawing
+//------------------------------------------------------------------------------
+void VRBlowStringEntity::setImage( const string & key )
+{
+    setImage(OFCKDB::instance()->getImage(key));
+}
+
+//------------------------------------------------------------------------------
+// name: formMesh()
+// desc: construct the mesh after the image is set
+//------------------------------------------------------------------------------
+void VRBlowStringEntity::formMesh()
+{
+    glowMesh.clear();
+    glowMesh.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
+    
+    ofColor color;
+    color.set(col.x, col.y, col.z);
+
+    // Bottom left
+    glowMesh.addVertex(ofPoint(-defaultWidth/2, 0));
+    glowMesh.addTexCoord(ofPoint(0, 0));
+    glowMesh.addColor(color);
+    
+    // Bottom right
+    glowMesh.addVertex(ofPoint(defaultWidth/2, 0));
+    glowMesh.addTexCoord(ofPoint(1.0, 0));
+    glowMesh.addColor(color);
+    
+    // Middle left
+    glowMesh.addVertex(ofPoint(-defaultWidth/2, defaultHeight / 2));
+    glowMesh.addTexCoord(ofPoint(0, 0.5));
+    glowMesh.addColor(color);
+    
+    // Middle right
+    glowMesh.addVertex(ofPoint(defaultWidth/2, defaultHeight / 2));
+    glowMesh.addTexCoord(ofPoint(1.0, 0.5));
+    glowMesh.addColor(color);
+
+    // Top left
+    glowMesh.addVertex(ofPoint(-defaultWidth/2, defaultHeight));
+    glowMesh.addTexCoord(ofPoint(0, 1.0));
+    glowMesh.addColor(color);
+
+    // Top right
+    glowMesh.addVertex(ofPoint(defaultWidth/2, defaultHeight));
+    glowMesh.addTexCoord(ofPoint(1.0, 1.0));
+    glowMesh.addColor(color);
+}
+
+void VRBlowStringEntity::updateMesh()
+{
+    // Compute new midpoint positions
+    vector<ofVec3f> & vertices = glowMesh.getVertices();
+    vertices[2].x = - defaultWidth/2 + animationAmount/20 * sin(animationSpeed * time + animationPhase);
+    vertices[3].x = defaultWidth/2 + animationAmount/20 * sin(animationSpeed * time + animationPhase);
+    
+    time += 0.4;
+    
+    // Update color in case that has changed
+    for (int i = 0; i < glowMesh.getVertices().size(); i++) {
+        glowMesh.setColor(i, ofColor(col.x, col.y, col.z));
+    }
+}
+
+
+
+//------------------------------------------------------------------------------
+// name: update()
+// desc: update the blowstring state
+//------------------------------------------------------------------------------
+void VRBlowStringEntity::update( double dt )
+{
+    // look up and set image ref
+    setImage( getString("texture") );
+    // animate the mesh
+    updateMesh();
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: render()
+// desc: render the blowstring
+//------------------------------------------------------------------------------
+void VRBlowStringEntity::render()
+{
+    // check
+    if( !m_imageRef ) return;
+
+    // blending
+    ofEnableBlendMode( m_blendMode );
+    
+    // bind texture and draw
+    m_imageRef->bind();
+    glowMesh.draw();
+    m_imageRef->unbind();
+    
+    // alpha is default
+    ofEnableBlendMode( OF_BLENDMODE_ALPHA );
+}
+
+//------------------------------------------------------------------------------
+// name: eval()
+// desc: set the animation amount
+//------------------------------------------------------------------------------
+bool VRBlowStringEntity::eval( const std::string & theLine )
+{
+    // line
+    string line = lowerCase( theLine );
+    
+    // string stream
+    istringstream istr(line);
+    // the command
+    string command;
+    // get it
+    istr >> command;
+    
+    float readVal;
+    
+    // sanity check
+    if( command == "" ) return false;
+    
+    // check
+    if( command == "speed" )
+    {
+        // read
+        if( !(istr >> readVal) )
+        {
+            // error
+            cerr << "[VRBlowStringEntity]: SPEED not enough arguments..." << endl;
+            // done
+            return false;
+        }
+        else
+        {
+            animationSpeed = readVal;
+        }
+    }
+    else if( command == "amount" )
+    {
+        // read
+        if( !(istr >> readVal) )
+        {
+            // error
+            cerr << "[VRBlowStringEntity]: AMOUNT not enough arguments..." << endl;
+            // done
+            return false;
+        }
+        else
+        {
+            animationAmount = readVal;
+        }
+    }
+    else if( command == "phase" )
+    {
+        // read
+        if( !(istr >> readVal) )
+        {
+            // error
+            cerr << "[VRBlowStringEntity]: PHASE not enough arguments..." << endl;
+            // done
+            return false;
+        }
+        else
+        {
+            animationPhase = readVal;
+        }
+    }
+    else if( command == "texture" )
+    {
+        string textureKey;
+        // read
+        if( !(istr >> textureKey) )
+        {
+            // error
+            cerr << "[VRBlowStringEntity]: TEXTURE not enough arguments..." << endl;
+            // done
+            return false;
+        }
+        else
+        {
+            setString( "texture", textureKey );
+        }
+    }
+    else
+    {
+        // error
+        cerr << "[VRBlowStringEntity]: unrecognized command..." << endl;
+        // done
+        return false;
+    }
+    
+    return true;
 }
