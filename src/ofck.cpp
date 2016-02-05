@@ -708,8 +708,6 @@ CK_DLL_SFUN( vr_displaySync )
 {
     // get the DB
     OFCKDB * db = OFCKDB::instance();
-    // flush eval queue (defered eval commands here to minimize locking)
-    db->flushEval();
     // return the event
     RETURN->v_object = &(db->displaySync);
 }
@@ -725,6 +723,8 @@ OFCKDB::OFCKDB()
 {
     initialize_object( &displaySync, &t_event );
     m_eventBuffer = TheChucK::instance()->vm()->create_event_buffer();
+    // reset length of buffer (capacity)
+    m_evalQueue.init( 250000 );
 }
 
 
@@ -1099,8 +1099,10 @@ ofLight * OFCKDB::getLight( const std::string & key )
 //------------------------------------------------------------------------------
 void OFCKDB::deferEval( VREntity * e, const std::string & line )
 {
+    // instantiate
+    EvalCommand ec(e,line);
     // enqueue
-    m_evalQueue.push_back( EvalCommand(e,line) );
+    m_evalQueue.put( ec );
 }
 
 
@@ -1112,22 +1114,14 @@ void OFCKDB::deferEval( VREntity * e, const std::string & line )
 //------------------------------------------------------------------------------
 void OFCKDB::flushEval()
 {
-    // lock
-    VR::instance()->lock();
+    // the command
+    EvalCommand c;
 
-    // iterator
-    std::deque<EvalCommand>::iterator it = m_evalQueue.begin();
-    // go over
-    for( ; it != m_evalQueue.end(); it++ )
+    // check if more
+    while( m_evalQueue.get( &c ) )
     {
-        // eval
-        (*it).entity->eval( (*it).command );
+        c.entity->eval(c.command);
     }
-    // clear the queue
-    m_evalQueue.clear();
-    
-    // release
-    VR::instance()->release();
 }
 
 

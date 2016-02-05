@@ -15,6 +15,7 @@
 
 #include "chuck_dl.h"
 #include "util_thread.h"
+#include "x-buffer.h"
 #include "x-vector3d.h"
 #include "ofMain.h"
 #include <deque>
@@ -239,7 +240,8 @@ public:
 
 public:
     // command queue
-    std::deque<EvalCommand> m_evalQueue;
+    // std::deque<EvalCommand> m_evalQueue;
+    XCircleBuffer<EvalCommand> m_evalQueue;
 };
 
 

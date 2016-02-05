@@ -1,5 +1,5 @@
 // keyboard number
-2 => int KB_NUM;
+0 => int KB_NUM;
 // light pool fade factor
 .95 => float FADE_FACTOR;
 // toggle
@@ -115,7 +115,7 @@ VREntity pool[0];
 // pool index
 0 => int poolIndex;
 // number in pool
-50 => int POOL_SIZE;
+200 => int POOL_SIZE;
 // go
 for( int i; i < POOL_SIZE; i++ )
 {
@@ -214,10 +214,8 @@ fun void bangDetect()
 {
     while( true )
     {
-        if( envL.last() > 0.000001 )
+        if( envL.last() > 0.0000001 )
         {
-            // add vertex
-            // trail.eval( "add", light.loc );
             // check
             if( POOL_ONOFF )
             {
@@ -227,7 +225,7 @@ fun void bangDetect()
                 .5 => pool[poolIndex].sca.setAll;
                 poolIndex++; POOL_SIZE %=> poolIndex;
             }
-            <<< "BANG!!", poolIndex, now/second >>>;
+            // <<< "BANG!!", poolIndex, now/second >>>;
             30::ms => now;
         }
         5::ms => now;
@@ -243,7 +241,7 @@ spork ~ bangDetect();
 while( true )
 {
     6 * x.last() => light.loc.x;
-    6 * y.last() => light.loc.z;
+    6 * y.last() => light.loc.y;
     // add vertex
     trail.eval( "add", light.loc );
     
