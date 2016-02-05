@@ -1120,7 +1120,8 @@ void OFCKDB::flushEval()
     // check if more
     while( m_evalQueue.get( &c ) )
     {
-        c.entity->eval(c.command);
+        // evaluate the command
+        if( c.entity != NULL ) c.entity->eval(c.command);
     }
 }
 

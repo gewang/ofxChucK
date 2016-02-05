@@ -394,7 +394,7 @@ template <typename T>
 bool XCircleBuffer<T>::get( T * result )
 {
     // sanity check
-    if( m_buffer == NULL || !more() || m_numElements <= 0 ) return false;
+    if( m_buffer == NULL || !more() ) return false;
     
     // get item to read
     *result = m_buffer[m_readIndex];
