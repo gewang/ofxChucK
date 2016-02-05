@@ -21,7 +21,7 @@ for( int i; i < NUM_COLUMNS; i++ )
     e.eval( "texture texture:flare-4" );
 
     // tall rotating red one
-    e.eval( "rotate 2" );
+    e.eval( "rotate .5" );
     e.eval( "num " + NUM_LAYERS );
     50 => e.sca.y;
     2 => e.sca.x;
@@ -69,7 +69,8 @@ VR.allLightsOff();
 // loop
 while( true )
 {
-    // do nothing because lights are incredible
+    // rotate it
+    .2 +=> varent.ori.y;
     
     // synch with display
     VR.displaySync() => now;
