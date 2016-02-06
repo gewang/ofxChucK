@@ -724,7 +724,7 @@ OFCKDB::OFCKDB()
     initialize_object( &displaySync, &t_event );
     m_eventBuffer = TheChucK::instance()->vm()->create_event_buffer();
     // reset length of buffer (capacity)
-    m_evalQueue.init( 250000 );
+    m_evalQueue.init( 800000 );
 }
 
 
