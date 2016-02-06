@@ -80,7 +80,7 @@ protected: // helper functions
     inline void advanceWrite();
     inline void advanceRead();
     
-public:
+protected:
     // the buffer
     T * m_buffer;
     // the buffer length (capacity)
