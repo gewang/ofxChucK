@@ -50,11 +50,11 @@ void ofApp::setup()
     // r = chuck->compileFile( "ck/head.ck" );
     // r = chuck->compileFile( "ck/mesh.ck" );
     
-    // Spatialization Chubgraph test
+    // Spatialization Chubgraph test (chuck these two together)
     //r = chuck->compileFile( "ck/3d/BPanner.ck" );
     //r = chuck->compileFile( "ck/3dsound.ck" );
     
-    //r = chuck->compileFile( "ck/turenas.ck" );
+    r = chuck->compileFile( "ck/turenas.ck" );
     
     
     // check
