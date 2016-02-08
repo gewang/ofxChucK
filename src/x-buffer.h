@@ -84,13 +84,13 @@ protected:
     // the buffer
     T * m_buffer;
     // the buffer length (capacity)
-    long m_length;
+    volatile long m_length;
     // write index
-    long m_writeIndex;
+    volatile long m_writeIndex;
     // read index
-    long m_readIndex;
+    volatile long m_readIndex;
     // num elements
-    long m_numElements;
+    volatile long m_numElements;
 };
 
 
@@ -213,8 +213,6 @@ void XCircleBuffer<T>::advanceWrite()
 {
     // increment
     m_writeIndex++;
-    // increment count
-    m_numElements++;
     
     // check for bounds
     if( m_writeIndex >= m_length )
@@ -222,6 +220,9 @@ void XCircleBuffer<T>::advanceWrite()
         // wrap
         m_writeIndex -= m_length;
     }
+
+    // increment count
+    m_numElements++;
 }
 
 
@@ -236,8 +237,6 @@ void XCircleBuffer<T>::advanceRead()
 {
     // increment
     m_readIndex++;
-    // decrement count
-    m_numElements--;
     
     // check for bounds
     if( m_readIndex >= m_length )
@@ -245,6 +244,9 @@ void XCircleBuffer<T>::advanceRead()
         // wrap
         m_readIndex -= m_length;
     }
+
+    // decrement count
+    m_numElements--;
 }
 
 
@@ -394,7 +396,7 @@ template <typename T>
 bool XCircleBuffer<T>::get( T * result )
 {
     // sanity check
-    if( m_buffer == NULL || !more() || m_numElements <= 0 ) return false;
+    if( m_buffer == NULL || m_readIndex == m_writeIndex ) return false;
     
     // get item to read
     *result = m_buffer[m_readIndex];
