@@ -119,6 +119,11 @@ VRMeshEntity::VRMeshEntity()
 //------------------------------------------------------------------------------
 void VRMeshEntity::render()
 {
+    // enable depth test
+    ofEnableDepthTest();
+    // enable lighting
+    ofEnableLighting();
+
     // check if draw texture
     bool drawTexture = (m_texture != NULL);
     // bind texture
@@ -139,6 +144,11 @@ void VRMeshEntity::render()
 
     // unbind texture
     if( drawTexture ) m_texture->getTextureReference().unbind();
+    
+    // disable depth test
+    ofDisableDepthTest();
+    // disable lighting
+    ofDisableLighting();
 }
 
 
@@ -646,8 +656,9 @@ void VRTextEntity::update( double dt )
 //------------------------------------------------------------------------------
 void VRTextEntity::render()
 {
-    // disable depth
-    ofDisableDepthTest();
+    // enable depth
+    ofEnableDepthTest();
+
     // the size
     int size = m_font.getSize();
     // check
@@ -658,6 +669,9 @@ void VRTextEntity::render()
         // draw it
         m_font.drawString( m_text, 0, 0 );
     }
+    
+    // disable depth test
+    ofDisableDepthTest();
 }
 
 
@@ -745,6 +759,11 @@ VRLinesEntity::VRLinesEntity()
 //------------------------------------------------------------------------------
 void VRLinesEntity::render()
 {
+    // disable depth
+    ofEnableDepthTest();
+    // lighting
+    ofDisableLighting();
+    
     // actual size
     int N = m_vertices.size() / 2 * 2;
     // loop over lines
@@ -754,6 +773,9 @@ void VRLinesEntity::render()
         ofLine( m_vertices[i].x, m_vertices[i].y, m_vertices[i].z,
                 m_vertices[i+1].x, m_vertices[i+1].x, m_vertices[i+1].x );
     }
+    
+    // disable depth test
+    ofDisableDepthTest();
 }
 
 
@@ -999,6 +1021,8 @@ void VRFlare::render()
 
     // disable depth
     ofDisableDepthTest();
+    // lighting
+    ofDisableLighting();
     // blending
     ofEnableBlendMode( m_blendMode );
     
@@ -1007,8 +1031,8 @@ void VRFlare::render()
     m_mesh.draw();
     m_imageRef->getTextureReference().unbind();
 
-    // blending
-    ofEnableBlendMode( OF_BLENDMODE_ALPHA );
+    // disable blending
+    ofDisableBlendMode();
 }
 
 
@@ -1164,6 +1188,8 @@ void VRLightEntity::render()
     
     // disable depth
     ofDisableDepthTest();
+    // lighting
+    ofDisableLighting();
     // blending
     ofEnableBlendMode( m_blendMode );
 
@@ -1189,8 +1215,8 @@ void VRLightEntity::render()
     // unbind texture
     m_imageRef->getTextureReference().unbind();
     
-    // blending
-    ofEnableBlendMode( OF_BLENDMODE_ALPHA );
+    // disable blending
+    ofDisableBlendMode();
 }
 
 
@@ -1251,11 +1277,6 @@ void VRTrailEntity::update( double dt )
 //------------------------------------------------------------------------------
 void VRTrailEntity::render()
 {
-    // check if draw texture
-    // bool drawTexture = (m_texture != NULL);
-    // bind texture
-    // if( drawTexture ) m_texture->getTextureReference().bind();
-    
     // no lighting for now
     ofDisableLighting();
     // enable depth testing
@@ -1268,11 +1289,11 @@ void VRTrailEntity::render()
     // mesh draw
     if( m_fill ) m_mesh.draw();
     else m_mesh.drawWireframe();
+
     // disable blending
     ofDisableBlendMode();
-    
-    // unbind texture
-    // if( drawTexture ) m_texture->getTextureReference().unbind();
+    // disable depth test
+    ofDisableDepthTest();
 }
 
 
@@ -1425,8 +1446,18 @@ VRDotEntity::VRDotEntity()
 //------------------------------------------------------------------------------
 void VRDotEntity::render()
 {
+    // enable depth test
+    ofEnableDepthTest();
+    // enable lighting
+    ofEnableLighting();
+    
     // ofSetColor( 255 );
     sphere.draw();
+    
+    // disable depth test
+    ofDisableDepthTest();
+    // disable lighting
+    ofDisableLighting();
 }
 
 
@@ -1537,6 +1568,7 @@ void VRBlowStringEntity::updateMesh()
 
 
 
+
 //------------------------------------------------------------------------------
 // name: update()
 // desc: update the blowstring state
@@ -1561,6 +1593,8 @@ void VRBlowStringEntity::render()
     // check
     if( !m_imageRef ) return;
 
+    // disable lighting
+    ofDisableLighting();
     // blending
     ofEnableBlendMode( m_blendMode );
     
@@ -1569,9 +1603,12 @@ void VRBlowStringEntity::render()
     glowMesh.draw();
     m_imageRef->unbind();
     
-    // alpha is default
-    ofEnableBlendMode( OF_BLENDMODE_ALPHA );
+    // disable blending
+    ofDisableBlendMode();
 }
+
+
+
 
 //------------------------------------------------------------------------------
 // name: eval()
