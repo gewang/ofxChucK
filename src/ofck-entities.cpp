@@ -121,6 +121,8 @@ void VRMeshEntity::render()
 {
     // enable depth test
     ofEnableDepthTest();
+    // enable depth write
+    glDepthMask(GL_TRUE);
     // enable lighting
     ofEnableLighting();
 
@@ -658,7 +660,9 @@ void VRTextEntity::render()
 {
     // enable depth
     ofEnableDepthTest();
-
+    // disable depth write
+    glDepthMask(GL_TRUE);
+    
     // the size
     int size = m_font.getSize();
     // check
@@ -672,6 +676,8 @@ void VRTextEntity::render()
     
     // disable depth test
     ofDisableDepthTest();
+    // enable depth write
+    glDepthMask(GL_FALSE);
 }
 
 
@@ -1019,10 +1025,12 @@ void VRFlare::render()
     // check
     if( !m_imageRef ) return;
 
-    // disable depth
-    ofDisableDepthTest();
     // lighting
     ofDisableLighting();
+    // disable depth
+    ofEnableDepthTest();
+    // disable depth write
+    glDepthMask(GL_FALSE);
     // blending
     ofEnableBlendMode( m_blendMode );
     
@@ -1031,7 +1039,10 @@ void VRFlare::render()
     m_mesh.draw();
     m_imageRef->getTextureReference().unbind();
 
-    // disable blending
+    // disable depth test
+    ofDisableDepthTest();
+    // disable depth write
+    glDepthMask(GL_TRUE);    // disable blending
     ofDisableBlendMode();
 }
 
@@ -1186,10 +1197,12 @@ void VRLightEntity::render()
     // check
     if( !m_imageRef ) return;
     
-    // disable depth
-    ofDisableDepthTest();
     // lighting
     ofDisableLighting();
+    // enable depth
+    ofEnableDepthTest();
+    // disable depth write
+    glDepthMask(GL_FALSE);
     // blending
     ofEnableBlendMode( m_blendMode );
 
@@ -1215,6 +1228,8 @@ void VRLightEntity::render()
     // unbind texture
     m_imageRef->getTextureReference().unbind();
     
+    // disable depth write
+    glDepthMask(GL_TRUE);
     // disable blending
     ofDisableBlendMode();
 }
@@ -1595,6 +1610,10 @@ void VRBlowStringEntity::render()
 
     // disable lighting
     ofDisableLighting();
+    // enable depth test
+    ofEnableDepthTest();
+    // disable depth write
+    glDepthMask(GL_FALSE);
     // blending
     ofEnableBlendMode( m_blendMode );
     
@@ -1602,7 +1621,9 @@ void VRBlowStringEntity::render()
     m_imageRef->bind();
     glowMesh.draw();
     m_imageRef->unbind();
-    
+
+    // enable depth
+    glDepthMask(GL_TRUE);
     // disable blending
     ofDisableBlendMode();
 }

@@ -242,7 +242,7 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
         QUERY->add_arg(QUERY, "vec3", "value");
 
         // vec3 VR.getVec3(key,value) // set
-        QUERY->add_sfun(QUERY, vr_getString, "vec3", "getVec3");
+        QUERY->add_sfun(QUERY, vr_getVec3, "vec3", "getVec3");
         // name of object to retrieve
         QUERY->add_arg(QUERY, "string", "key");
 
