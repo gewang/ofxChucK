@@ -54,6 +54,7 @@ void ofApp::setup()
     // r = chuck->compileFile( "ck/lights-trail.ck" );
     // r = chuck->compileFile( "ck/vortex.ck" );
     // r = chuck->compileFile( "ck/turenas-2.ck" );
+    // r = chuck->compileFile( "ck/nick.ck" );
     // r = chuck->compileFile( "ck/gametrak-1.ck" ); // need gametrak
     r = chuck->compileFile( "ck/gametrak-2.ck" ); // need gametrak
     r = chuck->compileFile( "ck/gametrak-base.ck" ); // need gametrak
