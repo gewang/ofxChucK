@@ -109,8 +109,6 @@ void ofApp::setup()
 }
 
 
-iSlew3D bg;
-
 
 
 //------------------------------------------------------------------------------
@@ -192,12 +190,15 @@ void ofApp::draw()
         
         // render scene for left eye
         oculusRift.beginLeftEye();
-        Vector3D a = bg.actual(); a *= 16;
+        // bg is sourced from root.col and is already scaled from 0 to 255
+        Vector3D a = bg.actual();
         if( a.x > 255 ) a.x = 255;
         if( a.y > 255 ) a.y = 255;
         if( a.z > 255 ) a.z = 255;
+        
         // use root as background color
-        // ofBackground( a.x, a.y, a.z, 255 );
+        ofBackground( a.x, a.y, a.z, 255 );
+        
         drawScene();
         oculusRift.endLeftEye();
 

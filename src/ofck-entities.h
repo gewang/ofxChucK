@@ -288,6 +288,9 @@ public:
     ofSpherePrimitive sphere;
 };
 
+
+
+
 //------------------------------------------------------------------------------
 // name: class VRBlowStringEntity
 // desc: a single additive blended vibrating string
@@ -338,6 +341,47 @@ protected:
     float animationPhase;
 };
 
+
+
+
+//------------------------------------------------------------------------------
+// name: class VRNickEntity
+// desc: a single additive blended vibrating string
+// source: ported from https://github.com/nickgang/soundcave
+//
+// EVAL commands:
+//   "rotate x|y [rotation speed]"
+//   "toggle split|fill|wireframe|normals|axes"
+//------------------------------------------------------------------------------
+class VRNickEntity : public VREntity {
+public:
+    // constructor
+    VRNickEntity();
+    
+public:
+    // render
+    void render();
+    // eval: change animation amount
+    virtual bool eval( const std::string & command );
+
+protected:
+    // main object
+    ofIcoSpherePrimitive sphere;
+    // material
+    ofMaterial material;
+    // mesh surface
+    vector<ofMeshFace> triangles;
+    // animation parameters
+    float time;
+    float rotateSpeedX;
+    float rotateSpeedY;
+    bool drawSplit;
+    bool drawFill;
+    bool drawWireframe;
+    bool drawNormals;
+    bool drawAxes;
+    
+};
 
 
 #endif

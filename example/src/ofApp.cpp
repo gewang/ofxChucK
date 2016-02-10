@@ -32,7 +32,7 @@ void ofApp::setup()
     
     // set up light
     m_light = new ofLight();
-    m_light->setDiffuseColor( ofColor(100, 255, 100) );
+    m_light->setDiffuseColor( ofColor(255, 255, 255) );
     m_light->setGlobalPosition( 1000, 1000, 1000 );
     m_light->enable();
 
@@ -51,11 +51,13 @@ void ofApp::setup()
     // r = chuck->compileFile( "ck/update_mesh.ck" );
     // r = chuck->compileFile( "ck/lights-1.ck" );
     // r = chuck->compileFile( "ck/lights-3.ck" );
-    r = chuck->compileFile( "ck/lights-trail.ck" );
+    // r = chuck->compileFile( "ck/lights-trail.ck" );
     // r = chuck->compileFile( "ck/vortex.ck" );
     // r = chuck->compileFile( "ck/turenas-2.ck" );
+    // r = chuck->compileFile( "ck/nick.ck" );
     // r = chuck->compileFile( "ck/gametrak-1.ck" ); // need gametrak
-    // r = chuck->compileFile( "ck/gametrak-2.ck" ); // need gametrak
+    r = chuck->compileFile( "ck/gametrak-2.ck" ); // need gametrak
+    r = chuck->compileFile( "ck/gametrak-base.ck" ); // need gametrak
 
     // check
     if( !r )

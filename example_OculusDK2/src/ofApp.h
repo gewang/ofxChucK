@@ -71,4 +71,6 @@ public:
     ofLight * m_light;
     // font
     ofTrueTypeFont	arial;
+    // background, tied to root node color
+    iSlew3D bg;
 };

@@ -71,6 +71,7 @@ CK_DLL_SFUN(vr_loadImage);
 CK_DLL_SFUN(vr_makeEntity);
 CK_DLL_SFUN(vr_root);
 CK_DLL_SFUN(vr_head);
+CK_DLL_SFUN(vr_leap);
 CK_DLL_SFUN(vr_allLightsOn);
 CK_DLL_SFUN(vr_allLightsOff);
 
@@ -242,7 +243,7 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
         QUERY->add_arg(QUERY, "vec3", "value");
 
         // vec3 VR.getVec3(key,value) // set
-        QUERY->add_sfun(QUERY, vr_getString, "vec3", "getVec3");
+        QUERY->add_sfun(QUERY, vr_getVec3, "vec3", "getVec3");
         // name of object to retrieve
         QUERY->add_arg(QUERY, "string", "key");
 
@@ -288,7 +289,10 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
 
         // VREntity VR.head() // get head as entity
         QUERY->add_sfun(QUERY, vr_head, "VREntity", "head");
-
+        
+        // VREntity VR.leap() // get leap as entity
+        QUERY->add_sfun(QUERY, vr_leap, "VREntity", "leap");
+        
         // VREntity VR.allLightsOn()
         QUERY->add_sfun(QUERY, vr_allLightsOn, "void", "allLightsOn");
 
@@ -645,6 +649,20 @@ CK_DLL_SFUN( vr_head )
 {
     // make the entity
     VREntity * e = VR::instance()->head();
+    // check it
+    if( !e ) { RETURN->v_object = 0; } else
+    {
+        // if necessary, instantiate chuck-side object
+        if( e->chuckObject() == NULL ) { e->initChucKSideObject(); }
+        // return the value
+        RETURN->v_object = e->chuckObject();
+    }
+}
+
+CK_DLL_SFUN( vr_leap )
+{
+    // make the entity
+    VREntity * e = VR::instance()->leap();
     // check it
     if( !e ) { RETURN->v_object = 0; } else
     {
@@ -1177,6 +1195,8 @@ void VREntity::addChild( VREntity * entity )
 //------------------------------------------------------------------------------
 void VREntity::removeChild( VREntity * entity )
 {
+    // lock
+    VR::instance()->lock();
     // index
     int index = -1;
     // find it
@@ -1195,6 +1215,8 @@ void VREntity::removeChild( VREntity * entity )
         // erase
         children.erase( children.begin()+index );
     }
+    // release
+    VR::instance()->release();
 }
 
 
@@ -1499,6 +1521,10 @@ VR::VR()
     m_head = new VREntity();
     // head has special sync
     m_head->setSyncMode( true );
+    // leap
+    m_leap = new VREntity();
+    // leap also has special sync
+    m_leap->setSyncMode( true );
     // initialize
     m_allLightsOn = true;
 }
@@ -1539,4 +1565,14 @@ VREntity * VR::root()
 VREntity * VR::head()
 {
     return m_head;
+}
+
+
+//------------------------------------------------------------------------------
+// name: leap()
+// desc: get the head
+//------------------------------------------------------------------------------
+VREntity * VR::leap()
+{
+    return m_leap;
 }

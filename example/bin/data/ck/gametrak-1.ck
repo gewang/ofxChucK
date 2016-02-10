@@ -1,160 +1,102 @@
-// construct some lights
-VR.makeEntity("handL", "light") @=> VREntity handL;
-VR.makeEntity("trailL", "trail") @=> VREntity trailL;
-VR.makeEntity("handR", "light") @=> VREntity handR;
-VR.makeEntity("trailR", "trail") @=> VREntity trailR;
-
-// set their textures
-handL.eval( "texture texture:flare-1" );
-handR.eval( "texture texture:flare-1" );
-// set trail length
-trailL.eval( "length 100" );
-trailL.eval( "draw linestrip" );
-trailR.eval( "length 100" );
-trailR.eval( "draw linestrip" );
-
-// tall rotating red one
-handL.eval( "rotate 1" );
-handL.eval( "num 5" );
-handL.rgba.set(.25,1,.25,.5);
-3 => handL.sca.setAll;
-handR.eval( "rotate 1" );
-handR.eval( "num 5" );
-handR.rgba.set(.25,.25,1,.5);
-3 => handR.sca.setAll;
-// color
-handL.rgba => trailL.rgba;
-handR.rgba => trailR.rgba;
-
-// add to scene
-VR.root().addChild( handL );
-VR.root().addChild( trailL );
-VR.root().addChild( handR );
-VR.root().addChild( trailR );
-
-// z axis deadzone
-.032 => float DEADZONE;
-
-// which joystick
-0 => int device;
-// get from command line
-if( me.args() ) me.arg(0) => Std.atoi => device;
-
-// data structure for gametrak
-class GameTrak
+class Monkey
 {
-    // timestamps
-    time lastTime;
-    time currTime;
+    // sound
+    SndBuf buffy => dac;
+    // load
+    "special:dope" => buffy.read;
+    // to back
+    buffy.samples() => buffy.pos;
     
-    // previous axis data
-    float lastAxis[6];
-    // current axis data
-    float axis[6];
+    // mesh + shadow
+    VR.makeEntity("mesh-1","mesh") @=> VREntity head;
+    VR.makeEntity("shadow-1","flare") @=> VREntity shadow;
+    
+    // load obj
+    head.eval( "load model/suzanne.obj" );
+    // draw points
+    head.eval( "draw triangles" );
+    // shadow texture
+    shadow.eval( "texture texture:flare-4" );
+    // shadows
+    90 => shadow.ori.x;
+    @(.5,.5,.5,.5) => shadow.rgba;
+    
+    // monkey location
+    0 => head.loc.y;
+    // scale
+    1.5 => head.sca.setAll;
+    
+    // add to world
+    VR.root().addChild( head );
+    VR.root().addChild( shadow );
+    
+    // collide state
+    0 => int isColliding;
+    
+    // collision detection
+    fun int collide( vec3 center, float radius )
+    {
+        // monkey radius
+        head.sca.magnitude() => float r;
+        // get diff
+        center - head.loc => vec3 diff;
+        // get length
+        diff.magnitude() => float L;
+        // check
+        (r + radius) > L => int colliding;
+        // check current state
+        if( colliding && !isColliding )
+        {
+            true => isColliding;
+            return true;
+        }
+        
+        // set state
+        colliding => isColliding;
+        // return false
+        return false;
+    }
 }
-// gametrack
-GameTrak gt;
 
-// HID objects
-Hid trak;
-HidMsg msg;
+// make a monkey
+new Monkey @=> Monkey m;
 
-// open joystick 0, exit on fail
-if( !trak.openJoystick( device ) ) me.exit();
+// disable lights
+VR.allLightsOn();
 
-// print
-<<< "joystick '" + trak.name() + "' ready", "" >>>;
-
-// spork control
-spork ~ gametrak();
-// print
-spork ~ print();
+// left hand location
+vec3 handL;
+vec3 handR;
+// ground level
+float GROUND_LEVEL;
 
 // main loop
 while( true )
 {
-    // left hand: L to R
-    gt.axis[0]*8-4 => handL.loc.x;
-    // left hand: front to back
-    -gt.axis[1]*8 => handL.loc.z;
-    // left hand: up down
-    gt.axis[2]*40-5 => handL.loc.y;
-    // add vertex
-    trailL.eval( "add", handL.loc );
-    // right hand: L to R
-    gt.axis[3]*8+4 => handR.loc.x;
-    // left hand: front to back
-    -gt.axis[4]*8 => handR.loc.z;
-    // left hand: up down
-    gt.axis[5]*40-5 => handR.loc.y;
-    // add vertex
-    trailR.eval( "add", handR.loc );
+    // get data
+    VR.getVec3("hand.left") => handL;
+    VR.getVec3("hand.right") => handR;
+    // get it
+    VR.getFloat( "GROUND_LEVEL" ) => GROUND_LEVEL;
+    
+    // shadow
+    m.head.loc => m.shadow.loc;
+    GROUND_LEVEL => m.shadow.loc.y;
+    4 => m.shadow.sca.setAll;
+    
+    // check collision
+    if( m.collide( handR, -.5 ) )
+    {
+        // play
+        0 => m.buffy.pos;
+        // set gain
+        1 => m.buffy.gain;
+    }
+    
+    // color
+    if( m.isColliding ) @(1,.25,1,1) => m.head.rgba;
+    else @(1,1,1,1) => m.head.rgba;
+    
     // synchronize to display
     VR.displaySync() => now;
-}
-
-// print
-fun void print()
-{
-    // time loop
-    while( true )
-    {
-        // values
-        <<< "axes:", gt.axis[0],gt.axis[1],gt.axis[2], gt.axis[3],gt.axis[4],gt.axis[5] >>>;
-        // advance time
-        100::ms => now;
-    }
-}
-
-// gametrack handling
-fun void gametrak()
-{
-    while( true )
-    {
-        // wait on HidIn as event
-        trak => now;
-        
-        // messages received
-        while( trak.recv( msg ) )
-        {
-            // joystick axis motion
-            if( msg.isAxisMotion() )
-            {            
-                // check which
-                if( msg.which >= 0 && msg.which < 6 )
-                {
-                    // check if fresh
-                    if( now > gt.currTime )
-                    {
-                        // time stamp
-                        gt.currTime => gt.lastTime;
-                        // set
-                        now => gt.currTime;
-                    }
-                    // save last
-                    gt.axis[msg.which] => gt.lastAxis[msg.which];
-                    // the z axes map to [0,1], others map to [-1,1]
-                    if( msg.which != 2 && msg.which != 5 )
-                    { msg.axisPosition => gt.axis[msg.which]; }
-                    else
-                    {
-                        1 - ((msg.axisPosition + 1) / 2) - DEADZONE => gt.axis[msg.which];
-                        if( gt.axis[msg.which] < 0 ) 0 => gt.axis[msg.which];
-                    }
-                }
-            }
-            
-            // joystick button down
-            else if( msg.isButtonDown() )
-            {
-                <<< "button", msg.which, "down" >>>;
-            }
-            
-            // joystick button up
-            else if( msg.isButtonUp() )
-            {
-                <<< "button", msg.which, "up" >>>;
-            }
-        }
-    }
 }

@@ -79,6 +79,7 @@ VREntity * VREntityFactory::makeEntity( const std::string & type )
     else if( type == "ugen" ) { }
     else if( type == "dot" ) { e = new VRDotEntity(); }
     else if( type == "blowstring" ) { e = new VRBlowStringEntity(); }
+    else if( type == "nick" ) { e = new VRNickEntity(); }
     
     // log
     if( !e )
@@ -121,6 +122,8 @@ void VRMeshEntity::render()
 {
     // enable depth test
     ofEnableDepthTest();
+    // enable depth write
+    glDepthMask(GL_TRUE);
     // enable lighting
     ofEnableLighting();
 
@@ -658,7 +661,9 @@ void VRTextEntity::render()
 {
     // enable depth
     ofEnableDepthTest();
-
+    // disable depth write
+    glDepthMask(GL_TRUE);
+    
     // the size
     int size = m_font.getSize();
     // check
@@ -672,6 +677,8 @@ void VRTextEntity::render()
     
     // disable depth test
     ofDisableDepthTest();
+    // enable depth write
+    glDepthMask(GL_FALSE);
 }
 
 
@@ -1019,10 +1026,12 @@ void VRFlare::render()
     // check
     if( !m_imageRef ) return;
 
-    // disable depth
-    ofDisableDepthTest();
     // lighting
     ofDisableLighting();
+    // disable depth
+    ofEnableDepthTest();
+    // disable depth write
+    glDepthMask(GL_FALSE);
     // blending
     ofEnableBlendMode( m_blendMode );
     
@@ -1031,7 +1040,10 @@ void VRFlare::render()
     m_mesh.draw();
     m_imageRef->getTextureReference().unbind();
 
-    // disable blending
+    // disable depth test
+    ofDisableDepthTest();
+    // disable depth write
+    glDepthMask(GL_TRUE);    // disable blending
     ofDisableBlendMode();
 }
 
@@ -1186,10 +1198,12 @@ void VRLightEntity::render()
     // check
     if( !m_imageRef ) return;
     
-    // disable depth
-    ofDisableDepthTest();
     // lighting
     ofDisableLighting();
+    // enable depth
+    ofEnableDepthTest();
+    // disable depth write
+    glDepthMask(GL_FALSE);
     // blending
     ofEnableBlendMode( m_blendMode );
 
@@ -1215,6 +1229,8 @@ void VRLightEntity::render()
     // unbind texture
     m_imageRef->getTextureReference().unbind();
     
+    // disable depth write
+    glDepthMask(GL_TRUE);
     // disable blending
     ofDisableBlendMode();
 }
@@ -1595,6 +1611,10 @@ void VRBlowStringEntity::render()
 
     // disable lighting
     ofDisableLighting();
+    // enable depth test
+    ofEnableDepthTest();
+    // disable depth write
+    glDepthMask(GL_FALSE);
     // blending
     ofEnableBlendMode( m_blendMode );
     
@@ -1602,7 +1622,9 @@ void VRBlowStringEntity::render()
     m_imageRef->bind();
     glowMesh.draw();
     m_imageRef->unbind();
-    
+
+    // enable depth
+    glDepthMask(GL_TRUE);
     // disable blending
     ofDisableBlendMode();
 }
@@ -1703,3 +1725,229 @@ bool VRBlowStringEntity::eval( const std::string & theLine )
     
     return true;
 }
+
+
+
+
+
+//------------------------------------------------------------------------------
+// name: VRNickEntity()
+// desc: constructor
+//------------------------------------------------------------------------------
+VRNickEntity::VRNickEntity()
+{
+    // primitives
+    time = 0;
+    rotateSpeedX = 1;
+    rotateSpeedY = 1;
+    drawSplit = true;
+    drawFill = true;
+    drawWireframe = true;
+    drawNormals = false;
+    drawAxes = false;
+    
+    // objects
+    // shininess is a value between 0 - 128, 128 being the most shiny 
+    material.setShininess( 120 );
+    // the light highlight of the material
+    material.setSpecularColor(ofColor(255, 255, 255, 255));
+    
+    // sphere
+    sphere.setRadius(1);
+    sphere.setResolution(4);
+    // despite this call, still get error message that mesh normals are disabled
+    sphere.enableNormals();
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: render()
+// desc: render the nick
+//------------------------------------------------------------------------------
+void VRNickEntity::render()
+{
+    ofPushMatrix();
+    ofPushStyle();
+    
+    // TODO: enable viewMode 0
+    int viewMode = 3;
+    
+    float spinX = sin(ofGetElapsedTimef()*.35f*rotateSpeedX);
+    float spinY = cos(ofGetElapsedTimef()*.075f*rotateSpeedY);
+    
+    //Enable additive blending
+    ofEnableBlendMode(OF_BLENDMODE_ADD);
+    material.begin();
+    
+    // make the sphere spin
+    sphere.rotate(spinX, 1.0, 0.0, 0.0);
+    sphere.rotate(spinY, 0, 1.0, 0.0);
+    
+    //Triangles
+    if(viewMode == 3) {
+        triangles = sphere.getMesh().getUniqueFaces();
+    }
+    
+    if(drawFill) {
+        ofFill();
+        ofSetColor(22,51,90);
+        
+        //Send the triangles around
+        if(viewMode == 3) {
+            float angle = (ofGetElapsedTimef() * 1.4);
+            ofVec3f faceNormal;
+            for(int i = 0; i < triangles.size(); i++ ) {
+                float frc = ofSignedNoise(angle* (float)i * .1, angle*.05) * 4;
+                faceNormal = triangles[i].getFaceNormal();
+                for(int j = 0; j < 3; j++ ) {
+                    triangles[i].setVertex(j, triangles[i].getVertex(j) + faceNormal * frc );
+                }
+            }
+            sphere.getMesh().setFromTriangles( triangles );
+        }
+        
+        sphere.draw();
+    }
+    
+    //Draw wireframe sphere
+    if(drawWireframe) {
+        ofNoFill();
+        //Wireframe color
+        ofSetColor(128, 128, 128);
+        if(!drawFill) ofSetColor(255);
+        sphere.setScale(1.01f);
+        sphere.drawWireframe();
+        sphere.setScale(1.f);
+    }
+    
+    material.end();
+    
+    //Draw normals of sphere
+    if(drawNormals) {
+        ofSetColor(255);
+        sphere.drawNormals(20, drawSplit);
+    }
+    
+    //Draw axes on sphere
+    if(drawAxes) {
+        sphere.drawAxes(sphere.getRadius()+30);
+    }
+    ofDisableBlendMode();
+    
+    ofPopStyle();
+    ofPopMatrix();
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: eval()
+// desc: set the animation parameters
+//------------------------------------------------------------------------------
+bool VRNickEntity::eval( const std::string & theLine )
+{
+    // line
+    string line = lowerCase( theLine );
+    
+    // string stream
+    istringstream istr(line);
+    // the command
+    string command;
+    // get it
+    istr >> command;
+    
+    // sanity check
+    if( command == "" ) return false;
+    
+    // check
+    if( command == "rotate" )
+    {
+        string dimension;
+        float amount;
+        // read
+        if( !(istr >> dimension) )
+        {
+            // error
+            cerr << "[VRNickEntity]: ROTATE not enough arguments..." << endl;
+            // done
+            return false;
+        }
+        else if( !(istr >> amount))
+        {
+            // error
+            cerr << "[VRNickEntity]: ROTATE not enough arguments..." << endl;
+            // done
+            return false;
+        }
+        
+        if( dimension == "x" )
+        {
+            rotateSpeedX = amount;
+        }
+        else if( dimension == "y" )
+        {
+            rotateSpeedY = amount;
+        }
+        else
+        {
+            // error
+            cerr << "[VRNickEntity]: ROTATE invalid dimension..." << endl;
+            // done
+            return false;
+        }
+    }
+    else if( command == "toggle" )
+    {
+        string t;
+        // read string
+        if( !(istr >> t) )
+        {
+            // error
+            cerr << "[VRNickEntity]: TOGGLE not enough arguments..." << endl;
+            // done
+            return false;
+        }
+        if( t == "split" )
+        {
+            drawSplit = !drawSplit;
+        }
+        else if( t == "fill" )
+        {
+            drawFill = !drawFill;
+        }
+        else if( t == "wireframe" )
+        {
+            drawWireframe = !drawWireframe;
+        }
+        else if( t == "normals" )
+        {
+            drawNormals = !drawNormals;
+        }
+        else if( t == "axes" )
+        {
+            drawAxes = !drawAxes;
+        }
+        else
+        {
+            // error
+            cerr << "[VRNickEntity]: TOGGLE unrecognized argument..." << endl;
+            // done
+            return false;
+        }
+    }
+    else
+    {
+        // error
+        cerr << "[VRNickEntity]: unrecognized command..." << endl;
+        // done
+        return false;
+    }
+    
+    return true;
+}
+
+
+
