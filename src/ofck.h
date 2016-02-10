@@ -264,6 +264,8 @@ public:
     VREntity * root();
     // get head
     VREntity * head();
+    // get leap
+    VREntity * leap();
 
 public:
     // set field of view
@@ -306,6 +308,8 @@ public:
     VREntity * m_root;
     // head as entity
     VREntity * m_head;
+    // leap as entity
+    VREntity * m_leap;
 
 public:
     // all lights on or off
