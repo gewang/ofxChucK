@@ -1195,6 +1195,8 @@ void VREntity::addChild( VREntity * entity )
 //------------------------------------------------------------------------------
 void VREntity::removeChild( VREntity * entity )
 {
+    // lock
+    VR::instance()->lock();
     // index
     int index = -1;
     // find it
@@ -1213,6 +1215,8 @@ void VREntity::removeChild( VREntity * entity )
         // erase
         children.erase( children.begin()+index );
     }
+    // release
+    VR::instance()->release();
 }
 
 
