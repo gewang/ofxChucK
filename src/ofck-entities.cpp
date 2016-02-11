@@ -662,7 +662,7 @@ void VRTextEntity::render()
     // enable depth
     ofEnableDepthTest();
     // disable depth write
-    glDepthMask(GL_TRUE);
+    glDepthMask(GL_FALSE);
     
     // the size
     int size = m_font.getSize();

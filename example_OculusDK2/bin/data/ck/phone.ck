@@ -19,8 +19,8 @@ R => OnePole envR => blackhole; R => envR; 3 => envR.op;
 .9995 => envL.pole => envR.pole;
 
 // load
-me.dir() + "../audio/turenas-L.aiff" => L.read;
-me.dir() + "../audio/turenas-R.aiff" => R.read;
+me.dir() + "../audio/phone-L.aiff" => L.read;
+me.dir() + "../audio/phone-R.aiff" => R.read;
 L.samples() => L.pos;
 R.samples() => R.pos;
 0 => L.gain => R.gain;

@@ -40,24 +40,24 @@ void ofApp::setup()
     bool r = false;
     // compile and run file
     // r = chuck->compileFile( "ck/solar.ck" );
+    // r = chuck->compileFile( "ck/solar2" );
     // r = chuck->compileFile( "ck/lines.ck" );
-    // r = chuck->compileFile( "ck/text.ck" );
     // r = chuck->compileFile( "ck/flares.ck" ); // need audio input
-    // r = chuck->compileFile( "ck/points.ck" );
     // r = chuck->compileFile( "ck/mesh.ck" );
+    // r = chuck->compileFile( "ck/lights-1.ck" );
+    // r = chuck->compileFile( "ck/lights-3.ck" );
+    r = chuck->compileFile( "ck/lights-trail.ck" );
+    // r = chuck->compileFile( "ck/vortex.ck" );
+    // r = chuck->compileFile( "ck/text.ck" );
     // r = chuck->compileFile( "ck/wire.ck" );
     // r = chuck->compileFile( "ck/obj.ck" );
     // r = chuck->compileFile( "ck/textured_mesh.ck" );
     // r = chuck->compileFile( "ck/update_mesh.ck" );
-    // r = chuck->compileFile( "ck/lights-1.ck" );
-    // r = chuck->compileFile( "ck/lights-3.ck" );
-    // r = chuck->compileFile( "ck/lights-trail.ck" );
-    // r = chuck->compileFile( "ck/vortex.ck" );
     // r = chuck->compileFile( "ck/turenas-2.ck" );
     // r = chuck->compileFile( "ck/nick.ck" );
     // r = chuck->compileFile( "ck/gametrak-1.ck" ); // need gametrak
-    r = chuck->compileFile( "ck/gametrak-2.ck" ); // need gametrak
-    r = chuck->compileFile( "ck/gametrak-base.ck" ); // need gametrak
+    // r = chuck->compileFile( "ck/gametrak-2.ck" ); // need gametrak
+    // r = chuck->compileFile( "ck/gametrak-base.ck" ); // need gametrak
 
     // check
     if( !r )

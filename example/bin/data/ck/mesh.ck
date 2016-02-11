@@ -15,6 +15,13 @@ repeat( 100000 )
     // add vertex    
     mesh.eval( "vertex", v1 );
     mesh.eval( "color 1 1 1" );
+    
+    Math.random2f(-5,5) => v1.x;
+    Math.random2f(-5,5) => v1.y;
+    Math.random2f(-5,5) => v1.z;
+    v1.normalize();
+    
+    mesh.eval( "normal", v1 );
 }
 // draw points
 mesh.eval( "draw points" );
@@ -27,7 +34,7 @@ VR.root().addChild( mesh );
 VR.root().addChild( sphere );
 
 // disable lights
-VR.allLightsOn();
+VR.allLightsOff();
 
 // loop
 while( true )

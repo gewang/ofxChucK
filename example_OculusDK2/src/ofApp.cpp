@@ -41,12 +41,12 @@ void ofApp::setup()
     // success code
     bool r = false;
     // compile and run file
-    //r = chuck->compileFile( "ck/dot-circle.ck" );
-    //r = chuck->compileFile( "ck/solar.ck" );
+    // r = chuck->compileFile( "ck/dot-circle.ck" );
+    // r = chuck->compileFile( "ck/solar.ck" );
     // r = chuck->compileFile( "ck/lines.ck" );
     // r = chuck->compileFile( "ck/text.ck" );
-    //r = chuck->compileFile( "ck/flares.ck" ); // need audio input
-    //r = chuck->compileFile( "ck/points.ck" );
+    // r = chuck->compileFile( "ck/flares.ck" ); // need audio input
+    // r = chuck->compileFile( "ck/points.ck" );
     // r = chuck->compileFile( "ck/head.ck" );
     // r = chuck->compileFile( "ck/mesh.ck" );
     
@@ -54,7 +54,7 @@ void ofApp::setup()
     //r = chuck->compileFile( "ck/3d/BPanner.ck" );
     //r = chuck->compileFile( "ck/3dsound.ck" );
     
-    r = chuck->compileFile( "ck/turenas.ck" );
+    r = chuck->compileFile( "ck/phone.ck" );
     
     
     // check
