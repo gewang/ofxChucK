@@ -106,7 +106,7 @@ VRMeshEntity::VRMeshEntity()
     // default
     m_fill = true;
     // default
-    m_texture = NULL;
+    m_imageRef = NULL;
     // line width
     m_lineWidth = 1;
 }
@@ -128,9 +128,9 @@ void VRMeshEntity::render()
     ofEnableLighting();
 
     // check if draw texture
-    bool drawTexture = (m_texture != NULL);
+    bool drawTexture = (m_imageRef != NULL);
     // bind texture
-    if( drawTexture ) m_texture->getTextureReference().bind();
+    if( drawTexture ) m_imageRef->getTextureReference().bind();
     
     // line width
     ofSetLineWidth( m_lineWidth );
@@ -146,7 +146,7 @@ void VRMeshEntity::render()
     }
 
     // unbind texture
-    if( drawTexture ) m_texture->getTextureReference().unbind();
+    if( drawTexture ) m_imageRef->getTextureReference().unbind();
     
     // disable depth test
     ofDisableDepthTest();
@@ -250,7 +250,7 @@ bool VRMeshEntity::eval( const std::string & theLine )
             // get instance
             OFCKDB * db = OFCKDB::instance();
             // get the image
-            m_texture = db->getImage( str );
+            m_imageRef = db->getImage( str );
         }
     }
     else if( command == "draw" )
@@ -1450,9 +1450,74 @@ void VRTrailEntity::setLength( int N )
 // desc: constructor
 //------------------------------------------------------------------------------
 VRDotEntity::VRDotEntity()
-: sphere( 1, 10 )
+: sphere( 1, 10 ), m_imageRef(NULL)
 {}
 
+
+
+
+//------------------------------------------------------------------------------
+// name: eval()
+// desc: ...
+//------------------------------------------------------------------------------
+bool VRDotEntity::eval( const std::string & theLine )
+{
+    // line
+    string line = lowerCase( theLine );
+    
+    // string stream
+    istringstream istr(line);
+    // the command
+    string command;
+    // get it
+    istr >> command;
+    
+    // string
+    string str;
+
+    // sanity check
+    if( command == "" ) return false;
+    
+    if( command == "texture" )
+    {
+        // loop
+        if( istr >> str )
+        {
+            // get instance
+            OFCKDB * db = OFCKDB::instance();
+            // get the image
+            m_imageRef = db->getImage( str );
+        }
+    }
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: setImage()
+// desc: set image for drawing
+//------------------------------------------------------------------------------
+void VRDotEntity::setImage( ofImage * imageRef )
+{
+    // set the image
+    m_imageRef = imageRef;
+}
+
+
+
+
+//------------------------------------------------------------------------------
+// name: setImage()
+// desc: set image for drawing
+//------------------------------------------------------------------------------
+void VRDotEntity::setImage( const string & key )
+{
+    // get instance
+    OFCKDB * db = OFCKDB::instance();
+    // get and set the image
+    setImage( db->getImage( key ) );
+}
 
 
 
@@ -1467,8 +1532,14 @@ void VRDotEntity::render()
     // enable lighting
     ofEnableLighting();
     
+    // check if draw texture
+    bool drawTexture = (m_imageRef != NULL);
+    // bind texture
+    if( drawTexture ) m_imageRef->getTextureReference().bind();
     // ofSetColor( 255 );
     sphere.draw();
+    // bind texture
+    if( drawTexture ) m_imageRef->getTextureReference().unbind();
     
     // disable depth test
     ofDisableDepthTest();
@@ -1524,6 +1595,9 @@ void VRBlowStringEntity::setImage( const string & key )
     setImage(OFCKDB::instance()->getImage(key));
 }
 
+
+
+
 //------------------------------------------------------------------------------
 // name: formMesh()
 // desc: construct the mesh after the image is set
@@ -1566,6 +1640,9 @@ void VRBlowStringEntity::formMesh()
     glowMesh.addTexCoord(ofPoint(1.0, 1.0));
     glowMesh.addColor(color);
 }
+
+
+
 
 void VRBlowStringEntity::updateMesh()
 {

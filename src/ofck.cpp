@@ -50,6 +50,8 @@ CK_DLL_MFUN(vrentity_getFloat);
 CK_DLL_MFUN(vrentity_eval);
 CK_DLL_MFUN(vrentity_eval_vec3);
 CK_DLL_MFUN(vrentity_eval_vec3_vec3);
+CK_DLL_MFUN(vrentity_eval_vec4);
+CK_DLL_MFUN(vrentity_eval_vec4_vec4);
 CK_DLL_MFUN(vrentity_eval_2);
 
 // VR
@@ -187,6 +189,22 @@ DLL_QUERY ofck_query( Chuck_DL_Query * QUERY )
         QUERY->add_arg(QUERY, "vec3", "v1");
         // second vec3 argument
         QUERY->add_arg(QUERY, "vec3", "v2");
+        
+        // string VREntity.eval(command, vec4) // eval
+        QUERY->add_mfun(QUERY, vrentity_eval_vec4, "int", "eval");
+        // command to evaluate
+        QUERY->add_arg(QUERY, "string", "command");
+        // first vec4 argument
+        QUERY->add_arg(QUERY, "vec4", "v");
+        
+        // string VREntity.eval(command, vec4, vec4) // eval
+        QUERY->add_mfun(QUERY, vrentity_eval_vec4_vec4, "int", "eval");
+        // command to evaluate
+        QUERY->add_arg(QUERY, "string", "command");
+        // first vec4 argument
+        QUERY->add_arg(QUERY, "vec4", "v1");
+        // second vec4 argument
+        QUERY->add_arg(QUERY, "vec4", "v2");
     }
     // end the class definition
     QUERY->end_class(QUERY);
@@ -464,6 +482,48 @@ CK_DLL_MFUN( vrentity_eval_vec3_vec3 )
     cmd << command << " " << v1.x << " " << v1.y << " " << v1.z << " ";
     cmd << v2.x << " " << v2.y << " " << v2.z;
 
+    // get the c VREntity pointer
+    VREntity * e = (VREntity *)OBJ_MEMBER_INT(SELF,vrentity_offset_cpointer);
+    // defer
+    OFCKDB::instance()->deferEval(e, cmd.str());
+    // true for now
+    RETURN->v_int = true;
+    // set the string
+    // RETURN->v_int = e->eval( cmd.str() );
+}
+
+CK_DLL_MFUN( vrentity_eval_vec4 )
+{
+    std::string command = GET_NEXT_STRING(ARGS)->str;
+    t_CKVEC4 v = GET_NEXT_VEC4(ARGS);
+    
+    // string stream
+    ostringstream cmd;
+    // add
+    cmd << command << " " << v.x << " " << v.y << " " << v.z << " " << v.w;
+    
+    // get the c VREntity pointer
+    VREntity * e = (VREntity *)OBJ_MEMBER_INT(SELF,vrentity_offset_cpointer);
+    // defer
+    OFCKDB::instance()->deferEval(e, cmd.str());
+    // true for now
+    RETURN->v_int = true;
+    // set the string
+    //RETURN->v_int = e->eval( cmd.str() );
+}
+
+CK_DLL_MFUN( vrentity_eval_vec4_vec4 )
+{
+    std::string command = GET_NEXT_STRING(ARGS)->str;
+    t_CKVEC4 v1 = GET_NEXT_VEC4(ARGS);
+    t_CKVEC4 v2 = GET_NEXT_VEC4(ARGS);
+    
+    // string stream
+    ostringstream cmd;
+    // add
+    cmd << command << " " << v1.x << " " << v1.y << " " << v1.z << " " << v1.w;
+    cmd << v2.x << " " << v2.y << " " << v2.z << v2.w;
+    
     // get the c VREntity pointer
     VREntity * e = (VREntity *)OBJ_MEMBER_INT(SELF,vrentity_offset_cpointer);
     // defer
