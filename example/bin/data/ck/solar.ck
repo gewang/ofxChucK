@@ -8,11 +8,13 @@ sun.sca.setAll(2);
 // make earth
 VR.makeEntity("earth","dot") @=> VREntity earth;
 // color
-earth.rgba.set(.25,1,1,1);
+// earth.rgba.set(.25,1,1,1);
 // scale
 earth.sca.setAll(.3);
 // offset the earth
 4 => earth.loc.x;
+// texture the earth
+earth.eval( "texture texture:earth" );
 
 // make
 VR.makeEntity("moon","dot") @=> VREntity moon;
@@ -35,7 +37,7 @@ earth.addChild( moon );
 while( true )
 {
     // rotate teh sun (and its children)
-    1 +=> sun.ori.z;
+    1 +=> sun.ori.y;
     // rotate teh sun (and its children)
     2.5 +=> earth.ori.y;
 

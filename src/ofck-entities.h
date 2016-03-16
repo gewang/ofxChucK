@@ -124,10 +124,16 @@ public:
         std::vector<ofVec2f> & outUVs );
 
 public:
+    // set image for drawing
+    void setImage( ofImage * imageRef );
+    // set image for drawing by name (via OFCKDB)
+    void setImage( const std::string & key );
+    
+public:
     // the mesh
     ofMesh m_mesh;
     // the texture
-    ofImage * m_texture;
+    ofImage * m_imageRef;
     // how to draw
     bool m_fill;
     // line width
@@ -285,7 +291,19 @@ public:
     virtual void render();
 
 public:
+    // eval
+    virtual bool eval( const std::string & command );
+    
+public:
+    // set image for drawing
+    void setImage( ofImage * imageRef );
+    // set image for drawing by name (via OFCKDB)
+    void setImage( const std::string & key );
+
+public:
     ofSpherePrimitive sphere;
+    // the texture
+    ofImage * m_imageRef;
 };
 
 

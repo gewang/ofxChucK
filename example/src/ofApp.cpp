@@ -26,6 +26,7 @@ void ofApp::setup()
     OFCKDB::instance()->loadImage("texture:flare-3", "flare-tng-3.png");
     OFCKDB::instance()->loadImage("texture:flare-4", "flare-tng-4.png");
     OFCKDB::instance()->loadImage("texture:flare-5", "flare-tng-5.png");
+    OFCKDB::instance()->loadImage("texture:earth", "earth.jpg");
 
     // set pointer
     vr = VR::instance();
@@ -39,14 +40,14 @@ void ofApp::setup()
     // success code
     bool r = false;
     // compile and run file
-    // r = chuck->compileFile( "ck/solar.ck" );
+    r = chuck->compileFile( "ck/solar.ck" );
     // r = chuck->compileFile( "ck/solar2" );
     // r = chuck->compileFile( "ck/lines.ck" );
     // r = chuck->compileFile( "ck/flares.ck" ); // need audio input
     // r = chuck->compileFile( "ck/mesh.ck" );
     // r = chuck->compileFile( "ck/lights-1.ck" );
     // r = chuck->compileFile( "ck/lights-3.ck" );
-    r = chuck->compileFile( "ck/lights-trail.ck" );
+    // r = chuck->compileFile( "ck/lights-trail.ck" );
     // r = chuck->compileFile( "ck/vortex.ck" );
     // r = chuck->compileFile( "ck/text.ck" );
     // r = chuck->compileFile( "ck/wire.ck" );
